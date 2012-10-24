@@ -67,6 +67,8 @@ Desktop.ini
 *.un~
 Session.vim
 
+.svn/
+
 /artifacts
 /build
 /test-reports
