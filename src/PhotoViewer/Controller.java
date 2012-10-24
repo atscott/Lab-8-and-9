@@ -24,9 +24,22 @@ public class Controller implements IController {
         if (fileName != null) {
             try {
                 albumModel = new Album(fileName);
+                this.tellViewToShowAlbumInfo();
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
     }
+
+    @Override
+    public void OnOpenAlbum() {
+        this.tellViewToShowAlbumInfo();
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private void tellViewToShowAlbumInfo(){
+
+    }
+
+
 }

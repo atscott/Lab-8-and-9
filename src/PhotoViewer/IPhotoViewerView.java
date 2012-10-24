@@ -10,4 +10,5 @@ import java.io.File;
 public interface IPhotoViewerView {
     public void AddListener(IController controller);
     public String RetrieveNewAlbumName();
+    public void DisplayAlbumName(String name);
 }

@@ -6,4 +6,6 @@ package PhotoViewer;
  * Time: 7:49 AM
  */
 public interface IAlbumModel {
+    public String GetName();
+    public void Save();
 }

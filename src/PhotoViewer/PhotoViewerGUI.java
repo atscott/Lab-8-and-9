@@ -402,4 +402,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         fd.setVisible(true);
         return fd.getFile();
     }
+
+    @Override
+    public void DisplayAlbumName(String name) {
+        this.setTitle(name + "  -  Photo Viewer");
+    }
 }
