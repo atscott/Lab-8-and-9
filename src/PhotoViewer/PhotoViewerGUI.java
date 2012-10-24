@@ -2,15 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package photoviewer;
+package PhotoViewer;
 
-import javax.swing.JSpinner;
+import PhotoViewer.IController;
+import PhotoViewer.IPhotoViewerView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 /**
  *
  * @author moorea
  */
-public class PhotoViewerGUI extends javax.swing.JFrame {
+public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
+    IController controller;
 
     /**
      * Creates new form PhotoViewerGUI
@@ -256,6 +262,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame {
     private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
         // TODO add your handling code here:
         System.out.println("New Album");
+
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
@@ -316,6 +323,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame {
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
         // TODO add your handling code here:
         System.out.println("New album");
+        controller.OnNewAlbum();
     }//GEN-LAST:event_newMenuItemActionPerformed
 
     private void delaySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delaySpinnerStateChanged
@@ -382,4 +390,16 @@ public class PhotoViewerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem startSlideMenuItem;
     private javax.swing.JMenuItem stopSlideMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void AddListener(IController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public String RetrieveNewAlbumName() {
+        FileDialog fd = new FileDialog(this, "Select New Album Name", FileDialog.SAVE);
+        fd.setVisible(true);
+        return fd.getFile();
+    }
 }

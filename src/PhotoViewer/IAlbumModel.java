@@ -1,0 +1,9 @@
+package PhotoViewer;
+
+/**
+ * User: atscott
+ * Date: 10/24/12
+ * Time: 7:49 AM
+ */
+public interface IAlbumModel {
+}
