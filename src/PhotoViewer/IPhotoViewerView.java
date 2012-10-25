@@ -1,7 +1,6 @@
 package PhotoViewer;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * User: atscott
