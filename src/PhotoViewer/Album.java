@@ -25,17 +25,13 @@ public class Album implements IAlbumModel {
      */
     private IController controller;
 
-    /**
-     * This constant indicates that the slideshow will iterate through images sequentially
-     */
-    public static final int SEQUENTIAL = 0;
+    public static enum SlideshowOrder { SEQUENTIAL, RANDOM; }
 
-    /**
-     * This constant indicates that the slideshow will go through the images in a random order
-     */
-    public static final int RANDOM = 1;
+    private static enum AlbumState { SLIDESHOW_RUNNING, SLIDESHOW_STOPPED; }
 
-    private int slideshowOrder = 0;
+    private SlideshowOrder order = SlideshowOrder.SEQUENTIAL;
+
+    private AlbumState state = AlbumState.SLIDESHOW_STOPPED;
 
     private int indexOfLastShownFile = 0;
 
@@ -77,27 +73,26 @@ public class Album implements IAlbumModel {
         return this.pictures;
     }
 
-    public void setSlideshowOrder(int order) {
-        if (order == Album.RANDOM) {
-            this.slideshowOrder = Album.RANDOM;
-        } else {
-            this.slideshowOrder = Album.SEQUENTIAL;
-        }
+    public void setSlideshowOrder(SlideshowOrder order) {
+        this.order = order;
     }
 
     @Override
     public void ToggleSlideshow() {
-        if (timer == null) {
-            if (this.slideshowOrder == Album.RANDOM) {
+        if (state == AlbumState.SLIDESHOW_STOPPED) {
+            if (this.order == SlideshowOrder.RANDOM) {
                 this.createRandomizedList();
             }
 
             timer = new Timer();
+            this.state = AlbumState.SLIDESHOW_RUNNING;
             timer.schedule(new NextImage(), timeBetweenImages * 1000);
         } else {
             timer.cancel();
+            this.state = AlbumState.SLIDESHOW_STOPPED;
             timer = null;
         }
+
     }
 
     private void createRandomizedList() {
@@ -117,7 +112,7 @@ public class Album implements IAlbumModel {
     class NextImage extends TimerTask {
         public void run() {
             File picture;
-            if (slideshowOrder == Album.SEQUENTIAL) {
+            if (order == SlideshowOrder.SEQUENTIAL) {
                 picture = getNextImageFromList(pictures);
             } else {
                 picture = getNextImageFromList(randomizedPictures);

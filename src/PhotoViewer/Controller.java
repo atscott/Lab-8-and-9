@@ -1,5 +1,7 @@
 package PhotoViewer;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -11,6 +13,10 @@ import java.io.IOException;
 public class Controller implements IController {
     IAlbumModel albumModel;
     IPhotoViewerView view;
+
+    private enum ControllerState {ALBUM_OPENED, ALBUM_CLOSED;}
+
+    private ControllerState state = ControllerState.ALBUM_CLOSED;
 
     public Controller(IAlbumModel model, IPhotoViewerView view) {
         this.view = view;
@@ -45,24 +51,37 @@ public class Controller implements IController {
 
         this.albumModel = new Album(file);
         this.albumModel.AddListener(this);
+        this.state = ControllerState.ALBUM_OPENED;
         this.tellViewToShowAlbumInfo();
     }
 
     @Override
-    public void ToggleSlideshow() {
-        this.albumModel.ToggleSlideshow();
+    public boolean ToggleSlideshow() {
+        boolean toggled = false;
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            this.albumModel.ToggleSlideshow();
+            toggled = true;
+        } else {
+            view.showErrorMessage("Cannot toggle slideshow because no album is open.");
+        }
+
+        return toggled;
     }
 
     @Override
     public void ShowImage(File file) {
-        this.view.showImage(file);
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            this.view.showImage(file);
+        }
     }
 
     private void tellViewToShowAlbumInfo() {
-        this.view.ClearEverything();
-        this.view.DisplayAlbumName(this.albumModel.GetName());
-        for (File picture : this.albumModel.getPictures()) {
-            this.view.AddPhoto(picture);
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            this.view.ClearEverything();
+            this.view.DisplayAlbumName(this.albumModel.GetName());
+            for (File picture : this.albumModel.getPictures()) {
+                this.view.AddPhoto(picture);
+            }
         }
     }
 
