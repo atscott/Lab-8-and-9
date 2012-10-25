@@ -4,14 +4,12 @@
  */
 package PhotoViewer;
 
-import PhotoViewer.IController;
-import PhotoViewer.IPhotoViewerView;
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +39,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         fileList = new java.awt.List();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        picturePanel = new javax.swing.JPanel();
+        picturePanel = new javax.swing.JLabel();
         fileInfoLabel = new javax.swing.JLabel();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
@@ -317,6 +315,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
         // TODO add your handling code here:
         System.out.println("Start/Stop Slideshow");
+        this.controller.ToggleSlideshow();
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
@@ -343,7 +342,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -383,7 +382,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JButton nextButton;
     private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JPanel picturePanel;
+    private javax.swing.JLabel picturePanel;
     private javax.swing.JButton previousButton;
     private javax.swing.JRadioButtonMenuItem randomRadio;
     private javax.swing.JMenuItem saveMenuItem;
@@ -414,16 +413,46 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
-    public void AddPhotos(ArrayList<File> pictures) {
-        this.listFiles = pictures;
-
-        for(File picture : pictures){
-            fileList.add(picture.getName());
-        }
+    public void AddPhoto(File picture) {
+        this.listFiles.add(picture);
+        this.fileList.add(picture.getName());
     }
 
     @Override
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    @Override
+    public void ClearEverything() {
+        this.listFiles.clear();
+        this.fileList.removeAll();
+        this.setTitle("Photo Viewer");
+    }
+
+    @Override
+    public void showImage(File file) {
+        int index = 0;
+        boolean found = false;
+        while(file != null && !found && index < this.listFiles.size()){
+            if(file.equals(this.listFiles.get(index))){
+                this.fileList.select(index);
+                found = true;
+                BufferedImage myPicture = null;
+                try {
+                    picturePanel.setIcon(new ImageIcon(ImageIO.read(file)));
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+            index++;
+        }
+
+        try {
+            picturePanel.setIcon(new ImageIcon(ImageIO.read(new File("D:\\MyDocs\\Pictures\\eaimport.png"))));
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
 }
