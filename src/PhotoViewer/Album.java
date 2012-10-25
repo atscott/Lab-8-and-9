@@ -68,13 +68,6 @@ public class Album implements IAlbumModel {
     }
 
     @Override
-    public boolean AddImage(File image) {
-        // TODO check if its really an image
-        pictures.add(image);
-        return true;
-    }
-
-    @Override
     public void AddListener(IController controller) {
         this.controller = controller;
     }

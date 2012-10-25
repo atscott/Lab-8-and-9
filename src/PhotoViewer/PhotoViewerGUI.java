@@ -299,7 +299,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         System.out.println("Add photo");
-        controller.OnAddPicture();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -342,7 +341,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -435,8 +434,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void showImage(File file) {
         int index = 0;
         boolean found = false;
-        while(file != null && !found && index < this.listFiles.size()){
-            if(file.equals(this.listFiles.get(index))){
+        while (file != null && !found && index < this.listFiles.size()) {
+            if (file.equals(this.listFiles.get(index))) {
                 this.fileList.select(index);
                 found = true;
                 BufferedImage myPicture = null;
