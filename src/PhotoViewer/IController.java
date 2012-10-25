@@ -8,6 +8,9 @@ package PhotoViewer;
 public interface IController {
 
     public void OnNewAlbum();
+
     public void OnOpenAlbum();
+
+    public void OnAddPicture();
 
 }

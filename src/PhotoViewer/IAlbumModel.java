@@ -1,5 +1,7 @@
 package PhotoViewer;
 
+import java.io.File;
+
 /**
  * User: atscott
  * Date: 10/24/12
@@ -7,6 +9,10 @@ package PhotoViewer;
  */
 public interface IAlbumModel {
     public String GetName();
+
     public void Save();
+
+    public boolean AddImage(File image);
+
     public void AddListener(IController controller);
 }

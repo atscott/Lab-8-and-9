@@ -30,9 +30,9 @@ public class Album implements IAlbumModel {
      */
     public static final int RANDOM = 1;
 
-    public Album(File file) throws IOException{
+    public Album(File file) throws IOException {
         String name = file.getPath();
-        if(!name.endsWith(".alb")){
+        if (!name.endsWith(".alb")) {
             file = new File(name + ".alb");
         }
         me = file;
@@ -49,21 +49,28 @@ public class Album implements IAlbumModel {
 
     @Override
     public void Save() {
-        try{
+        try {
             // Create file
             FileWriter fstream = new FileWriter(me.getPath());
             BufferedWriter out = new BufferedWriter(fstream);
 
             //save all the pictures to the file, one per line.
-            for(File picture : pictures){
-                out.write(picture.getPath()+"\n");
+            for (File picture : pictures) {
+                out.write(picture.getPath() + "\n");
             }
 
             //Close the output stream
             out.close();
-        }catch (Exception e){//Catch exception if any
+        } catch (Exception e) {//Catch exception if any
             System.err.println("Error: " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean AddImage(File image) {
+        // TODO check if its really an image
+        pictures.add(image);
+        return true;
     }
 
     @Override
