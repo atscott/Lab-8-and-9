@@ -20,13 +20,14 @@ public class Controller implements IController {
 
     @Override
     public void OnNewAlbum() {
-        String fileName = this.view.RetrieveNewAlbumName();
-        if (fileName != null) {
+        File file = this.view.RetrieveNewAlbumName();
+        if (file != null) {
             try {
-                albumModel = new Album(fileName);
-                this.tellViewToShowAlbumInfo();
+                albumModel = new Album(file);
+                this.albumModel.AddListener(this);
+                this.OnOpenAlbum();
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                view.showErrorMessage("Error creating album: " + e.getMessage());
             }
         }
     }
@@ -38,6 +39,7 @@ public class Controller implements IController {
     }
 
     private void tellViewToShowAlbumInfo(){
+        this.view.DisplayAlbumName(this.albumModel.GetName());
 
     }
 

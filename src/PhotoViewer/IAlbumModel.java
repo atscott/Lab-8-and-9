@@ -8,4 +8,5 @@ package PhotoViewer;
 public interface IAlbumModel {
     public String GetName();
     public void Save();
+    public void AddListener(IController controller);
 }

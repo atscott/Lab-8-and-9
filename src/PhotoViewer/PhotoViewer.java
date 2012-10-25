@@ -39,7 +39,7 @@ public class PhotoViewer {
         //</editor-fold>
 
         PhotoViewerGUI view = new PhotoViewerGUI();
-        Album album = new Album();
+        Album album = null;
         Controller controller = new Controller(album, view);
         view.setVisible(true);
 

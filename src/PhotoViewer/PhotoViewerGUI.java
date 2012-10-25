@@ -8,8 +8,11 @@ import PhotoViewer.IController;
 import PhotoViewer.IPhotoViewerView;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +20,7 @@ import java.io.File;
  */
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
     IController controller;
+    ArrayList<File> listFiles = new ArrayList<File>();
 
     /**
      * Creates new form PhotoViewerGUI
@@ -397,14 +401,29 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
-    public String RetrieveNewAlbumName() {
-        FileDialog fd = new FileDialog(this, "Select New Album Name", FileDialog.SAVE);
-        fd.setVisible(true);
-        return fd.getFile();
+    public File RetrieveNewAlbumName() {
+        JFileChooser fc = new JFileChooser("C:\\");
+        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
+        fc.showSaveDialog(this);
+        return fc.getSelectedFile();
     }
 
     @Override
     public void DisplayAlbumName(String name) {
         this.setTitle(name + "  -  Photo Viewer");
+    }
+
+    @Override
+    public void AddPhotos(ArrayList<File> pictures) {
+        this.listFiles = pictures;
+
+        for(File picture : pictures){
+            fileList.add(picture.getName());
+        }
+    }
+
+    @Override
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 }
