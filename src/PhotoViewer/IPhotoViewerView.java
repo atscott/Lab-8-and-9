@@ -1,7 +1,6 @@
 package PhotoViewer;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * User: atscott
@@ -10,14 +9,10 @@ import java.util.ArrayList;
  */
 public interface IPhotoViewerView {
     public void AddListener(IController controller);
-
     public File RetrieveNewAlbumName();
-
     public void DisplayAlbumName(String name);
-
-    public void AddPhotos(ArrayList<File> pictures);
-
+    public void AddPhoto(File picture);
     public void showErrorMessage(String message);
-
-    public void AddPhoto(File image);
+    public void ClearEverything();
+    public void showImage(File file);
 }

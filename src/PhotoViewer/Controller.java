@@ -23,10 +23,16 @@ public class Controller implements IController {
     public void OnNewAlbum() {
         File file = this.view.RetrieveNewAlbumName();
         if (file != null) {
+            if (file.exists()) {
+                file.delete();
+            }
             try {
-                albumModel = new Album(file);
-                this.albumModel.AddListener(this);
-                this.OnOpenAlbum();
+                String name = file.getPath();
+                if (!name.endsWith(".alb")) {
+                    file = new File(name + ".alb");
+                }
+                file.createNewFile();
+                this.OnOpenAlbum(file);
             } catch (IOException e) {
                 view.showErrorMessage("Error creating album: " + e.getMessage());
             }
@@ -34,7 +40,12 @@ public class Controller implements IController {
     }
 
     @Override
-    public void OnOpenAlbum() {
+    public void OnOpenAlbum(File file) {
+        if (file == null)
+            throw new NullPointerException("File cannot be null");
+
+        this.albumModel = new Album(file);
+        this.albumModel.AddListener(this);
         this.tellViewToShowAlbumInfo();
     }
 
@@ -52,6 +63,17 @@ public class Controller implements IController {
     private void tellViewToShowAlbumInfo() {
         this.view.DisplayAlbumName(this.albumModel.GetName());
 
+    @Override
+    public void ShowImage(File file) {
+        this.view.showImage(file);
+    }
+
+    private void tellViewToShowAlbumInfo() {
+        this.view.ClearEverything();
+        this.view.DisplayAlbumName(this.albumModel.GetName());
+        for (File picture : this.albumModel.getPictures()) {
+            this.view.AddPhoto(picture);
+        }
     }
 
 

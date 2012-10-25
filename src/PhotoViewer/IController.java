@@ -1,5 +1,7 @@
 package PhotoViewer;
 
+import java.io.File;
+
 /**
  * User: atscott
  * Date: 10/24/12
@@ -8,9 +10,9 @@ package PhotoViewer;
 public interface IController {
 
     public void OnNewAlbum();
-
-    public void OnOpenAlbum();
-
+    public void OnOpenAlbum(File file);
+    public void ToggleSlideshow();
+    public void ShowImage(File file);
     public void OnAddPicture();
 
 }

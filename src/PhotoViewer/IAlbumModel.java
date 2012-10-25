@@ -1,6 +1,7 @@
 package PhotoViewer;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * User: atscott
@@ -15,4 +16,6 @@ public interface IAlbumModel {
     public boolean AddImage(File image);
 
     public void AddListener(IController controller);
+    public ArrayList<File> getPictures();
+    public void ToggleSlideshow();
 }
