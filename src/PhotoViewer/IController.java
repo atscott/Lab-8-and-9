@@ -10,8 +10,11 @@ import java.io.File;
 public interface IController {
 
     public void OnNewAlbum();
+
     public void OnOpenAlbum(File file);
+
     public void ToggleSlideshow();
+
     public void ShowImage(File file);
 
 }

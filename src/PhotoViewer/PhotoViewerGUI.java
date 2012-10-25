@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *
  * @author moorea
  */
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
@@ -360,6 +359,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JLabel delayLabel;
