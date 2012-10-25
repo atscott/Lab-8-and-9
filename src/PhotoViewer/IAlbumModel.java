@@ -10,7 +10,11 @@ import java.util.ArrayList;
  */
 public interface IAlbumModel {
     public String GetName();
+
     public void Save();
+
+    public boolean AddImage(File image);
+
     public void AddListener(IController controller);
     public ArrayList<File> getPictures();
     public void ToggleSlideshow();

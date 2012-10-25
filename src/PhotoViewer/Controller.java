@@ -1,5 +1,6 @@
 package PhotoViewer;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -49,9 +50,18 @@ public class Controller implements IController {
     }
 
     @Override
-    public void ToggleSlideshow() {
-        this.albumModel.ToggleSlideshow();
+    public void OnAddPicture() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(null);
+        File image = fileChooser.getSelectedFile();
+        if (albumModel.AddImage(image)) {
+            view.AddPhoto(image);
+        }
+        // TODO if it's the first image display it
     }
+
+    private void tellViewToShowAlbumInfo() {
+        this.view.DisplayAlbumName(this.albumModel.GetName());
 
     @Override
     public void ShowImage(File file) {

@@ -13,5 +13,6 @@ public interface IController {
     public void OnOpenAlbum(File file);
     public void ToggleSlideshow();
     public void ShowImage(File file);
+    public void OnAddPicture();
 
 }
