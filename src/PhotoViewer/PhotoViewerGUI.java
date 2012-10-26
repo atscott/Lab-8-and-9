@@ -272,11 +272,23 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void startSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         // TODO add your handling code here:
         System.out.println("Start Slideshow");
+        if(state == slideshowState.SLIDESHOW_STOPPED){
+            if(this.controller.ToggleSlideshow() == true){
+                state = slideshowState.SLIDESHOW_RUNNING;
+                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+            }
+        }
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
     private void stopSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         // TODO add your handling code here:
         System.out.println("Stop Slideshow");
+        if(state == slideshowState.SLIDESHOW_RUNNING){
+            if(this.controller.ToggleSlideshow() == true){
+                state = slideshowState.SLIDESHOW_STOPPED;
+                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+            }
+        }
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
     private void sequentialRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sequentialRadioActionPerformed
