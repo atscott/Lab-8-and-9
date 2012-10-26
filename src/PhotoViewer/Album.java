@@ -25,9 +25,9 @@ public class Album implements IAlbumModel {
      */
     private IController controller;
 
-    public static enum SlideshowOrder { SEQUENTIAL, RANDOM; }
+    public static enum SlideshowOrder {SEQUENTIAL, RANDOM;}
 
-    private static enum AlbumState { SLIDESHOW_RUNNING, SLIDESHOW_STOPPED; }
+    private static enum AlbumState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
 
     private SlideshowOrder order = SlideshowOrder.SEQUENTIAL;
 
@@ -93,6 +93,13 @@ public class Album implements IAlbumModel {
             timer = null;
         }
 
+    }
+
+    @Override
+    public void AddPhoto(File photo) {
+        // TODO check if its a photo
+        pictures.add(photo);
+        // TODO do we need to re-randomize or something now?
     }
 
     private void createRandomizedList() {

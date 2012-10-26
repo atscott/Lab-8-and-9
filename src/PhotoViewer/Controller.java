@@ -1,7 +1,6 @@
 package PhotoViewer;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -56,6 +55,15 @@ public class Controller implements IController {
     }
 
     @Override
+    public void OnAddPhoto() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(null);
+        File photo = fileChooser.getSelectedFile();
+        albumModel.AddPhoto(photo);
+        this.tellViewToAddPhoto(photo);
+    }
+
+    @Override
     public boolean ToggleSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
@@ -83,6 +91,10 @@ public class Controller implements IController {
                 this.view.AddPhoto(picture);
             }
         }
+    }
+
+    private void tellViewToAddPhoto(File photo) {
+        this.view.AddPhoto(photo);
     }
 
 

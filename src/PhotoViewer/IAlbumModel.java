@@ -18,4 +18,6 @@ public interface IAlbumModel {
     public ArrayList<File> getPictures();
 
     public void ToggleSlideshow();
+
+    public void AddPhoto(File photo);
 }

@@ -290,6 +290,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         System.out.println("Add photo");
+        this.controller.OnAddPhoto();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -426,8 +427,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void showImage(File file) {
         int index = 0;
         boolean found = false;
-        while(file != null && !found && index < this.listFiles.size()){
-            if(file.equals(this.listFiles.get(index))){
+        while (file != null && !found && index < this.listFiles.size()) {
+            if (file.equals(this.listFiles.get(index))) {
                 this.fileList.select(index);
                 found = true;
                 BufferedImage myPicture = null;
@@ -447,4 +448,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
 
     }
+
+
 }
