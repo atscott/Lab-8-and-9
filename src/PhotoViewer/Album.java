@@ -103,10 +103,15 @@ public class Album implements IAlbumModel {
     @Override
     public File getPictureAt(int index) {
         File picture = null;
-        if (index >= 0 && index < this.pictures.size() - 1) {
+        if (index >= 0 && index < this.pictures.size()) {
             picture =  this.pictures.get(index);
         }
         return picture;
+    }
+
+    @Override
+    public int getNumberOfPictures() {
+        return pictures.size();
     }
 
     private void createRandomizedList() {

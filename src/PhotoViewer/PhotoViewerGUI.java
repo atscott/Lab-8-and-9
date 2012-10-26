@@ -20,7 +20,6 @@ import java.util.ArrayList;
  */
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
     IController controller;
-    ArrayList<File> listFiles = new ArrayList<File>();
 
     private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
 
@@ -286,7 +285,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         if(this.fileList.getSelectedIndex() >= 0){
             BufferedImage myPicture = null;
             try {
-                photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
+                photoScrollPane.setIcon(new ImageIcon(ImageIO.read(this.controller.getImageAtIndex(this.fileList.getSelectedIndex()))));
             } catch (Exception e) {
                 photoScrollPane.setIcon(null);
                 photoScrollPane.setText("Could not read file");
@@ -466,7 +465,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     @Override
     public void AddPhoto(File picture) {
-        this.listFiles.add(picture);
+
         DefaultListModel model = (DefaultListModel)this.fileList.getModel();
         model.addElement(picture.getName());
         this.fileList.setModel(model);
@@ -479,7 +478,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     @Override
     public void ClearEverything() {
-        this.listFiles.clear();
         this.fileList.setModel(new DefaultListModel());
         this.setTitle("Photo Viewer");
     }
@@ -488,8 +486,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void showImage(File file) {
         int index = 0;
         boolean found = false;
-        while (file != null && !found && index < this.listFiles.size()) {
-            if (file.equals(this.listFiles.get(index))) {
+        while (file != null && !found && index < this.controller.getAlbumSize()) {
+            if (file.equals(this.controller.getImageAtIndex(index))) {
                 changeListIndex(index);
                 found = true;
             }

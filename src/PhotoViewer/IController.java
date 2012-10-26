@@ -19,4 +19,10 @@ public interface IController {
 
     public void ShowImage(File file);
 
+    public File getImageAtIndex(int index);
+
+    public int getAlbumSize();
+
+
+
 }
