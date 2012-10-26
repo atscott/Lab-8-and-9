@@ -85,6 +85,7 @@ public class Album implements IAlbumModel {
             this.state = AlbumState.SLIDESHOW_RUNNING;
             timer.schedule(new NextImage(), timeBetweenImages * 1000);
         } else {
+            indexOfLastShownFile = -1;
             timer.cancel();
             this.state = AlbumState.SLIDESHOW_STOPPED;
             timer = null;

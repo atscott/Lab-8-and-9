@@ -123,7 +123,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         secondsLabel.setText("seconds");
 
-        photoScrollPane.setText("photoLabel");
+        photoScrollPane.setText("");
         jScrollPane1.setViewportView(photoScrollPane);
 
         fileList.setModel(new DefaultListModel());
@@ -491,13 +491,14 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         while (file != null && !found && index < this.listFiles.size()) {
             if (file.equals(this.listFiles.get(index))) {
                 changeListIndex(index);
+                found = true;
             }
             index++;
         }
     }
 
     private void changeListIndex(int index) {
-        if (index > 0 && index < fileList.getVisibleRowCount()) {
+        if (index >= 0 && index < fileList.getVisibleRowCount()) {
             this.fileList.setSelectedIndex(index);
         }
     }
