@@ -18,6 +18,8 @@ import java.util.ArrayList;
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
     IController controller;
     ArrayList<File> listFiles = new ArrayList<File>();
+    private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
+    private slideshowState state = slideshowState.SLIDESHOW_STOPPED;
 
     /**
      * Creates new form PhotoViewerGUI
@@ -109,7 +111,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         secondsLabel.setText("seconds");
 
-        photoScrollPane.setText("photoLabel");
+        photoScrollPane.setText("");
         jScrollPane1.setViewportView(photoScrollPane);
         photoScrollPane.getAccessibleContext().setAccessibleName("photoLabel");
 
@@ -306,7 +308,15 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
         // TODO add your handling code here:
         System.out.println("Start/Stop Slideshow");
-        this.controller.ToggleSlideshow();
+        if(this.controller.ToggleSlideshow() == true){
+            if(state == slideshowState.SLIDESHOW_STOPPED){
+                state = slideshowState.SLIDESHOW_RUNNING;
+                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+            }else{
+                state = slideshowState.SLIDESHOW_STOPPED;
+                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+            }
+        }
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
@@ -440,13 +450,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
             index++;
         }
-
-        try {
-            photoScrollPane.setIcon(new ImageIcon(ImageIO.read(new File("D:\\MyDocs\\Pictures\\eaimport.png"))));
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
     }
 
 
