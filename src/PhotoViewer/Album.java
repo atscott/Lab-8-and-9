@@ -100,6 +100,15 @@ public class Album implements IAlbumModel {
         this.createRandomizedList();
     }
 
+    @Override
+    public File getPictureAt(int index) {
+        File picture = null;
+        if (index >= 0 && index < this.pictures.size() - 1) {
+            picture =  this.pictures.get(index);
+        }
+        return picture;
+    }
+
     private void createRandomizedList() {
         this.randomizedPictures.clear();
         ArrayList<File> temp = new ArrayList<File>();

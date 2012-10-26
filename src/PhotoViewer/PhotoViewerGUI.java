@@ -287,10 +287,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             BufferedImage myPicture = null;
             try {
                 photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 photoScrollPane.setIcon(null);
                 photoScrollPane.setText("Could not read file");
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
     }
