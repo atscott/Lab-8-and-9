@@ -80,9 +80,6 @@ public class Album implements IAlbumModel {
     @Override
     public void ToggleSlideshow() {
         if (state == AlbumState.SLIDESHOW_STOPPED) {
-            if (this.order == SlideshowOrder.RANDOM) {
-                this.createRandomizedList();
-            }
 
             timer = new Timer();
             this.state = AlbumState.SLIDESHOW_RUNNING;
@@ -99,7 +96,7 @@ public class Album implements IAlbumModel {
     public void AddPhoto(File photo) {
         // TODO check if its a photo
         pictures.add(photo);
-        // TODO do we need to re-randomize or something now?
+        this.createRandomizedList();
     }
 
     private void createRandomizedList() {
