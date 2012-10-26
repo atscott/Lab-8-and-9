@@ -336,6 +336,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void randomRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomRadioActionPerformed
         // TODO add your handling code here:
         System.out.println("Random order");
+        System.out.println("make sure to uncheck the other radio button ");
     }//GEN-LAST:event_randomRadioActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
