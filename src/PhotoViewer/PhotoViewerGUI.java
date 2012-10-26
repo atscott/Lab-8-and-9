@@ -7,12 +7,8 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -284,7 +280,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         //To change body of created methods use File | Settings | File Templates.
         System.out.println("selection changed");
-        if(this.fileList.getSelectedIndex() >= 0){
+        if (this.fileList.getSelectedIndex() >= 0) {
             BufferedImage myPicture = null;
             try {
                 photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
@@ -454,7 +450,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
 
-
     @Override
     public void DisplayAlbumName(String name) {
         this.setTitle(name + "  -  Photo Viewer");
@@ -463,7 +458,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     @Override
     public void AddPhoto(File picture) {
         this.listFiles.add(picture);
-        DefaultListModel model = (DefaultListModel)this.fileList.getModel();
+        DefaultListModel model = (DefaultListModel) this.fileList.getModel();
         model.addElement(picture.getName());
         this.fileList.setModel(model);
     }
@@ -491,6 +486,36 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
             index++;
         }
+    }
+
+    @Override
+    public void DisableAllFunctions() {
+        this.addButton.setEnabled(false);
+        this.deleteButton.setEnabled(false);
+        this.nextButton.setEnabled(false);
+        this.previousButton.setEnabled(false);
+        this.startAndStopToggleButton.setEnabled(false);
+        this.sequentialRadio.setEnabled(false);
+        this.randomRadio.setEnabled(false);
+        this.startSlideMenuItem.setEnabled(false);
+        this.stopSlideMenuItem.setEnabled(false);
+        this.delaySpinner.setEnabled(false);
+        this.saveMenuItem.setEnabled(false);
+    }
+
+    @Override
+    public void EnableAllFunctions() {
+        this.addButton.setEnabled(true);
+        this.deleteButton.setEnabled(true);
+        this.nextButton.setEnabled(true);
+        this.previousButton.setEnabled(true);
+        this.startAndStopToggleButton.setEnabled(true);
+        this.sequentialRadio.setEnabled(true);
+        this.randomRadio.setEnabled(true);
+        this.startSlideMenuItem.setEnabled(true);
+        this.stopSlideMenuItem.setEnabled(true);
+        this.delaySpinner.setEnabled(true);
+        this.saveMenuItem.setEnabled(true);
     }
 
     private void changeListIndex(int index) {

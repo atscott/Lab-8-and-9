@@ -9,9 +9,18 @@ import java.io.File;
  */
 public interface IPhotoViewerView {
     public void AddListener(IController controller);
+
     public void DisplayAlbumName(String name);
+
     public void AddPhoto(File picture);
+
     public void showErrorMessage(String message);
+
     public void ClearEverything();
+
     public void showImage(File file);
+
+    public void DisableAllFunctions();
+
+    public void EnableAllFunctions();
 }

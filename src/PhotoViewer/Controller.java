@@ -25,7 +25,9 @@ public class Controller implements IController {
     /**
      * Controller state. Album open or closed
      */
-    private enum ControllerState {ALBUM_OPENED, ALBUM_CLOSED;}
+    private enum ControllerState {
+        ALBUM_OPENED, ALBUM_CLOSED;
+    }
 
     /**
      * The controller's initial state is album closed
@@ -34,13 +36,15 @@ public class Controller implements IController {
 
     /**
      * Creates the controller with the given view and model. Adds this controller as a listener to the view
+     *
      * @param model the model for this controller
-     * @param view The view for this controller
+     * @param view  The view for this controller
      */
     public Controller(IAlbumModel model, IPhotoViewerView view) {
         this.view = view;
         this.albumModel = model;
         this.view.AddListener(this);
+        this.view.DisableAllFunctions();
     }
 
     @Override
@@ -52,7 +56,7 @@ public class Controller implements IController {
         JFileChooser fc = new JFileChooser("C:\\");
         fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
         fc.showSaveDialog(null);
-        File file =  fc.getSelectedFile();
+        File file = fc.getSelectedFile();
         if (file != null) {
             if (file.exists()) {
                 file.delete();
@@ -83,6 +87,7 @@ public class Controller implements IController {
         this.albumModel.AddListener(this);
         this.state = ControllerState.ALBUM_OPENED;
         this.tellViewToShowAlbumInfo();
+        this.view.EnableAllFunctions();
     }
 
     @Override
@@ -139,6 +144,7 @@ public class Controller implements IController {
 
     /**
      * Tells the view that a new photo was added to the album and requests that it be displayed
+     *
      * @param photo The photo that was added to the album
      */
     private void tellViewToAddPhoto(File photo) {
