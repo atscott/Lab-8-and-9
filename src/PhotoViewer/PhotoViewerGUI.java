@@ -316,6 +316,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 state = slideshowState.SLIDESHOW_RUNNING;
                 startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
             }
+
         }
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
