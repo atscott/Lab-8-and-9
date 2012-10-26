@@ -96,10 +96,14 @@ public class Controller implements IController {
      */
     public void OnAddPhoto() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(null);
-        File photo = fileChooser.getSelectedFile();
-        albumModel.AddPhoto(photo);
-        this.tellViewToAddPhoto(photo);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "gif", "png");
+        fileChooser.setFileFilter(filter);
+        int returnVal = fileChooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File photo = fileChooser.getSelectedFile();
+            albumModel.AddPhoto(photo);
+            this.tellViewToAddPhoto(photo);
+        }
     }
 
     @Override
