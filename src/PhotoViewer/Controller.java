@@ -83,26 +83,6 @@ public class Controller implements IController {
         }
     }
 
-    @Override
-    public File getImageAtIndex(int index) {
-        if (this.state == ControllerState.ALBUM_OPENED) {
-            return this.albumModel.getPictureAt(index);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public int getAlbumSize() {
-        if (this.state == ControllerState.ALBUM_OPENED) {
-            return this.albumModel.getNumberOfPictures();
-        }else{
-            return -1;
-        }
-    }
-
-
-
     private void tellViewToShowAlbumInfo() {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.view.ClearEverything();

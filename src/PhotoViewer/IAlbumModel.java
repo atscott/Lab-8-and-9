@@ -20,8 +20,4 @@ public interface IAlbumModel {
     public void ToggleSlideshow();
 
     public void AddPhoto(File photo);
-
-    public File getPictureAt(int index);
-
-    public int getNumberOfPictures();
 }
