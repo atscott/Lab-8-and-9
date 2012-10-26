@@ -453,13 +453,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         this.controller = controller;
     }
 
-    @Override
-    public File RetrieveNewAlbumName() {
-        JFileChooser fc = new JFileChooser("C:\\");
-        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
-        fc.showSaveDialog(this);
-        return fc.getSelectedFile();
-    }
+
 
     @Override
     public void DisplayAlbumName(String name) {

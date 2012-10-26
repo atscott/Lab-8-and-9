@@ -9,7 +9,6 @@ import java.io.File;
  */
 public interface IPhotoViewerView {
     public void AddListener(IController controller);
-    public File RetrieveNewAlbumName();
     public void DisplayAlbumName(String name);
     public void AddPhoto(File picture);
     public void showErrorMessage(String message);
