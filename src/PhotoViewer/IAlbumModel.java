@@ -19,5 +19,7 @@ public interface IAlbumModel {
 
     public void ToggleSlideshow();
 
+    public void setSlideshowOrder(Album.SlideshowOrder slideshowOrder);
+
     public void AddPhoto(File photo);
 }

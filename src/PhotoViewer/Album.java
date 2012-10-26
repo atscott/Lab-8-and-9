@@ -14,37 +14,82 @@ import java.util.TimerTask;
  * Time: 7:43 AM
  */
 public class Album implements IAlbumModel {
+
+    /**
+     * The album File
+     */
     final File me;
+
+    /**
+     * The pictures in this album
+     */
     private ArrayList<File> pictures = new ArrayList<File>();
+
+    /**
+     * The pictures in this album, in a random order
+     */
     private ArrayList<File> randomizedPictures = new ArrayList<File>();
+
+    /**
+     * Timer used to wait between showing slideshow images
+     */
     Timer timer;
-    int timeBetweenImages = 1;
+
+    /**
+     * The time between images shown in the slideshow
+     */
+    private int timeBetweenImages = 1;
 
     /**
      * This is the controller that the album is linked to
      */
     private IController controller;
 
+    /**
+     * slideshow will be shown in random or sequential order
+     */
     public static enum SlideshowOrder {SEQUENTIAL, RANDOM;}
 
+    /**
+     * indicates if slideshow is running or stopped
+     */
     private static enum AlbumState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
 
+    /**
+     * The order of the slideshow. initially sequential
+     */
     private SlideshowOrder order = SlideshowOrder.SEQUENTIAL;
 
+    /**
+     * The state of this album. initially slideshow stopped
+     */
     private AlbumState state = AlbumState.SLIDESHOW_STOPPED;
 
+    /**
+     * The index in the array of the last file that was displayed in the slideshow
+     */
     private int indexOfLastShownFile = 0;
 
+    /**
+     * Initializes an album with the given file name
+     * @param file What the album is called
+     */
     public Album(File file) {
         this.me = file;
     }
 
     @Override
+    /**
+     * returns the file name of this album
+     */
     public String GetName() {
         return me.getName();
     }
 
     @Override
+    /**
+     * Saves the album to a file
+     */
     public void Save() {
         try {
             // Create file
@@ -64,20 +109,33 @@ public class Album implements IAlbumModel {
     }
 
     @Override
+    /**
+     * Adds the given controller to this model
+     */
     public void AddListener(IController controller) {
         this.controller = controller;
     }
 
     @Override
+    /**
+     * returns the list of pictures
+     */
     public ArrayList<File> getPictures() {
         return this.pictures;
     }
 
+    /**
+     * Changes the slideshow order
+     * @param order The order to show the pictures in during the slideshow
+     */
     public void setSlideshowOrder(SlideshowOrder order) {
         this.order = order;
     }
 
     @Override
+    /**
+     * Toggles the slideshow. If running, stops. If not running, starts the slideshow timer.
+     */
     public void ToggleSlideshow() {
         if (state == AlbumState.SLIDESHOW_STOPPED) {
 
@@ -100,6 +158,9 @@ public class Album implements IAlbumModel {
         this.createRandomizedList();
     }
 
+    /**
+     * creates an ArrayList of the pictures in random order
+     */
     private void createRandomizedList() {
         this.randomizedPictures.clear();
         ArrayList<File> temp = new ArrayList<File>();
@@ -114,6 +175,9 @@ public class Album implements IAlbumModel {
         }
     }
 
+    /**
+     * tells the controller to show the next image. THen schedules a new timer task NextImage to continue the loop.
+     */
     class NextImage extends TimerTask {
         public void run() {
             File picture;
@@ -127,6 +191,12 @@ public class Album implements IAlbumModel {
         }
     }
 
+    /**
+     * Retrieves the next File from a given list. If at the end of the list, gets the first item. Updates the
+     * attribute indexofLastShownFile to keep track of the last file that was shown in the slideshow.
+     * @param list The list to get the picture from
+     * @return The next image in the list
+     */
     private File getNextImageFromList(ArrayList<File> list) {
         File retVal = null;
 
