@@ -1,12 +1,7 @@
 package PhotoViewer;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.*;
+import java.util.*;
 
 /**
  * User: atscott
@@ -48,12 +43,16 @@ public class Album implements IAlbumModel {
     /**
      * slideshow will be shown in random or sequential order
      */
-    public static enum SlideshowOrder {SEQUENTIAL, RANDOM;}
+    public static enum SlideshowOrder {
+        SEQUENTIAL, RANDOM;
+    }
 
     /**
      * indicates if slideshow is running or stopped
      */
-    private static enum AlbumState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
+    private static enum AlbumState {
+        SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;
+    }
 
     /**
      * The order of the slideshow. initially sequential
@@ -72,6 +71,7 @@ public class Album implements IAlbumModel {
 
     /**
      * Initializes an album with the given file name
+     *
      * @param file What the album is called
      */
     public Album(File file) {
@@ -126,6 +126,7 @@ public class Album implements IAlbumModel {
 
     /**
      * Changes the slideshow order
+     *
      * @param order The order to show the pictures in during the slideshow
      */
     public void setSlideshowOrder(SlideshowOrder order) {
@@ -152,10 +153,16 @@ public class Album implements IAlbumModel {
     }
 
     @Override
-    public void AddPhoto(File photo) {
-        // TODO check if its a photo
-        pictures.add(photo);
-        this.createRandomizedList();
+    public void AddPhoto(File photo) throws IOException {
+        byte[] jpegIdBytes = {-1, -40};
+        byte[] signature = new byte[2];
+        FileInputStream fileInputStream = new FileInputStream(photo);
+        if (fileInputStream.read(signature, 0, 2) == 2 && Arrays.equals(signature, jpegIdBytes)) {
+            pictures.add(photo);
+            this.createRandomizedList();
+        } else {
+            throw new IOException("File not a JPEG image.");
+        }
     }
 
     /**
@@ -194,6 +201,7 @@ public class Album implements IAlbumModel {
     /**
      * Retrieves the next File from a given list. If at the end of the list, gets the first item. Updates the
      * attribute indexofLastShownFile to keep track of the last file that was shown in the slideshow.
+     *
      * @param list The list to get the picture from
      * @return The next image in the list
      */

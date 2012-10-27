@@ -1,6 +1,7 @@
 package PhotoViewer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,5 +22,5 @@ public interface IAlbumModel {
 
     public void setSlideshowOrder(Album.SlideshowOrder slideshowOrder);
 
-    public void AddPhoto(File photo);
+    public void AddPhoto(File photo) throws IOException;
 }
