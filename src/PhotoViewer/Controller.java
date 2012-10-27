@@ -98,7 +98,7 @@ public class Controller implements IController {
         this.state = ControllerState.ALBUM_OPENED;
         a.Open();
         this.tellViewToShowAlbumInfo();
-
+        this.view.EnableAllFunctions();
     }
 
     @Override
@@ -145,6 +145,13 @@ public class Controller implements IController {
     public void ShowImage(File file) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.view.showImage(file);
+            BufferedImage bimg = null;
+			try {
+				bimg = ImageIO.read(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight() );
         }
     }
 
@@ -158,9 +165,7 @@ public class Controller implements IController {
             for (File picture : this.albumModel.getPictures()) {
                 this.view.AddPhoto(picture);
             }
-            this.view.EnableAllFunctions();
         }
-
     }
 
     /**
@@ -171,6 +176,12 @@ public class Controller implements IController {
     private void tellViewToAddPhoto(File photo) {
         this.view.AddPhoto(photo);
     }
+
+	@Override
+	public void onTimeChange(int newTime) {
+		albumModel.setTimeBetweenImages(newTime);
+	}
+
 
 
 }
