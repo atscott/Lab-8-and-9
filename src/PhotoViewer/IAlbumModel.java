@@ -20,6 +20,8 @@ public interface IAlbumModel {
 
     public void ToggleSlideshow();
 
+    public void setTimeBetweenImages(int time);
+
     public void setSlideshowOrder(Album.SlideshowOrder slideshowOrder);
 
     public void AddPhoto(File photo) throws IOException;

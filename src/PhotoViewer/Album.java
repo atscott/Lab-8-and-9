@@ -78,6 +78,28 @@ public class Album implements IAlbumModel {
         this.me = file;
     }
 
+    public void Open() {
+        try {
+            // Read file
+            FileReader fstream = new FileReader(me.getPath());
+            BufferedReader in = new BufferedReader(fstream);
+            Boolean hasLines = true;
+            while (hasLines) {
+                String line = in.readLine();
+                if (line == null) {
+                    hasLines = false;
+                } else {
+                    pictures.add(new File(line));
+                }
+            }
+
+            //Close the input stream
+            in.close();
+        } catch (Exception e) {//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
     @Override
     /**
      * returns the file name of this album
@@ -150,6 +172,11 @@ public class Album implements IAlbumModel {
             timer = null;
         }
 
+    }
+
+    @Override
+    public void setTimeBetweenImages(int time) {
+        timeBetweenImages = time;
     }
 
     @Override

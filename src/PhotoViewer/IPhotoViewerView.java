@@ -25,4 +25,6 @@ public interface IPhotoViewerView {
     public void EnableAllFunctions();
 
     public void RemovePhoto(File photo);
+
+    public void setPictureLabel(String label);
 }
