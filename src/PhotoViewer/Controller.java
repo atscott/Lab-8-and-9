@@ -104,6 +104,11 @@ public class Controller implements IController {
     }
 
     @Override
+    public void OnSaveAlbum() {
+        this.albumModel.Save();
+    }
+
+    @Override
     /**
      * Handles a request to add a photo. Adds the photo to the album and tells the view to also display the added photo
      */

@@ -13,6 +13,8 @@ public interface IController {
 
     public void OnOpenAlbum();
 
+    public void OnSaveAlbum();
+
     public void OnAddPhoto();
 
     void OnDeletePhoto(File photo);

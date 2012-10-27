@@ -294,21 +294,19 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
-        // TODO add your handling code here:
         this.controller.OnNewAlbum();
         System.out.println("New Album");
 
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        // TODO add your handling code here:
         System.out.println("Open Album");
         this.controller.OnOpenAlbum();
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        // TODO add your handling code here:
         System.out.println("Save Album");
+        this.controller.OnSaveAlbum();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void startSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSlideMenuItemActionPerformed
@@ -374,13 +372,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
-        // TODO add your handling code here:
         System.out.println("New album");
         controller.OnNewAlbum();
     }//GEN-LAST:event_newMenuItemActionPerformed
 
     private void delaySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delaySpinnerStateChanged
-        // TODO add your handling code here:
         JSpinner js = (JSpinner) evt.getSource();
         controller.onTimeChange(Integer.parseInt((js.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
