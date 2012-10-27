@@ -1,7 +1,9 @@
 package PhotoViewer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -151,7 +153,7 @@ public class Controller implements IController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-            this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight() );
+            this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight());
         }
     }
 
