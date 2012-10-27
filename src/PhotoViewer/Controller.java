@@ -28,7 +28,7 @@ public class Controller implements IController {
      * Controller state. Album open or closed
      */
     private enum ControllerState {
-        ALBUM_OPENED, ALBUM_CLOSED;
+        ALBUM_OPENED, ALBUM_CLOSED
     }
 
     /**

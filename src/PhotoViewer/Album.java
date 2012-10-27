@@ -44,14 +44,14 @@ public class Album implements IAlbumModel {
      * slideshow will be shown in random or sequential order
      */
     public static enum SlideshowOrder {
-        SEQUENTIAL, RANDOM;
+        SEQUENTIAL, RANDOM
     }
 
     /**
      * indicates if slideshow is running or stopped
      */
     private static enum AlbumState {
-        SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;
+        SLIDESHOW_RUNNING, SLIDESHOW_STOPPED
     }
 
     /**
