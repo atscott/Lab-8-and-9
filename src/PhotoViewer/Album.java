@@ -165,6 +165,12 @@ public class Album implements IAlbumModel {
         }
     }
 
+    @Override
+    public void RemovePhoto(File photo) {
+        pictures.remove(photo);
+        this.createRandomizedList();
+    }
+
     /**
      * creates an ArrayList of the pictures in random order
      */

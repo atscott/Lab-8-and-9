@@ -23,4 +23,6 @@ public interface IAlbumModel {
     public void setSlideshowOrder(Album.SlideshowOrder slideshowOrder);
 
     public void AddPhoto(File photo) throws IOException;
+
+    public void RemovePhoto(File photo);
 }

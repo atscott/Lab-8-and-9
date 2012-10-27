@@ -110,6 +110,16 @@ public class Controller implements IController {
     }
 
     @Override
+    public void OnDeletePhoto(File photo) {
+        this.albumModel.RemovePhoto(photo);
+        this.TellViewToRemovePhoto(photo);
+    }
+
+    private void TellViewToRemovePhoto(File photo) {
+        this.view.RemovePhoto(photo);
+    }
+
+    @Override
     /**
      * If controller has an album open (state), tells the AlbumModel to toggle its slideshow. otherwise tells the view
      * to show an error message.

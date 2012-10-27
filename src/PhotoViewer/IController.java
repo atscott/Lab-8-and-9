@@ -15,6 +15,8 @@ public interface IController {
 
     public void OnAddPhoto();
 
+    void OnDeletePhoto(File photo);
+
     public boolean ToggleSlideshow();
 
     public void ShowImage(File file);

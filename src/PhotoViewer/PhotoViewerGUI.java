@@ -344,8 +344,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
         System.out.println("Delete photo");
+        this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
@@ -516,6 +516,12 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         this.stopSlideMenuItem.setEnabled(true);
         this.delaySpinner.setEnabled(true);
         this.saveMenuItem.setEnabled(true);
+    }
+
+    @Override
+    public void RemovePhoto(File photo) {
+        int index = this.listFiles.indexOf(photo);
+        this.listFiles.remove(index);
     }
 
     private void changeListIndex(int index) {
