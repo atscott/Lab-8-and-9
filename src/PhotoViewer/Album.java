@@ -151,6 +151,11 @@ public class Album implements IAlbumModel {
         }
 
     }
+    
+    @Override
+    public void setTimeBetweenImages(int time){
+    	timeBetweenImages = time;  
+    }
 
     @Override
     public void AddPhoto(File photo) throws IOException {

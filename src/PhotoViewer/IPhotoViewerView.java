@@ -23,4 +23,6 @@ public interface IPhotoViewerView {
     public void DisableAllFunctions();
 
     public void EnableAllFunctions();
+    
+    public void setPictureLabel(String label);
 }

@@ -19,6 +19,8 @@ public interface IAlbumModel {
     public ArrayList<File> getPictures();
 
     public void ToggleSlideshow();
+    
+    public void setTimeBetweenImages(int time);
 
     public void setSlideshowOrder(Album.SlideshowOrder slideshowOrder);
 

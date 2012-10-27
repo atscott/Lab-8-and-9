@@ -16,6 +16,8 @@ public interface IController {
     public void OnAddPhoto();
 
     public boolean ToggleSlideshow();
+    
+    public void onTimeChange(int newTime);
 
     public void ShowImage(File file);
 

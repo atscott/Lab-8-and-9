@@ -109,12 +109,14 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 startAndStopToggleButtonActionPerformed(evt);
             }
         });
-
+        
+        delaySpinner.setValue((Integer) 3);
         delaySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 delaySpinnerStateChanged(evt);
             }
         });
+        
 
         delayLabel.setText("Slide Delay ");
 
@@ -349,8 +351,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Previous photo");
+        showImage(getPreviousPicture());
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
@@ -366,8 +367,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Next photo");
+    	showImage(getNextPicture());
+    	
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
@@ -379,7 +380,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void delaySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delaySpinnerStateChanged
         // TODO add your handling code here:
         JSpinner js = (JSpinner) evt.getSource();
-        System.out.println(js.getValue().toString());
+        controller.onTimeChange(Integer.parseInt((js.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
 
     /**
@@ -487,6 +488,38 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             index++;
         }
     }
+    
+    public File getNextPicture(){
+    	File retVal = null;
+    	
+        if (listFiles.size() > 0) {
+            if (fileList.getSelectedIndex() == listFiles.size() - 1) {
+                retVal = listFiles.get(0);
+                fileList.setSelectedIndex(0);
+            } else {
+                retVal = listFiles.get(fileList.getSelectedIndex() + 1);
+                fileList.setSelectedIndex(fileList.getSelectedIndex() +1);
+            }
+        }
+        
+        return retVal;
+    }
+    
+    public File getPreviousPicture(){
+    	File retVal = null;
+    	
+        if (listFiles.size() > 0) {
+            if (fileList.getSelectedIndex() == 0) {
+                retVal = listFiles.get(listFiles.size()-1);
+                fileList.setSelectedIndex(listFiles.size()-1);
+            } else {
+                retVal = listFiles.get(fileList.getSelectedIndex() - 1);
+                fileList.setSelectedIndex(fileList.getSelectedIndex() - 1);
+            }
+        }
+        
+        return retVal;
+    }
 
     @Override
     public void DisableAllFunctions() {
@@ -523,5 +556,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             this.fileList.setSelectedIndex(index);
         }
     }
+
+	@Override
+	public void setPictureLabel(String label) {
+		fileInfoLabel.setText(label);
+	}
 
 }
