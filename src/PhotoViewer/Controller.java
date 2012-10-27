@@ -67,7 +67,13 @@ public class Controller implements IController {
                     file = new File(name + ".alb");
                 }
                 file.createNewFile();
-                this.OnOpenAlbum(file);
+
+                Album a = new Album(file);
+                this.albumModel = new Album(file);
+                this.albumModel.AddListener(this);
+                this.state = ControllerState.ALBUM_OPENED;
+                a.Open();
+                this.tellViewToShowAlbumInfo();
             } catch (IOException e) {
                 view.showErrorMessage("Error creating album: " + e.getMessage());
             }
@@ -79,14 +85,20 @@ public class Controller implements IController {
      * Given the album file, attempts to create an albumModel and add this controller as the listener. Updates the state
      * to indicate an album is open. Also calls tellViewToShowAlbumInfo so the view shows the album information.
      */
-    public void OnOpenAlbum(File file) {
+    public void OnOpenAlbum() {
+        JFileChooser fc = new JFileChooser("C:\\");
+        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
+        fc.showOpenDialog(null);
+        File file = fc.getSelectedFile();
         if (file == null)
             throw new NullPointerException("File cannot be null");
-
+        Album a = new Album(file);
         this.albumModel = new Album(file);
         this.albumModel.AddListener(this);
         this.state = ControllerState.ALBUM_OPENED;
+        a.Open();
         this.tellViewToShowAlbumInfo();
+
     }
 
     @Override

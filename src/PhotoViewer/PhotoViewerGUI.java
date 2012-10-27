@@ -293,6 +293,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
         // TODO add your handling code here:
+        this.controller.OnNewAlbum();
         System.out.println("New Album");
 
     }//GEN-LAST:event_newMenuActionPerformed
@@ -300,6 +301,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
         System.out.println("Open Album");
+        this.controller.OnOpenAlbum();
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed

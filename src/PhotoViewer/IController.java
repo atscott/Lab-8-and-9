@@ -11,7 +11,7 @@ public interface IController {
 
     public void OnNewAlbum();
 
-    public void OnOpenAlbum(File file);
+    public void OnOpenAlbum();
 
     public void OnAddPhoto();
 
