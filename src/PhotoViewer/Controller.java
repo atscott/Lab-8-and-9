@@ -87,7 +87,6 @@ public class Controller implements IController {
         this.albumModel.AddListener(this);
         this.state = ControllerState.ALBUM_OPENED;
         this.tellViewToShowAlbumInfo();
-        this.view.EnableAllFunctions();
     }
 
     @Override
@@ -147,7 +146,9 @@ public class Controller implements IController {
             for (File picture : this.albumModel.getPictures()) {
                 this.view.AddPhoto(picture);
             }
+            this.view.EnableAllFunctions();
         }
+
     }
 
     /**
