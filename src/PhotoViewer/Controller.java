@@ -105,6 +105,9 @@ public class Controller implements IController {
     }
 
     @Override
+    /**
+     * Tells the model to save the album
+     */
     public void OnSaveAlbum() {
         this.albumModel.Save();
     }
@@ -133,6 +136,9 @@ public class Controller implements IController {
     }
 
     @Override
+    /**
+     * Deletes the photo from the album and calls the TellViewToRemovePhoto method
+     */
     public void OnDeletePhoto(File photo) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.albumModel.RemovePhoto(photo);
@@ -140,6 +146,10 @@ public class Controller implements IController {
         }
     }
 
+    /**
+     * Tells the view to remove the given photo
+     * @param photo The photo File to remove from the view
+     */
     private void TellViewToRemovePhoto(File photo) {
         this.view.RemovePhoto(photo);
     }
@@ -203,6 +213,9 @@ public class Controller implements IController {
     }
 
     @Override
+    /**
+     * If an album is open, tells the album model to set the time between images
+     */
     public void onTimeChange(int newTime) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             albumModel.setTimeBetweenImages(newTime);
@@ -210,6 +223,9 @@ public class Controller implements IController {
     }
 
     @Override
+    /**
+     * tells the alum model to change slideshow order
+     */
     public void OnOrderSelection(SlideshowOrder o) {
         albumModel.setSlideshowOrder(o);
 
