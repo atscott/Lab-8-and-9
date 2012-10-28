@@ -495,7 +495,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }
 
-    public File getNextPicture() {
+    /**
+     * Gets the previous picutre
+     * @return The File that is the previous picture in the list
+     */
+    private File getNextPicture() {
         File retVal = null;
 
         if (listFiles.size() > 0) {
@@ -511,7 +515,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         return retVal;
     }
 
-    public File getPreviousPicture() {
+    /**
+     * gets the next picture
+     * @return The File that is the next picture in the list
+     */
+    private File getPreviousPicture() {
         File retVal = null;
 
         if (listFiles.size() > 0) {
