@@ -347,7 +347,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         System.out.println("Delete photo");
-        this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
+        if(listFiles.size() > 0){
+            this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
