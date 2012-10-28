@@ -91,14 +91,15 @@ public class Controller implements IController {
         fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
         fc.showOpenDialog(null);
         File file = fc.getSelectedFile();
-        if (file == null)
-            throw new NullPointerException("File cannot be null");
-        this.albumModel = new Album(file);
-        this.albumModel.AddListener(this);
-        this.state = ControllerState.ALBUM_OPENED;
-        this.albumModel.Open();
-        this.tellViewToShowAlbumInfo();
-        this.view.EnableAllFunctions();
+        if (file != null){
+            this.albumModel = new Album(file);
+            this.albumModel.AddListener(this);
+            this.state = ControllerState.ALBUM_OPENED;
+            this.albumModel.Open();
+            this.tellViewToShowAlbumInfo();
+            this.view.EnableAllFunctions();
+        }
+
     }
 
     @Override
