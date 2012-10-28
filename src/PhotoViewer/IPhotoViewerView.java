@@ -1,5 +1,6 @@
 package PhotoViewer;
 
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -27,4 +28,6 @@ public interface IPhotoViewerView {
     public void RemovePhoto(File photo);
 
     public void SetPictureLabel(String label);
+
+    void SetPicture(Image image);
 }

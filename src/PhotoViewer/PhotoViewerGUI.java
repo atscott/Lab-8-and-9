@@ -4,8 +4,8 @@
  */
 package PhotoViewer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -123,9 +123,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         photoScrollPane.setText("");
         jScrollPane1.setViewportView(photoScrollPane);
-        /* Code for scaling an image
         jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);*/
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         fileList.setModel(new DefaultListModel());
         fileList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -285,17 +284,19 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void fileListValueChanged() {
         if (this.fileList.getSelectedIndex() >= 0) {
-            //BufferedImage myPicture = null;
+            this.controller.ShowImage(listFiles.get(this.fileList.getSelectedIndex()));
+            /*BufferedImage myPicture = null;
             try {
-                /* Code for scaling an image
-                myPicture = ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()));
+                File file = listFiles.get(this.fileList.getSelectedIndex());
+                myPicture = ImageIO.read(file);
                 Image scaled = myPicture.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
-                photoScrollPane.setIcon(new ImageIcon(scaled));*/
-                photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
+                photoScrollPane.setIcon(new ImageIcon(scaled));
+                //photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
+                SetPictureLabel(file.getName() + " Width: " + myPicture.getWidth() + " Height: " + myPicture.getHeight());
             } catch (Exception e) {
                 photoScrollPane.setIcon(null);
                 photoScrollPane.setText("Could not read file");
-            }
+            } */
         }
     }
 
@@ -359,7 +360,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed() {//GEN-FIRST:event_previousButtonActionPerformed
-        controller.ShowImage(getPreviousPicture());
+        getPreviousPicture();
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void startAndStopToggleButtonActionPerformed() {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
@@ -375,7 +376,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed() {//GEN-FIRST:event_nextButtonActionPerformed
-        controller.ShowImage(getNextPicture());
+        getNextPicture();
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
@@ -572,6 +573,12 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         DefaultListModel model = (DefaultListModel) fileList.getModel();
         model.remove(index);
         fileList.setModel(model);
+    }
+
+    @Override
+    public void SetPicture(Image image) {
+        Image scaled = image.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
+        photoScrollPane.setIcon(new ImageIcon(scaled));
     }
 
     private void changeListIndex(int index) {
