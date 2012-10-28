@@ -3,6 +3,9 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import PhotoViewer.Album.SlideshowOrder;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -206,6 +209,12 @@ public class Controller implements IController {
             albumModel.setTimeBetweenImages(newTime);
         }
     }
+
+	@Override
+	public void OnOrderSelection(SlideshowOrder o) {
+		albumModel.setSlideshowOrder(o);
+		
+	}
 
 
 }
