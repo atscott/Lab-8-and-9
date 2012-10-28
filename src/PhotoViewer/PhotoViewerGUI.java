@@ -351,7 +351,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
-        showImage(getPreviousPicture());
+        controller.ShowImage(getPreviousPicture());
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
@@ -367,7 +367,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        showImage(getNextPicture());
+        controller.ShowImage(getNextPicture());
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
@@ -475,7 +475,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
-    public void showImage(File file) {
+    public void ShowImage(File file) {
         int index = 0;
         boolean found = false;
         while (file != null && !found && index < this.listFiles.size()) {

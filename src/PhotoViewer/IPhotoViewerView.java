@@ -18,7 +18,7 @@ public interface IPhotoViewerView {
 
     public void ClearEverything();
 
-    public void showImage(File file);
+    public void ShowImage(File file);
 
     public void DisableAllFunctions();
 
