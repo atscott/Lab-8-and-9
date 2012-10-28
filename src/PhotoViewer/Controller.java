@@ -119,11 +119,14 @@ public class Controller implements IController {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File photo = fileChooser.getSelectedFile();
             try {
-                albumModel.AddPhoto(photo);
+                if(albumModel.AddPhoto(photo)) {
+                    this.tellViewToAddPhoto(photo);
+                } else {
+                    this.view.showErrorMessage("Unable to add photo. Photo is already in the album.");
+                }
             } catch (IOException e) {
                 this.view.showErrorMessage("Unable to add image:\n" + e.getMessage());
             }
-            this.tellViewToAddPhoto(photo);
         }
     }
 
