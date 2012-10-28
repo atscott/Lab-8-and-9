@@ -161,7 +161,7 @@ public class Controller implements IController {
      */
     public void ShowImage(File file) {
         if (this.state == ControllerState.ALBUM_OPENED) {
-            this.view.showImage(file);
+            this.view.ShowImage(file);
             BufferedImage bimg = null;
             try {
                 bimg = ImageIO.read(file);
