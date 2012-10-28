@@ -124,6 +124,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         photoScrollPane.setText("");
         jScrollPane1.setViewportView(photoScrollPane);
+        /* Code for scaling an image
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);*/
 
         fileList.setModel(new DefaultListModel());
         fileList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -279,12 +282,15 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileListValueChanged(ListSelectionEvent evt) {
-
         //To change body of created methods use File | Settings | File Templates.
         System.out.println("selection changed");
         if (this.fileList.getSelectedIndex() >= 0) {
             BufferedImage myPicture = null;
             try {
+                /* Code for scaling an image
+                myPicture = ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()));
+                Image scaled = myPicture.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
+                photoScrollPane.setIcon(new ImageIcon(scaled));*/
                 photoScrollPane.setIcon(new ImageIcon(ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()))));
             } catch (Exception e) {
                 photoScrollPane.setIcon(null);
