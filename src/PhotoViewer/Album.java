@@ -169,7 +169,6 @@ public class Album implements IAlbumModel {
             indexOfLastShownFile = -1;
             timer.cancel();
             this.state = AlbumState.SLIDESHOW_STOPPED;
-            timer = null;
         }
 
     }
