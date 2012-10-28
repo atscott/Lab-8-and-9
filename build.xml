@@ -73,7 +73,7 @@
 
     <target name="dist" depends="compile">
         <mkdir dir="${artifacts.dir}"/>
-        <jar jarfile="${artifacts.dir}/photoViewer-1.${build.key}-SNAPSHOT.jar" basedir="${build.dir}"/>
+        <jar jarfile="${artifacts.dir}/photoViewer-SNAPSHOT.jar" basedir="${build.dir}"/>
     </target>
 
     <target name="clean">
