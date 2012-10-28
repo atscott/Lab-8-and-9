@@ -374,11 +374,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
         System.out.println("New album");
         controller.OnNewAlbum();
+        controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
 
     private void delaySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delaySpinnerStateChanged
-        JSpinner js = (JSpinner) evt.getSource();
-        controller.onTimeChange(Integer.parseInt((js.getValue().toString().trim())));
+        controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
 
     /**
