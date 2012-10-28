@@ -353,11 +353,13 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         System.out.println("Delete photo");
-        this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
+        if(listFiles.size() > 0){
+            this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
-        showImage(getPreviousPicture());
+        controller.ShowImage(getPreviousPicture());
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
@@ -373,7 +375,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        showImage(getNextPicture());
+        controller.ShowImage(getNextPicture());
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
@@ -478,10 +480,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         this.listFiles.clear();
         this.fileList.setModel(new DefaultListModel());
         this.setTitle("Photo Viewer");
+        this.photoScrollPane.setIcon(null);
     }
 
     @Override
-    public void showImage(File file) {
+    public void ShowImage(File file) {
         int index = 0;
         boolean found = false;
         while (file != null && !found && index < this.listFiles.size()) {
@@ -559,6 +562,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void RemovePhoto(File photo) {
         int index = this.listFiles.indexOf(photo);
         this.listFiles.remove(index);
+        DefaultListModel model = (DefaultListModel)fileList.getModel();
+        model.remove(index);
+        fileList.setModel(model);
     }
 
     private void changeListIndex(int index) {
