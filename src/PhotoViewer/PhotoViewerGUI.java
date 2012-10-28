@@ -13,13 +13,13 @@ import java.util.ArrayList;
  * @author moorea
  */
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
-    IController controller;
+    private IController controller;
 
     private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED}
 
     private slideshowState state = slideshowState.SLIDESHOW_STOPPED;
 
-    ArrayList<File> listFiles = new ArrayList<File>();
+    private ArrayList<File> listFiles = new ArrayList<File>();
 
     /**
      * Creates new form PhotoViewerGUI

@@ -19,12 +19,12 @@ public class Controller implements IController {
     /**
      * This controller's album
      */
-    IAlbumModel albumModel;
+    private IAlbumModel albumModel;
 
     /**
      * This controller's view
      */
-    IPhotoViewerView view;
+    private IPhotoViewerView view;
 
     /**
      * Controller state. Album open or closed

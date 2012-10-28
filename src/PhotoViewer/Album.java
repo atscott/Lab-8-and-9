@@ -13,7 +13,7 @@ public class Album implements IAlbumModel {
     /**
      * The album File
      */
-    final File me;
+    private final File me;
 
     /**
      * The pictures in this album
@@ -28,7 +28,7 @@ public class Album implements IAlbumModel {
     /**
      * Timer used to wait between showing slideshow images
      */
-    Timer timer;
+    private Timer timer;
 
     /**
      * The time between images shown in the slideshow
