@@ -137,12 +137,12 @@ public class Controller implements IController {
 
     @Override
     /**
-     * Deletes the photo from the album and calls the TellViewToRemovePhoto method
+     * Deletes the photo from the album and calls the tellViewToRemovePhoto method
      */
     public void OnDeletePhoto(File photo) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.albumModel.RemovePhoto(photo);
-            this.TellViewToRemovePhoto(photo);
+            this.tellViewToRemovePhoto(photo);
         }
     }
 
@@ -150,7 +150,7 @@ public class Controller implements IController {
      * Tells the view to remove the given photo
      * @param photo The photo File to remove from the view
      */
-    private void TellViewToRemovePhoto(File photo) {
+    private void tellViewToRemovePhoto(File photo) {
         this.view.RemovePhoto(photo);
     }
 
@@ -181,7 +181,7 @@ public class Controller implements IController {
             BufferedImage bimg = null;
             try {
                 bimg = ImageIO.read(file);
-                this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight());
+                this.view.SetPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -216,9 +216,9 @@ public class Controller implements IController {
     /**
      * If an album is open, tells the album model to set the time between images
      */
-    public void onTimeChange(int newTime) {
+    public void OnTimeChange(int newTime) {
         if (this.state == ControllerState.ALBUM_OPENED) {
-            albumModel.setTimeBetweenImages(newTime);
+            albumModel.SetTimeBetweenImages(newTime);
         }
     }
 
@@ -227,7 +227,7 @@ public class Controller implements IController {
      * tells the alum model to change slideshow order
      */
     public void OnOrderSelection(SlideshowOrder o) {
-        albumModel.setSlideshowOrder(o);
+        albumModel.SetSlideshowOrder(o);
 
     }
 

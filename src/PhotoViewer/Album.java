@@ -155,7 +155,7 @@ public class Album implements IAlbumModel {
      *
      * @param order The order to show the pictures in during the slideshow
      */
-    public void setSlideshowOrder(SlideshowOrder order) {
+    public void SetSlideshowOrder(SlideshowOrder order) {
         this.order = order;
     }
 
@@ -177,7 +177,7 @@ public class Album implements IAlbumModel {
     }
 
     @Override
-    public void setTimeBetweenImages(int time) {
+    public void SetTimeBetweenImages(int time) {
         timeBetweenImages = time;
     }
 

@@ -298,7 +298,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void openMenuItemActionPerformed() {//GEN-FIRST:event_openMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
         this.controller.OnOpenAlbum();
-        controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
+        controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed() {//GEN-FIRST:event_saveMenuItemActionPerformed
@@ -371,11 +371,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void newMenuItemActionPerformed() {//GEN-FIRST:event_newMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
         controller.OnNewAlbum();
-        controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
+        controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
 
     private void delaySpinnerStateChanged() {//GEN-FIRST:event_delaySpinnerStateChanged
-        controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
+        controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
 
     /**
@@ -571,7 +571,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
-    public void setPictureLabel(String label) {
+    public void SetPictureLabel(String label) {
         fileInfoLabel.setText(label);
     }
 
