@@ -79,7 +79,7 @@ public class Controller implements IController {
                 this.tellViewToShowAlbumInfo();
                 this.view.EnableAllFunctions();
             } catch (IOException e) {
-                view.showErrorMessage("Error creating album: " + e.getMessage());
+                view.ShowErrorMessage("Error creating album: " + e.getMessage());
             }
         }
     }
@@ -125,10 +125,10 @@ public class Controller implements IController {
                 if(albumModel.AddPhoto(photo)) {
                     this.tellViewToAddPhoto(photo);
                 } else {
-                    this.view.showErrorMessage("Unable to add photo. Photo is already in the album.");
+                    this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
                 }
             } catch (IOException e) {
-                this.view.showErrorMessage("Unable to add image:\n" + e.getMessage());
+                this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
             }
         }
     }
@@ -156,7 +156,7 @@ public class Controller implements IController {
             this.albumModel.ToggleSlideshow();
             toggled = true;
         } else {
-            view.showErrorMessage("Cannot toggle slideshow because no album is open.");
+            view.ShowErrorMessage("Cannot toggle slideshow because no album is open.");
         }
 
         return toggled;
