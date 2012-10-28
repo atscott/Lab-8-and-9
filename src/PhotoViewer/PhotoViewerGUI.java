@@ -472,6 +472,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         this.listFiles.clear();
         this.fileList.setModel(new DefaultListModel());
         this.setTitle("Photo Viewer");
+        this.photoScrollPane.setIcon(null);
     }
 
     @Override
@@ -553,6 +554,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void RemovePhoto(File photo) {
         int index = this.listFiles.indexOf(photo);
         this.listFiles.remove(index);
+        DefaultListModel model = (DefaultListModel)fileList.getModel();
+        model.remove(index);
+        fileList.setModel(model);
     }
 
     private void changeListIndex(int index) {
