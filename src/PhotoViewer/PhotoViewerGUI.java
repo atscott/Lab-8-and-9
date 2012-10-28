@@ -7,9 +7,6 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-
-import PhotoViewer.Album.SlideshowOrder;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -285,8 +282,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileListValueChanged(ListSelectionEvent evt) {
-        //To change body of created methods use File | Settings | File Templates.
-        System.out.println("selection changed");
         if (this.fileList.getSelectedIndex() >= 0) {
             BufferedImage myPicture = null;
             try {
@@ -304,18 +299,15 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
         this.controller.OnNewAlbum();
-        System.out.println("New Album");
 
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        System.out.println("Open Album");
         this.controller.OnOpenAlbum();
         controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        System.out.println("Save Album");
         this.controller.OnSaveAlbum();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
@@ -350,14 +342,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_randomRadioActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Add photo");
         this.controller.OnAddPhoto();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        System.out.println("Delete photo");
-        if (this.fileList.getSelectedIndex() >= 0) {
+        if(this.fileList.getSelectedIndex() >= 0){
             this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
         } else {
             this.ShowErrorMessage("No file selected to delete");
@@ -369,7 +358,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
-        if (this.controller.ToggleSlideshow() == true) {
+        if (this.controller.ToggleSlideshow()) {
             if (state == slideshowState.SLIDESHOW_STOPPED) {
                 state = slideshowState.SLIDESHOW_RUNNING;
                 startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
@@ -386,7 +375,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
-        System.out.println("New album");
         controller.OnNewAlbum();
         controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
