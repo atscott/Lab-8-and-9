@@ -135,11 +135,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         jScrollPane2.setViewportView(fileList);
 
         newMenu.setText("File");
-        newMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newMenuActionPerformed();
-            }
-        });
+
 
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         openMenuItem.setText("Open Album");
@@ -300,15 +296,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }
 
-    /**
-     *
-     */
-    private void newMenuActionPerformed() {//GEN-FIRST:event_newMenuActionPerformed
-        this.controller.OnNewAlbum();
-
-    }//GEN-LAST:event_newMenuActionPerformed
-
     private void openMenuItemActionPerformed() {//GEN-FIRST:event_openMenuItemActionPerformed
+        stopSlideMenuItemActionPerformed();
         this.controller.OnOpenAlbum();
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
@@ -381,6 +370,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void newMenuItemActionPerformed() {//GEN-FIRST:event_newMenuItemActionPerformed
+        stopSlideMenuItemActionPerformed();
         controller.OnNewAlbum();
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
