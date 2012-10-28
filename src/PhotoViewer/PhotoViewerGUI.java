@@ -6,7 +6,6 @@ package PhotoViewer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -70,7 +69,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         addButton.setToolTipText("Add file to album");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                addButtonActionPerformed();
             }
         });
 
@@ -78,7 +77,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         deleteButton.setToolTipText("Remove selected file from album");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteButtonActionPerformed(evt);
+                deleteButtonActionPerformed();
             }
         });
 
@@ -88,7 +87,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         previousButton.setToolTipText("View previous picture");
         previousButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                previousButtonActionPerformed(evt);
+                previousButtonActionPerformed();
             }
         });
 
@@ -97,7 +96,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         nextButton.setOpaque(false);
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextButtonActionPerformed(evt);
+                nextButtonActionPerformed();
             }
         });
 
@@ -105,7 +104,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         startAndStopToggleButton.setToolTipText("Start/Stop Slideshow");
         startAndStopToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startAndStopToggleButtonActionPerformed(evt);
+                startAndStopToggleButtonActionPerformed();
             }
         });
 
@@ -113,7 +112,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         delaySpinner.setModel(model);
         delaySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                delaySpinnerStateChanged(evt);
+                delaySpinnerStateChanged();
             }
         });
 
@@ -131,7 +130,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         fileList.setModel(new DefaultListModel());
         fileList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                fileListValueChanged(evt);
+                fileListValueChanged();
             }
         });
         jScrollPane2.setViewportView(fileList);
@@ -139,7 +138,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         newMenu.setText("File");
         newMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newMenuActionPerformed(evt);
+                newMenuActionPerformed();
             }
         });
 
@@ -147,7 +146,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         openMenuItem.setText("Open Album");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                openMenuItemActionPerformed();
             }
         });
         newMenu.add(openMenuItem);
@@ -156,7 +155,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         newMenuItem.setText("New Album");
         newMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newMenuItemActionPerformed(evt);
+                newMenuItemActionPerformed();
             }
         });
         newMenu.add(newMenuItem);
@@ -165,7 +164,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         saveMenuItem.setText("Save Album");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                saveMenuItemActionPerformed();
             }
         });
         newMenu.add(saveMenuItem);
@@ -180,7 +179,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         //startSlideMenuItem.setMnemonic(KeyEvent.VK_S);
         startSlideMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startSlideMenuItemActionPerformed(evt);
+                startSlideMenuItemActionPerformed();
             }
         });
         startSlideMenu.add(startSlideMenuItem);
@@ -189,7 +188,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         stopSlideMenuItem.setText("Stop Slideshow");
         stopSlideMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopSlideMenuItemActionPerformed(evt);
+                stopSlideMenuItemActionPerformed();
             }
         });
         startSlideMenu.add(stopSlideMenuItem);
@@ -201,7 +200,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         sequentialRadio.setText("Sequential");
         sequentialRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sequentialRadioActionPerformed(evt);
+                sequentialRadioActionPerformed();
             }
         });
         jMenu5.add(sequentialRadio);
@@ -210,7 +209,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         randomRadio.setText("Random");
         randomRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                randomRadioActionPerformed(evt);
+                randomRadioActionPerformed();
             }
         });
         jMenu5.add(randomRadio);
@@ -281,7 +280,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fileListValueChanged(ListSelectionEvent evt) {
+    /**
+     * When the JList selection changes, show the image that is selected
+     */
+    private void fileListValueChanged() {
         if (this.fileList.getSelectedIndex() >= 0) {
             //BufferedImage myPicture = null;
             try {
@@ -297,21 +299,24 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }
 
-    private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
+    /**
+     *
+     */
+    private void newMenuActionPerformed() {//GEN-FIRST:event_newMenuActionPerformed
         this.controller.OnNewAlbum();
 
     }//GEN-LAST:event_newMenuActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void openMenuItemActionPerformed() {//GEN-FIRST:event_openMenuItemActionPerformed
         this.controller.OnOpenAlbum();
         controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void saveMenuItemActionPerformed() {//GEN-FIRST:event_saveMenuItemActionPerformed
         this.controller.OnSaveAlbum();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
-    private void startSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSlideMenuItemActionPerformed
+    private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_STOPPED) {
             if (this.controller.ToggleSlideshow()) {
                 state = slideshowState.SLIDESHOW_RUNNING;
@@ -321,7 +326,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
-    private void stopSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
+    private void stopSlideMenuItemActionPerformed() {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_RUNNING) {
             if (this.controller.ToggleSlideshow()) {
                 state = slideshowState.SLIDESHOW_STOPPED;
@@ -330,22 +335,22 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
-    private void sequentialRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sequentialRadioActionPerformed
+    private void sequentialRadioActionPerformed() {//GEN-FIRST:event_sequentialRadioActionPerformed
         randomRadio.setSelected(false);
         controller.OnOrderSelection(Album.SlideshowOrder.SEQUENTIAL);
 
     }//GEN-LAST:event_sequentialRadioActionPerformed
 
-    private void randomRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomRadioActionPerformed
+    private void randomRadioActionPerformed() {//GEN-FIRST:event_randomRadioActionPerformed
         sequentialRadio.setSelected(false);
         controller.OnOrderSelection(Album.SlideshowOrder.RANDOM);
     }//GEN-LAST:event_randomRadioActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void addButtonActionPerformed() {//GEN-FIRST:event_addButtonActionPerformed
         this.controller.OnAddPhoto();
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    private void deleteButtonActionPerformed() {//GEN-FIRST:event_deleteButtonActionPerformed
         if (this.fileList.getSelectedIndex() >= 0) {
             this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
         } else {
@@ -353,11 +358,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
+    private void previousButtonActionPerformed() {//GEN-FIRST:event_previousButtonActionPerformed
         controller.ShowImage(getPreviousPicture());
     }//GEN-LAST:event_previousButtonActionPerformed
 
-    private void startAndStopToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
+    private void startAndStopToggleButtonActionPerformed() {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
         if (this.controller.ToggleSlideshow()) {
             if (state == slideshowState.SLIDESHOW_STOPPED) {
                 state = slideshowState.SLIDESHOW_RUNNING;
@@ -369,17 +374,17 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed() {//GEN-FIRST:event_nextButtonActionPerformed
         controller.ShowImage(getNextPicture());
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
-    private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
+    private void newMenuItemActionPerformed() {//GEN-FIRST:event_newMenuItemActionPerformed
         controller.OnNewAlbum();
         controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
 
-    private void delaySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_delaySpinnerStateChanged
+    private void delaySpinnerStateChanged() {//GEN-FIRST:event_delaySpinnerStateChanged
         controller.onTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
 
