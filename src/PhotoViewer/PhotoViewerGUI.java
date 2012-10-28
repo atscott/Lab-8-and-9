@@ -353,8 +353,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         System.out.println("Delete photo");
-        if(this.fileList.getSelectedIndex() >= 0){
+        if (this.fileList.getSelectedIndex() >= 0) {
             this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
+        } else {
+            this.ShowErrorMessage("No file selected to delete");
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -471,7 +473,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
-    public void showErrorMessage(String message) {
+    public void ShowErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 
@@ -562,7 +564,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     public void RemovePhoto(File photo) {
         int index = this.listFiles.indexOf(photo);
         this.listFiles.remove(index);
-        DefaultListModel model = (DefaultListModel)fileList.getModel();
+        DefaultListModel model = (DefaultListModel) fileList.getModel();
         model.remove(index);
         fileList.setModel(model);
     }
