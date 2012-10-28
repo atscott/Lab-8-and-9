@@ -13,12 +13,24 @@ import java.util.ArrayList;
  * @author moorea
  */
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
+    /**
+     * THe controller for this view
+     */
     private IController controller;
 
+    /**
+     * The enum that indicates slideshow state
+     */
     private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED}
 
+    /**
+     * The slideshow state for the view
+     */
     private slideshowState state = slideshowState.SLIDESHOW_STOPPED;
 
+    /**
+     * The list of files that are in the album
+     */
     private ArrayList<File> listFiles = new ArrayList<File>();
 
     /**
@@ -296,16 +308,25 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }
 
+    /**
+     * Stops any running slideshow and asks the controller to open an album
+     */
     private void openMenuItemActionPerformed() {//GEN-FIRST:event_openMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
         this.controller.OnOpenAlbum();
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
 
+    /**
+     * Asks the controller to save the album
+     */
     private void saveMenuItemActionPerformed() {//GEN-FIRST:event_saveMenuItemActionPerformed
         this.controller.OnSaveAlbum();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
+    /**
+     * If a slideshow is not running, asks the controller to start it
+     */
     private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_STOPPED) {
             if (this.controller.ToggleSlideshow()) {
@@ -316,6 +337,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
+    /**
+     * If a slideshow is running, asks the controller to stop it
+     */
     private void stopSlideMenuItemActionPerformed() {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_RUNNING) {
             if (this.controller.ToggleSlideshow()) {
@@ -325,21 +349,33 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
+    /**
+     * Changes the order to sequential in the controller
+     */
     private void sequentialRadioActionPerformed() {//GEN-FIRST:event_sequentialRadioActionPerformed
         randomRadio.setSelected(false);
         controller.OnOrderSelection(Album.SlideshowOrder.SEQUENTIAL);
 
     }//GEN-LAST:event_sequentialRadioActionPerformed
 
+    /**
+     * Tells the controller to change to random order for slideshows
+     */
     private void randomRadioActionPerformed() {//GEN-FIRST:event_randomRadioActionPerformed
         sequentialRadio.setSelected(false);
         controller.OnOrderSelection(Album.SlideshowOrder.RANDOM);
     }//GEN-LAST:event_randomRadioActionPerformed
 
+    /**
+     * Asks the controller to add a photo to the album
+     */
     private void addButtonActionPerformed() {//GEN-FIRST:event_addButtonActionPerformed
         this.controller.OnAddPhoto();
     }//GEN-LAST:event_addButtonActionPerformed
 
+    /**
+     * Asks the controller to delete the selected item. If no item is selected, shows an error.
+     */
     private void deleteButtonActionPerformed() {//GEN-FIRST:event_deleteButtonActionPerformed
         if (this.fileList.getSelectedIndex() >= 0) {
             this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
@@ -348,10 +384,16 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    /**
+     * gets the previous picture
+     */
     private void previousButtonActionPerformed() {//GEN-FIRST:event_previousButtonActionPerformed
         getPreviousPicture();
     }//GEN-LAST:event_previousButtonActionPerformed
 
+    /**
+     * Toggles slideshow state
+     */
     private void startAndStopToggleButtonActionPerformed() {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
         if (this.controller.ToggleSlideshow()) {
             if (state == slideshowState.SLIDESHOW_STOPPED) {
@@ -364,17 +406,26 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
+    /**
+     * Gets the next picture in the list
+     */
     private void nextButtonActionPerformed() {//GEN-FIRST:event_nextButtonActionPerformed
         getNextPicture();
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
+    /**
+     * Stops any running slideshow. Asks controller to create an album.
+     */
     private void newMenuItemActionPerformed() {//GEN-FIRST:event_newMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
         controller.OnNewAlbum();
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
 
+    /**
+     * Tells the controller that the time interval between images has changed
+     */
     private void delaySpinnerStateChanged() {//GEN-FIRST:event_delaySpinnerStateChanged
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
@@ -442,17 +493,26 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     // End of variables declaration//GEN-END:variables
 
     @Override
+    /**
+     * Adds a controller as a listener
+     */
     public void AddListener(IController controller) {
         this.controller = controller;
     }
 
 
     @Override
+    /**
+     * Displays the album name in the title
+     */
     public void DisplayAlbumName(String name) {
         this.setTitle(name + "  -  Photo Viewer");
     }
 
     @Override
+    /**
+     * Adds photo to the view
+     */
     public void AddPhoto(File picture) {
         this.listFiles.add(picture);
         DefaultListModel model = (DefaultListModel) this.fileList.getModel();
@@ -461,11 +521,17 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * Shows an error message with the given string
+     */
     public void ShowErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
+    /**
+     * Clears all information being displayed on the GUI
+     */
     public void ClearEverything() {
         this.listFiles.clear();
         this.fileList.setModel(new DefaultListModel());
@@ -474,6 +540,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * findds the given file in the list and changes to the index that it is located
+     */
     public void ShowImage(File file) {
         int index = 0;
         boolean found = false;
@@ -527,6 +596,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * Disables all buttons and menu items
+     */
     public void DisableAllFunctions() {
         this.addButton.setEnabled(false);
         this.deleteButton.setEnabled(false);
@@ -542,6 +614,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * enables all buttons and menu items
+     */
     public void EnableAllFunctions() {
         this.addButton.setEnabled(true);
         this.deleteButton.setEnabled(true);
@@ -557,6 +632,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * removes a photo from the view's information
+     */
     public void RemovePhoto(File photo) {
         int index = this.listFiles.indexOf(photo);
         this.listFiles.remove(index);
@@ -566,11 +644,18 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * Sets picture that is displayed
+     */
     public void SetPicture(Image image) {
         Image scaled = image.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
         photoScrollPane.setIcon(new ImageIcon(scaled));
     }
 
+    /**
+     * Changes the JList index
+     * @param index index to change to
+     */
     private void changeListIndex(int index) {
         if (index >= 0 && index < fileList.getVisibleRowCount()) {
             this.fileList.setSelectedIndex(index);
@@ -578,6 +663,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }
 
     @Override
+    /**
+     * Sets the picture label information
+     */
     public void SetPictureLabel(String label) {
         fileInfoLabel.setText(label);
     }
