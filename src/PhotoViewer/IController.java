@@ -23,7 +23,7 @@ public interface IController {
 
     public boolean ToggleSlideshow();
 
-    public void onTimeChange(int newTime);
+    public void OnTimeChange(int newTime);
 
     public void ShowImage(File file);
 
