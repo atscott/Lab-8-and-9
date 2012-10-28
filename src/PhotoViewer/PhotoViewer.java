@@ -5,7 +5,6 @@
 package PhotoViewer;
 
 /**
- *
  * @author moorea
  */
 public class PhotoViewer {

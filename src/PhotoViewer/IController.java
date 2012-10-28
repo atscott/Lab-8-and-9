@@ -1,8 +1,8 @@
 package PhotoViewer;
 
-import java.io.File;
-
 import PhotoViewer.Album.SlideshowOrder;
+
+import java.io.File;
 
 /**
  * User: atscott
@@ -26,7 +26,7 @@ public interface IController {
     public void onTimeChange(int newTime);
 
     public void ShowImage(File file);
-    
+
     public void OnOrderSelection(SlideshowOrder o);
 
 }

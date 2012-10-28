@@ -181,10 +181,10 @@ public class Album implements IAlbumModel {
     @Override
     public boolean AddPhoto(File photo) throws IOException {
         boolean imageFound = false;
-        for(int i = 0; !imageFound && i < pictures.size(); i++) {
+        for (int i = 0; !imageFound && i < pictures.size(); i++) {
             imageFound = pictures.get(i).equals(photo);
         }
-        if(!imageFound) {
+        if (!imageFound) {
             byte[] jpegIdBytes = {-1, -40};
             byte[] signature = new byte[2];
             FileInputStream fileInputStream = new FileInputStream(photo);

@@ -1,11 +1,10 @@
 package PhotoViewer;
 
+import PhotoViewer.Album.SlideshowOrder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import PhotoViewer.Album.SlideshowOrder;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -94,7 +93,7 @@ public class Controller implements IController {
         fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
         fc.showOpenDialog(null);
         File file = fc.getSelectedFile();
-        if (file != null){
+        if (file != null) {
             this.albumModel = new Album(file);
             this.albumModel.AddListener(this);
             this.state = ControllerState.ALBUM_OPENED;
@@ -122,7 +121,7 @@ public class Controller implements IController {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File photo = fileChooser.getSelectedFile();
             try {
-                if(albumModel.AddPhoto(photo)) {
+                if (albumModel.AddPhoto(photo)) {
                     this.tellViewToAddPhoto(photo);
                 } else {
                     this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
@@ -172,10 +171,10 @@ public class Controller implements IController {
             BufferedImage bimg = null;
             try {
                 bimg = ImageIO.read(file);
+                this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            this.view.setPictureLabel(file.getName() + " Width: " + bimg.getWidth() + " Height: " + bimg.getHeight());
         }
     }
 
@@ -210,11 +209,11 @@ public class Controller implements IController {
         }
     }
 
-	@Override
-	public void OnOrderSelection(SlideshowOrder o) {
-		albumModel.setSlideshowOrder(o);
-		
-	}
+    @Override
+    public void OnOrderSelection(SlideshowOrder o) {
+        albumModel.setSlideshowOrder(o);
+
+    }
 
 
 }

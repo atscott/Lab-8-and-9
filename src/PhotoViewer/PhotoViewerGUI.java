@@ -7,7 +7,6 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerView {
     IController controller;
 
-    private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED;}
+    private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED}
 
     private slideshowState state = slideshowState.SLIDESHOW_STOPPED;
 
@@ -110,7 +109,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        delaySpinner.setValue((Integer) 3);
+        delaySpinner.setValue(3);
         delaySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 delaySpinnerStateChanged(evt);
@@ -283,7 +282,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void fileListValueChanged(ListSelectionEvent evt) {
         if (this.fileList.getSelectedIndex() >= 0) {
-            BufferedImage myPicture = null;
+            //BufferedImage myPicture = null;
             try {
                 /* Code for scaling an image
                 myPicture = ImageIO.read(listFiles.get(this.fileList.getSelectedIndex()));
@@ -312,7 +311,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void startSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_STOPPED) {
-            if (this.controller.ToggleSlideshow() == true) {
+            if (this.controller.ToggleSlideshow()) {
                 state = slideshowState.SLIDESHOW_RUNNING;
                 startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
             }
@@ -322,7 +321,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     private void stopSlideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         if (state == slideshowState.SLIDESHOW_RUNNING) {
-            if (this.controller.ToggleSlideshow() == true) {
+            if (this.controller.ToggleSlideshow()) {
                 state = slideshowState.SLIDESHOW_STOPPED;
                 startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
             }
@@ -332,7 +331,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void sequentialRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sequentialRadioActionPerformed
         randomRadio.setSelected(false);
         controller.OnOrderSelection(Album.SlideshowOrder.SEQUENTIAL);
-        
+
     }//GEN-LAST:event_sequentialRadioActionPerformed
 
     private void randomRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomRadioActionPerformed
@@ -345,7 +344,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        if(this.fileList.getSelectedIndex() >= 0){
+        if (this.fileList.getSelectedIndex() >= 0) {
             this.controller.OnDeletePhoto(listFiles.get(fileList.getSelectedIndex()));
         } else {
             this.ShowErrorMessage("No file selected to delete");
