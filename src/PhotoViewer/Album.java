@@ -78,6 +78,9 @@ public class Album implements IAlbumModel {
         this.me = file;
     }
 
+    /**
+     * Opens an existing album
+     */
     public void Open() {
         try {
             // Read file
@@ -179,6 +182,9 @@ public class Album implements IAlbumModel {
     }
 
     @Override
+    /**
+     * Adds photo to the picure list. Throws Exception if not a JPEG file
+     */
     public boolean AddPhoto(File photo) throws IOException {
         boolean imageFound = false;
         for (int i = 0; !imageFound && i < pictures.size(); i++) {
@@ -199,6 +205,9 @@ public class Album implements IAlbumModel {
     }
 
     @Override
+    /**
+     * removes photo from the pictures list
+     */
     public void RemovePhoto(File photo) {
         pictures.remove(photo);
         this.createRandomizedList();
