@@ -180,16 +180,23 @@ public class Album implements IAlbumModel {
     }
 
     @Override
-    public void AddPhoto(File photo) throws IOException {
-        byte[] jpegIdBytes = {-1, -40};
-        byte[] signature = new byte[2];
-        FileInputStream fileInputStream = new FileInputStream(photo);
-        if (fileInputStream.read(signature, 0, 2) == 2 && Arrays.equals(signature, jpegIdBytes)) {
-            pictures.add(photo);
-            this.createRandomizedList();
-        } else {
-            throw new IOException("File not a JPEG image.");
+    public boolean AddPhoto(File photo) throws IOException {
+        boolean imageFound = false;
+        for(int i = 0; !imageFound && i < pictures.size(); i++) {
+            imageFound = pictures.get(i).equals(photo);
         }
+        if(!imageFound) {
+            byte[] jpegIdBytes = {-1, -40};
+            byte[] signature = new byte[2];
+            FileInputStream fileInputStream = new FileInputStream(photo);
+            if (fileInputStream.read(signature, 0, 2) == 2 && Arrays.equals(signature, jpegIdBytes)) {
+                pictures.add(photo);
+                this.createRandomizedList();
+            } else {
+                throw new IOException("File not a JPEG image.");
+            }
+        }
+        return !imageFound;
     }
 
     @Override
