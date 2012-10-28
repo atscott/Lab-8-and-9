@@ -110,7 +110,8 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        delaySpinner.setValue((Integer) 3);
+        SpinnerModel model = new SpinnerNumberModel(2,1,60,2);
+        delaySpinner.setModel(model);
         delaySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 delaySpinnerStateChanged(evt);
