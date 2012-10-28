@@ -98,6 +98,7 @@ public class Album implements IAlbumModel {
 
             //Close the input stream
             in.close();
+            this.createRandomizedList();
         } catch (Exception e) {//Catch exception if any
             System.err.println("Error: " + e.getMessage());
         }
@@ -164,7 +165,6 @@ public class Album implements IAlbumModel {
      */
     public void ToggleSlideshow() {
         if (state == AlbumState.SLIDESHOW_STOPPED) {
-
             timer = new Timer();
             this.state = AlbumState.SLIDESHOW_RUNNING;
             timer.schedule(new NextImage(), timeBetweenImages * 1000);
@@ -242,7 +242,11 @@ public class Album implements IAlbumModel {
                 picture = getNextImageFromList(randomizedPictures);
             }
             controller.ShowImage(picture);
-            timer.schedule(new NextImage(), timeBetweenImages * 1000);
+            try{
+                timer.schedule(new NextImage(), timeBetweenImages * 1000);
+            }   catch(IllegalStateException e){
+                //timer is already cancelled so don't start a new task
+            }
         }
     }
 
