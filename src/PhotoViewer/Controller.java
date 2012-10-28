@@ -94,11 +94,10 @@ public class Controller implements IController {
         File file = fc.getSelectedFile();
         if (file == null)
             throw new NullPointerException("File cannot be null");
-        Album a = new Album(file);
         this.albumModel = new Album(file);
         this.albumModel.AddListener(this);
         this.state = ControllerState.ALBUM_OPENED;
-        a.Open();
+        this.albumModel.Open();
         this.tellViewToShowAlbumInfo();
         this.view.EnableAllFunctions();
     }
@@ -130,8 +129,10 @@ public class Controller implements IController {
 
     @Override
     public void OnDeletePhoto(File photo) {
-        this.albumModel.RemovePhoto(photo);
-        this.TellViewToRemovePhoto(photo);
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            this.albumModel.RemovePhoto(photo);
+            this.TellViewToRemovePhoto(photo);
+        }
     }
 
     private void TellViewToRemovePhoto(File photo) {
@@ -180,7 +181,7 @@ public class Controller implements IController {
             this.view.ClearEverything();
             this.view.DisplayAlbumName(this.albumModel.GetName());
             for (File picture : this.albumModel.getPictures()) {
-                this.view.AddPhoto(picture);
+                this.tellViewToAddPhoto(picture);
             }
         }
     }
@@ -191,12 +192,16 @@ public class Controller implements IController {
      * @param photo The photo that was added to the album
      */
     private void tellViewToAddPhoto(File photo) {
-        this.view.AddPhoto(photo);
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            this.view.AddPhoto(photo);
+        }
     }
 
     @Override
     public void onTimeChange(int newTime) {
-        albumModel.setTimeBetweenImages(newTime);
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            albumModel.setTimeBetweenImages(newTime);
+        }
     }
 
 

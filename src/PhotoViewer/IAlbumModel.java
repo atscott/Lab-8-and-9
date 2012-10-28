@@ -16,6 +16,8 @@ public interface IAlbumModel {
 
     public void AddListener(IController controller);
 
+    public void Open();
+
     public ArrayList<File> getPictures();
 
     public void ToggleSlideshow();
