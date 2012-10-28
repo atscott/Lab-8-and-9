@@ -70,11 +70,9 @@ public class Controller implements IController {
                 }
                 file.createNewFile();
 
-                Album a = new Album(file);
                 this.albumModel = new Album(file);
                 this.albumModel.AddListener(this);
                 this.state = ControllerState.ALBUM_OPENED;
-                a.Open();
                 this.tellViewToShowAlbumInfo();
             } catch (IOException e) {
                 view.showErrorMessage("Error creating album: " + e.getMessage());
