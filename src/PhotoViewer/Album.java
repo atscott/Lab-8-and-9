@@ -120,7 +120,7 @@ public class Album implements IAlbumModel {
 
             //save all the pictures to the file, one per line.
             for (File picture : pictures) {
-                out.write(picture.getPath() + "\n");
+                out.write(picture.getPath() + "\r\n");
             }
 
             //Close the output stream

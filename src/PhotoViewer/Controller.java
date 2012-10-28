@@ -74,6 +74,7 @@ public class Controller implements IController {
                 this.albumModel.AddListener(this);
                 this.state = ControllerState.ALBUM_OPENED;
                 this.tellViewToShowAlbumInfo();
+                this.view.EnableAllFunctions();
             } catch (IOException e) {
                 view.showErrorMessage("Error creating album: " + e.getMessage());
             }
