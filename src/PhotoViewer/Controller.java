@@ -3,6 +3,9 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import PhotoViewer.Album.SlideshowOrder;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +79,7 @@ public class Controller implements IController {
                 this.tellViewToShowAlbumInfo();
                 this.view.EnableAllFunctions();
             } catch (IOException e) {
-                view.showErrorMessage("Error creating album: " + e.getMessage());
+                view.ShowErrorMessage("Error creating album: " + e.getMessage());
             }
         }
     }
@@ -122,10 +125,10 @@ public class Controller implements IController {
                 if(albumModel.AddPhoto(photo)) {
                     this.tellViewToAddPhoto(photo);
                 } else {
-                    this.view.showErrorMessage("Unable to add photo. Photo is already in the album.");
+                    this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
                 }
             } catch (IOException e) {
-                this.view.showErrorMessage("Unable to add image:\n" + e.getMessage());
+                this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
             }
         }
     }
@@ -153,7 +156,7 @@ public class Controller implements IController {
             this.albumModel.ToggleSlideshow();
             toggled = true;
         } else {
-            view.showErrorMessage("Cannot toggle slideshow because no album is open.");
+            view.ShowErrorMessage("Cannot toggle slideshow because no album is open.");
         }
 
         return toggled;
@@ -206,6 +209,12 @@ public class Controller implements IController {
             albumModel.setTimeBetweenImages(newTime);
         }
     }
+
+	@Override
+	public void OnOrderSelection(SlideshowOrder o) {
+		albumModel.setSlideshowOrder(o);
+		
+	}
 
 
 }

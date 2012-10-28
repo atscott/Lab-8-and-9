@@ -14,7 +14,7 @@ public interface IPhotoViewerView {
 
     public void AddPhoto(File picture);
 
-    public void showErrorMessage(String message);
+    public void ShowErrorMessage(String message);
 
     public void ClearEverything();
 
