@@ -51,11 +51,11 @@ public class Controller implements IController {
         this.view.DisableAllFunctions();
     }
 
-    @Override
     /**
      * Gets a file name for the new album, creates the file, and opens the album. Tells view to display an error message
      * if the album couldn't be created.
      */
+    @Override
     public void OnNewAlbum() {
         JFileChooser fc = new JFileChooser("C:\\");
         fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
@@ -83,11 +83,11 @@ public class Controller implements IController {
         }
     }
 
-    @Override
     /**
      * Given the album file, attempts to create an albumModel and add this controller as the listener. Updates the state
      * to indicate an album is open. Also calls tellViewToShowAlbumInfo so the view shows the album information.
      */
+    @Override
     public void OnOpenAlbum() {
         JFileChooser fc = new JFileChooser("C:\\");
         fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
@@ -104,18 +104,18 @@ public class Controller implements IController {
 
     }
 
-    @Override
     /**
      * Tells the model to save the album
      */
+    @Override
     public void OnSaveAlbum() {
         this.albumModel.Save();
     }
 
-    @Override
     /**
      * Handles a request to add a photo. Adds the photo to the album and tells the view to also display the added photo
      */
+    @Override
     public void OnAddPhoto() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg");
@@ -135,10 +135,10 @@ public class Controller implements IController {
         }
     }
 
-    @Override
     /**
      * Deletes the photo from the album and calls the tellViewToRemovePhoto method
      */
+    @Override
     public void OnDeletePhoto(File photo) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.albumModel.RemovePhoto(photo);
@@ -154,11 +154,11 @@ public class Controller implements IController {
         this.view.RemovePhoto(photo);
     }
 
-    @Override
     /**
      * If controller has an album open (state), tells the AlbumModel to toggle its slideshow. otherwise tells the view
      * to show an error message.
      */
+    @Override
     public boolean ToggleSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
@@ -171,14 +171,13 @@ public class Controller implements IController {
         return toggled;
     }
 
-    @Override
     /**
      * Tells the view to display the specified image file.
      */
+    @Override
     public void ShowImage(File file) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.view.ShowImage(file);
-
         }
     }
 
@@ -206,24 +205,23 @@ public class Controller implements IController {
         }
     }
 
-    @Override
     /**
      * If an album is open, tells the album model to set the time between images
      */
+    @Override
     public void OnTimeChange(int newTime) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             albumModel.SetTimeBetweenImages(newTime);
         }
     }
 
-    @Override
     /**
      * tells the alum model to change slideshow order
      */
+    @Override
     public void OnOrderSelection(SlideshowOrder o) {
         albumModel.SetSlideshowOrder(o);
 
     }
-
 
 }

@@ -304,7 +304,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 this.setPicture(null);
                 this.SetPictureLabel("Could not read file.");
             }
-
             /*BufferedImage myPicture = null;
             try {
                 File file = listFiles.get(this.fileList.getSelectedIndex());
@@ -469,19 +468,19 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private javax.swing.JMenuItem stopSlideMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    @Override
     /**
      * Adds a controller as a listener
      */
+    @Override
     public void AddListener(IController controller) {
         this.controller = controller;
     }
 
 
-    @Override
     /**
      * Displays the album name in the title
      */
+    @Override
     public void DisplayAlbumName(String name) {
         this.setTitle(name + "  -  Photo Viewer");
     }

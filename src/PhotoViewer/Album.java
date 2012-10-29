@@ -104,18 +104,18 @@ public class Album implements IAlbumModel {
         }
     }
 
-    @Override
     /**
      * returns the file name of this album
      */
+    @Override
     public String GetName() {
         return me.getName();
     }
 
-    @Override
     /**
      * Saves the album to a file
      */
+    @Override
     public void Save() {
         try {
             // Create file
@@ -134,18 +134,18 @@ public class Album implements IAlbumModel {
         }
     }
 
-    @Override
     /**
      * Adds the given controller to this model
      */
+    @Override
     public void AddListener(IController controller) {
         this.controller = controller;
     }
 
-    @Override
     /**
      * returns the list of pictures
      */
+    @Override
     public ArrayList<File> getPictures() {
         return this.pictures;
     }
@@ -159,10 +159,10 @@ public class Album implements IAlbumModel {
         this.order = order;
     }
 
-    @Override
     /**
      * Toggles the slideshow. If running, stops. If not running, starts the slideshow timer.
      */
+    @Override
     public void ToggleSlideshow() {
         if (state == AlbumState.SLIDESHOW_STOPPED) {
             timer = new Timer();
@@ -176,15 +176,23 @@ public class Album implements IAlbumModel {
 
     }
 
+    /**
+     * Sets the time interval
+     * @param time the time in seconds. Must be greater than 0
+     */
     @Override
     public void SetTimeBetweenImages(int time) {
-        timeBetweenImages = time;
+        if (time > 0) {
+            timeBetweenImages = time;
+        } else {
+            timeBetweenImages = 1;
+        }
     }
 
-    @Override
     /**
      * Adds photo to the picure list. Throws Exception if not a JPEG file
      */
+    @Override
     public boolean AddPhoto(File photo) throws IOException {
         boolean imageFound = false;
         for (int i = 0; !imageFound && i < pictures.size(); i++) {
@@ -204,10 +212,10 @@ public class Album implements IAlbumModel {
         return !imageFound;
     }
 
-    @Override
     /**
      * removes photo from the pictures list
      */
+    @Override
     public void RemovePhoto(File photo) {
         pictures.remove(photo);
         this.createRandomizedList();
@@ -242,9 +250,9 @@ public class Album implements IAlbumModel {
                 picture = getNextImageFromList(randomizedPictures);
             }
             controller.ShowImage(picture);
-            try{
+            try {
                 timer.schedule(new NextImage(), timeBetweenImages * 1000);
-            }   catch(IllegalStateException e){
+            } catch (IllegalStateException e) {
                 //timer is already cancelled so don't start a new task
             }
         }
