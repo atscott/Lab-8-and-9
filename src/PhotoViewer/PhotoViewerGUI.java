@@ -150,7 +150,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 fileListValueChanged();
             }
         });
-        dt = new DropTarget(fileList, new ListDropTargetListener());
+        dt = new DropTarget(jScrollPane2, new ListDropTargetListener());
         jScrollPane2.setViewportView(fileList);
 
         newMenu.setText("File");
