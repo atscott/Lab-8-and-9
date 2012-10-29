@@ -494,6 +494,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         DefaultListModel model = (DefaultListModel) this.fileList.getModel();
         model.addElement(picture.getName());
         this.fileList.setModel(model);
+
+        if(this.fileList.getSelectedIndex() == -1) {
+            this.fileList.setSelectedIndex(0);
+        }
     }
 
     @Override
