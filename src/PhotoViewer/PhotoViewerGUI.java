@@ -4,8 +4,10 @@
  */
 package PhotoViewer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -292,7 +294,17 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void fileListValueChanged() {
         if (this.fileList.getSelectedIndex() >= 0) {
-            this.controller.ShowImage(listFiles.get(this.fileList.getSelectedIndex()));
+            File file = listFiles.get(this.fileList.getSelectedIndex());
+            BufferedImage myPicture = null;
+            try {
+                myPicture = ImageIO.read(file);
+                this.setPicture(myPicture);
+                this.SetPictureLabel(file.getName() + " Width: " + myPicture.getWidth() + " Height: " + myPicture.getHeight());
+            } catch (Exception e) {
+                this.setPicture(null);
+                this.SetPictureLabel("Could not read file.");
+            }
+
             /*BufferedImage myPicture = null;
             try {
                 File file = listFiles.get(this.fileList.getSelectedIndex());
@@ -608,11 +620,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         fileList.setModel(model);
     }
 
-    @Override
     /**
      * Sets picture that is displayed
      */
-    public void SetPicture(Image image) {
+    private void setPicture(Image image) {
         Image scaled = image.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
         photoScrollPane.setIcon(new ImageIcon(scaled));
     }
@@ -627,11 +638,10 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         }
     }
 
-    @Override
     /**
      * Sets the picture label information
      */
-    public void SetPictureLabel(String label) {
+    private void SetPictureLabel(String label) {
         fileInfoLabel.setText(label);
     }
 

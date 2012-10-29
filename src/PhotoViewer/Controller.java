@@ -177,16 +177,8 @@ public class Controller implements IController {
      */
     public void ShowImage(File file) {
         if (this.state == ControllerState.ALBUM_OPENED) {
-            //this.view.ShowImage(file);
-            BufferedImage myPicture = null;
-            try {
-                myPicture = ImageIO.read(file);
-                this.view.SetPicture(myPicture);
-                this.view.SetPictureLabel(file.getName() + " Width: " + myPicture.getWidth() + " Height: " + myPicture.getHeight());
-            } catch (Exception e) {
-                this.view.SetPicture(null);
-                this.view.SetPictureLabel("Could not read file.");
-            }
+            this.view.ShowImage(file);
+
         }
     }
 
