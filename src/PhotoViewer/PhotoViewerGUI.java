@@ -295,7 +295,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void fileListValueChanged() {
         if (this.fileList.getSelectedIndex() >= 0) {
             File file = listFiles.get(this.fileList.getSelectedIndex());
-            BufferedImage myPicture = null;
+            BufferedImage myPicture;
             try {
                 myPicture = ImageIO.read(file);
                 this.setPicture(myPicture);
