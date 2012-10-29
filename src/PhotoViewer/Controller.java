@@ -2,11 +2,10 @@ package PhotoViewer;
 
 import PhotoViewer.Album.SlideshowOrder;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -95,11 +94,17 @@ public class Controller implements IController {
         File file = fc.getSelectedFile();
         if (file != null) {
             this.albumModel = new Album(file);
-            this.albumModel.AddListener(this);
-            this.state = ControllerState.ALBUM_OPENED;
-            this.albumModel.Open();
-            this.tellViewToShowAlbumInfo();
-            this.view.EnableAllFunctions();
+            try {
+                this.albumModel.Open();
+                this.albumModel.AddListener(this);
+                this.state = ControllerState.ALBUM_OPENED;
+                this.tellViewToShowAlbumInfo();
+                this.view.EnableAllFunctions();
+            } catch (FileNotFoundException e) {
+                this.view.ShowErrorMessage("Unable to open album: File not found.");
+            } catch (IOException e) {
+                this.view.ShowErrorMessage("Unable to open album: " + e.getMessage());
+            }
         }
 
     }

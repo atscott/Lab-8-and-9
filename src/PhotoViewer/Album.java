@@ -80,28 +80,26 @@ public class Album implements IAlbumModel {
 
     /**
      * Opens an existing album
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public void Open() {
-        try {
-            // Read file
-            FileReader fstream = new FileReader(me.getPath());
-            BufferedReader in = new BufferedReader(fstream);
-            Boolean hasLines = true;
-            while (hasLines) {
-                String line = in.readLine();
-                if (line == null) {
-                    hasLines = false;
-                } else {
-                    pictures.add(new File(line));
-                }
+    public void Open() throws IOException {
+        // Read file
+        FileReader fstream = new FileReader(me.getPath());
+        BufferedReader in = new BufferedReader(fstream);
+        Boolean hasLines = true;
+        while (hasLines) {
+            String line = in.readLine();
+            if (line == null) {
+                hasLines = false;
+            } else {
+                pictures.add(new File(line));
             }
-
-            //Close the input stream
-            in.close();
-            this.createRandomizedList();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
         }
+
+        //Close the input stream
+        in.close();
+        this.createRandomizedList();
     }
 
     /**
