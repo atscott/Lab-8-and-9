@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface IAlbumModel {
     public String GetName();
 
-    public void Save();
+    public void Save() throws IOException;
 
     public void AddListener(IController controller);
 

@@ -114,7 +114,11 @@ public class Controller implements IController {
      */
     @Override
     public void OnSaveAlbum() {
-        this.albumModel.Save();
+        try {
+            this.albumModel.Save();
+        } catch (IOException e) {
+            this.view.ShowErrorMessage("Unable to save album: " + e.getMessage());
+        }
     }
 
     /**

@@ -112,24 +112,21 @@ public class Album implements IAlbumModel {
 
     /**
      * Saves the album to a file
+     * @throws IOException
      */
     @Override
-    public void Save() {
-        try {
-            // Create file
-            FileWriter fstream = new FileWriter(me.getPath());
-            BufferedWriter out = new BufferedWriter(fstream);
+    public void Save() throws IOException {
+        // Create file
+        FileWriter fstream = new FileWriter(me.getPath());
+        BufferedWriter out = new BufferedWriter(fstream);
 
-            //save all the pictures to the file, one per line.
-            for (File picture : pictures) {
-                out.write(picture.getPath() + "\r\n");
-            }
-
-            //Close the output stream
-            out.close();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
+        //save all the pictures to the file, one per line.
+        for (File picture : pictures) {
+            out.write(picture.getPath() + "\r\n");
         }
+
+        //Close the output stream
+        out.close();
     }
 
     /**
