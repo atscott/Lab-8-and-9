@@ -622,8 +622,31 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     /**
      * Sets picture that is displayed
      */
-    private void setPicture(Image image) {
-        Image scaled = image.getScaledInstance(jScrollPane1.getWidth(), jScrollPane1.getHeight(), Image.SCALE_SMOOTH);
+    private void setPicture(BufferedImage image) {
+        int newHeight;
+        int newWidth;
+        if(image.getWidth() > image.getHeight()) {
+            newWidth = jScrollPane1.getWidth();
+            newHeight = image.getHeight() * newWidth / image.getWidth();
+
+            if(newHeight > jScrollPane1.getHeight()) {
+                int tmpWidth = newWidth;
+                int tmpHeight = newHeight;
+                newHeight = jScrollPane1.getHeight();
+                newWidth = tmpWidth * newHeight / tmpHeight;
+            }
+        } else {
+            newHeight = jScrollPane1.getHeight();
+            newWidth = image.getWidth() * newHeight / image.getHeight();
+
+            if(newWidth > jScrollPane1.getWidth()) {
+                int tmpWidth = newWidth;
+                int tmpHeight = newHeight;
+                newWidth = jScrollPane1.getWidth();
+                newHeight = tmpHeight * newWidth / tmpWidth;
+            }
+        }
+        Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         photoScrollPane.setIcon(new ImageIcon(scaled));
     }
 
