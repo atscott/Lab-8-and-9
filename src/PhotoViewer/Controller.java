@@ -132,10 +132,14 @@ public class Controller implements IController {
      */
     @Override
     public void OnSaveAlbum() {
-        try {
-            this.albumModel.Save();
-        } catch (IOException e) {
-            this.view.ShowErrorMessage("Unable to save album: " + e.getMessage());
+        if(this.state == ControllerState.ALBUM_OPENED) {
+            try {
+                this.albumModel.Save();
+            } catch (IOException e) {
+                this.view.ShowErrorMessage("Unable to save album: " + e.getMessage());
+            }
+        } else {
+            view.ShowErrorMessage("Cannot save album because no album is open.");
         }
     }
 
@@ -144,21 +148,25 @@ public class Controller implements IController {
      */
     @Override
     public void OnAddPhoto() {
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg");
-        fileChooser.setFileFilter(filter);
-        int returnVal = fileChooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File photo = fileChooser.getSelectedFile();
-            try {
-                if (albumModel.AddPhoto(photo)) {
-                    this.tellViewToAddPhoto(photo);
-                } else {
-                    this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
+        if(this.state == ControllerState.ALBUM_OPENED) {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg");
+            fileChooser.setFileFilter(filter);
+            int returnVal = fileChooser.showOpenDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File photo = fileChooser.getSelectedFile();
+                try {
+                    if (albumModel.AddPhoto(photo)) {
+                        this.tellViewToAddPhoto(photo);
+                    } else {
+                        this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
+                    }
+                } catch (IOException e) {
+                    this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
                 }
-            } catch (IOException e) {
-                this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
             }
+        } else {
+            view.ShowErrorMessage("Cannot add photo because no album is open.");
         }
     }
 
@@ -170,6 +178,8 @@ public class Controller implements IController {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.albumModel.RemovePhoto(photo);
             this.tellViewToRemovePhoto(photo);
+        } else {
+            view.ShowErrorMessage("Cannot delete photo because no album is open.");
         }
     }
 
@@ -232,6 +242,8 @@ public class Controller implements IController {
     public void ShowImage(File file) {
         if (this.state == ControllerState.ALBUM_OPENED) {
             this.view.ShowImage(file);
+        } else {
+            view.ShowErrorMessage("Cannot show photo because no album is open.");
         }
     }
 
