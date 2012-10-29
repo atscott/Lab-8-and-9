@@ -1,6 +1,7 @@
 package PhotoViewer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,11 +13,11 @@ import java.util.ArrayList;
 public interface IAlbumModel {
     public String GetName();
 
-    public void Save();
+    public void Save() throws IOException;
 
     public void AddListener(IController controller);
 
-    public void Open();
+    public void Open() throws IOException;
 
     public ArrayList<File> getPictures();
 

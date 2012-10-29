@@ -58,28 +58,26 @@ public class Album implements IAlbumModel {
 
     /**
      * Opens an existing album
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public void Open() {
-        try {
-            // Read file
-            FileReader fstream = new FileReader(me.getPath());
-            BufferedReader in = new BufferedReader(fstream);
-            Boolean hasLines = true;
-            while (hasLines) {
-                String line = in.readLine();
-                if (line == null) {
-                    hasLines = false;
-                } else {
-                    pictures.add(new File(line));
-                }
+    public void Open() throws IOException {
+        // Read file
+        FileReader fstream = new FileReader(me.getPath());
+        BufferedReader in = new BufferedReader(fstream);
+        Boolean hasLines = true;
+        while (hasLines) {
+            String line = in.readLine();
+            if (line == null) {
+                hasLines = false;
+            } else {
+                pictures.add(new File(line));
             }
-
-            //Close the input stream
-            in.close();
-            this.createRandomizedList();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
         }
+
+        //Close the input stream
+        in.close();
+        this.createRandomizedList();
     }
 
     /**
@@ -92,24 +90,21 @@ public class Album implements IAlbumModel {
 
     /**
      * Saves the album to a file
+     * @throws IOException
      */
     @Override
-    public void Save() {
-        try {
-            // Create file
-            FileWriter fstream = new FileWriter(me.getPath());
-            BufferedWriter out = new BufferedWriter(fstream);
+    public void Save() throws IOException {
+        // Create file
+        FileWriter fstream = new FileWriter(me.getPath());
+        BufferedWriter out = new BufferedWriter(fstream);
 
-            //save all the pictures to the file, one per line.
-            for (File picture : pictures) {
-                out.write(picture.getPath() + "\r\n");
-            }
-
-            //Close the output stream
-            out.close();
-        } catch (Exception e) {//Catch exception if any
-            System.err.println("Error: " + e.getMessage());
+        //save all the pictures to the file, one per line.
+        for (File picture : pictures) {
+            out.write(picture.getPath() + "\r\n");
         }
+
+        //Close the output stream
+        out.close();
     }
 
     /**
