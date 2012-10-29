@@ -65,7 +65,7 @@ public class Controller implements IController {
         this.view = view;
         this.albumModel = model;
         this.view.AddListener(this);
-        this.view.DisableAllFunctions();
+        this.view.SetEnabled(false);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Controller implements IController {
                 this.albumModel.AddListener(this);
                 this.state = ControllerState.ALBUM_OPENED;
                 this.tellViewToShowAlbumInfo();
-                this.view.EnableAllFunctions();
+                this.view.SetEnabled(true);
             } catch (IOException e) {
                 view.ShowErrorMessage("Error creating album: " + e.getMessage());
             }
@@ -117,7 +117,7 @@ public class Controller implements IController {
                 this.albumModel.AddListener(this);
                 this.state = ControllerState.ALBUM_OPENED;
                 this.tellViewToShowAlbumInfo();
-                this.view.EnableAllFunctions();
+                this.view.SetEnabled(true);
             } catch (FileNotFoundException e) {
                 this.view.ShowErrorMessage("Unable to open album: File not found.");
             } catch (IOException e) {

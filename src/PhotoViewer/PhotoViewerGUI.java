@@ -573,38 +573,21 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     @Override
     /**
-     * Disables all buttons and menu items
+     * Sets the enabled status of all buttons and menu items
+     * @var enabled Enable (true) or disable (false)
      */
-    public void DisableAllFunctions() {
-        this.addButton.setEnabled(false);
-        this.deleteButton.setEnabled(false);
-        this.nextButton.setEnabled(false);
-        this.previousButton.setEnabled(false);
-        this.startAndStopToggleButton.setEnabled(false);
-        this.sequentialRadio.setEnabled(false);
-        this.randomRadio.setEnabled(false);
-        this.startSlideMenuItem.setEnabled(false);
-        this.stopSlideMenuItem.setEnabled(false);
-        this.delaySpinner.setEnabled(false);
-        this.saveMenuItem.setEnabled(false);
-    }
-
-    @Override
-    /**
-     * enables all buttons and menu items
-     */
-    public void EnableAllFunctions() {
-        this.addButton.setEnabled(true);
-        this.deleteButton.setEnabled(true);
-        this.nextButton.setEnabled(true);
-        this.previousButton.setEnabled(true);
-        this.startAndStopToggleButton.setEnabled(true);
-        this.sequentialRadio.setEnabled(true);
-        this.randomRadio.setEnabled(true);
-        this.startSlideMenuItem.setEnabled(true);
-        this.stopSlideMenuItem.setEnabled(true);
-        this.delaySpinner.setEnabled(true);
-        this.saveMenuItem.setEnabled(true);
+    public void SetEnabled(boolean enabled) {
+        this.addButton.setEnabled(enabled);
+        this.deleteButton.setEnabled(enabled);
+        this.nextButton.setEnabled(enabled);
+        this.previousButton.setEnabled(enabled);
+        this.startAndStopToggleButton.setEnabled(enabled);
+        this.sequentialRadio.setEnabled(enabled);
+        this.randomRadio.setEnabled(enabled);
+        this.startSlideMenuItem.setEnabled(enabled);
+        this.stopSlideMenuItem.setEnabled(enabled);
+        this.delaySpinner.setEnabled(enabled);
+        this.saveMenuItem.setEnabled(enabled);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package PhotoViewer;
 
-import java.awt.*;
 import java.io.File;
 
 /**
@@ -21,9 +20,7 @@ public interface IPhotoViewerView {
 
     public void ShowImage(File file);
 
-    public void DisableAllFunctions();
-
-    public void EnableAllFunctions();
+    public void SetEnabled(boolean enabled);
 
     public void RemovePhoto(File photo);
 }
