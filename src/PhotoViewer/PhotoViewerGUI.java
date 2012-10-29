@@ -559,7 +559,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         File retVal = null;
 
         if (listFiles.size() > 0) {
-            if (fileList.getSelectedIndex() == 0) {
+            if (fileList.getSelectedIndex() <= 0) {
                 retVal = listFiles.get(listFiles.size() - 1);
                 fileList.setSelectedIndex(listFiles.size() - 1);
             } else {
