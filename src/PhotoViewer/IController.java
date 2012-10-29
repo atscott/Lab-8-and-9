@@ -3,6 +3,7 @@ package PhotoViewer;
 import PhotoViewer.Album.SlideshowOrder;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * User: atscott
@@ -18,6 +19,8 @@ public interface IController {
     public void OnSaveAlbum();
 
     public void OnAddPhoto();
+
+    public void OnAddPhoto(List<File> transferData);
 
     void OnDeletePhoto(File photo);
 

@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * User: atscott
@@ -141,6 +142,21 @@ public class Controller implements IController {
             } catch (IOException e) {
                 this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
             }
+        }
+    }
+
+    /**
+     * Adds the photos in a list. This method does not output errors
+     * @param transferData Photos to add
+     */
+    @Override
+    public void OnAddPhoto(List<File> transferData) {
+        for(File file : transferData) {
+            try {
+                if(albumModel.AddPhoto(file)) {
+                    this.tellViewToAddPhoto(file);
+                }
+            } catch (IOException ignored) {}
         }
     }
 
