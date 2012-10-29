@@ -20,13 +20,11 @@ public interface IAlbumModel {
 
     public ArrayList<File> getPictures();
 
-    public void ToggleSlideshow();
-
-    public void SetTimeBetweenImages(int time);
-
     public void SetSlideshowOrder(Album.SlideshowOrder slideshowOrder);
 
     public boolean AddPhoto(File photo) throws IOException;
 
     public void RemovePhoto(File photo);
+
+    public File getNextPicture();
 }

@@ -26,16 +26,6 @@ public class Album implements IAlbumModel {
     private ArrayList<File> randomizedPictures = new ArrayList<File>();
 
     /**
-     * Timer used to wait between showing slideshow images
-     */
-    private Timer timer;
-
-    /**
-     * The time between images shown in the slideshow
-     */
-    private int timeBetweenImages = 1;
-
-    /**
      * This is the controller that the album is linked to
      */
     private IController controller;
@@ -48,21 +38,9 @@ public class Album implements IAlbumModel {
     }
 
     /**
-     * indicates if slideshow is running or stopped
-     */
-    private static enum AlbumState {
-        SLIDESHOW_RUNNING, SLIDESHOW_STOPPED
-    }
-
-    /**
      * The order of the slideshow. initially sequential
      */
     private SlideshowOrder order = SlideshowOrder.SEQUENTIAL;
-
-    /**
-     * The state of this album. initially slideshow stopped
-     */
-    private AlbumState state = AlbumState.SLIDESHOW_STOPPED;
 
     /**
      * The index in the array of the last file that was displayed in the slideshow
@@ -160,36 +138,6 @@ public class Album implements IAlbumModel {
     }
 
     /**
-     * Toggles the slideshow. If running, stops. If not running, starts the slideshow timer.
-     */
-    @Override
-    public void ToggleSlideshow() {
-        if (state == AlbumState.SLIDESHOW_STOPPED) {
-            timer = new Timer();
-            this.state = AlbumState.SLIDESHOW_RUNNING;
-            timer.schedule(new NextImage(), timeBetweenImages * 1000);
-        } else {
-            indexOfLastShownFile = -1;
-            timer.cancel();
-            this.state = AlbumState.SLIDESHOW_STOPPED;
-        }
-
-    }
-
-    /**
-     * Sets the time interval
-     * @param time the time in seconds. Must be greater than 0
-     */
-    @Override
-    public void SetTimeBetweenImages(int time) {
-        if (time > 0) {
-            timeBetweenImages = time;
-        } else {
-            timeBetweenImages = 1;
-        }
-    }
-
-    /**
      * Adds photo to the picure list. Throws Exception if not a JPEG file
      */
     @Override
@@ -221,6 +169,17 @@ public class Album implements IAlbumModel {
         this.createRandomizedList();
     }
 
+    @Override
+    public File getNextPicture() {
+        File picture;
+        if (order == SlideshowOrder.SEQUENTIAL) {
+            picture = getNextImageFromList(pictures);
+        } else {
+            picture = getNextImageFromList(randomizedPictures);
+        }
+        return picture;
+    }
+
     /**
      * creates an ArrayList of the pictures in random order
      */
@@ -238,25 +197,7 @@ public class Album implements IAlbumModel {
         }
     }
 
-    /**
-     * tells the controller to show the next image. THen schedules a new timer task NextImage to continue the loop.
-     */
-    class NextImage extends TimerTask {
-        public void run() {
-            File picture;
-            if (order == SlideshowOrder.SEQUENTIAL) {
-                picture = getNextImageFromList(pictures);
-            } else {
-                picture = getNextImageFromList(randomizedPictures);
-            }
-            controller.ShowImage(picture);
-            try {
-                timer.schedule(new NextImage(), timeBetweenImages * 1000);
-            } catch (IllegalStateException e) {
-                //timer is already cancelled so don't start a new task
-            }
-        }
-    }
+
 
     /**
      * Retrieves the next File from a given list. If at the end of the list, gets the first item. Updates the

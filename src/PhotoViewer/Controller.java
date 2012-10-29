@@ -8,6 +8,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.util.Timer;
 
 /**
  * User: atscott
@@ -27,16 +29,32 @@ public class Controller implements IController {
     private IPhotoViewerView view;
 
     /**
+     * The time between images shown in the slideshow
+     */
+    private int timeBetweenImages = 1;
+
+    /**
+     * Timer used to wait between showing slideshow images
+     */
+    private Timer timer;
+
+    /**
      * Controller state. Album open or closed
      */
     private enum ControllerState {
         ALBUM_OPENED, ALBUM_CLOSED
     }
 
+    private enum slideshowStates {
+        SLIDESHOW_RUNNING, SLIDESHOW_STOPPED
+    }
+
     /**
      * The controller's initial state is album closed
      */
     private ControllerState state = ControllerState.ALBUM_CLOSED;
+
+    private slideshowStates slideshowState = slideshowStates.SLIDESHOW_STOPPED;
 
     /**
      * Creates the controller with the given view and model. Adds this controller as a listener to the view
@@ -148,6 +166,7 @@ public class Controller implements IController {
 
     /**
      * Tells the view to remove the given photo
+     *
      * @param photo The photo File to remove from the view
      */
     private void tellViewToRemovePhoto(File photo) {
@@ -162,13 +181,39 @@ public class Controller implements IController {
     public boolean ToggleSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
-            this.albumModel.ToggleSlideshow();
-            toggled = true;
+            if (this.slideshowState == slideshowStates.SLIDESHOW_STOPPED) {
+                this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
+                timer = new java.util.Timer();
+                timer.schedule(new NextImage(), 0);
+                toggled = true;
+            } else {
+                this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
+                timer.cancel();
+                toggled = true;
+            }
         } else {
             view.ShowErrorMessage("Cannot toggle slideshow because no album is open.");
         }
 
         return toggled;
+    }
+
+    /**
+     * tells the controller to show the next image. THen schedules a new timer task NextImage to continue the loop.
+     */
+    class NextImage extends TimerTask {
+        public void run() {
+            if (slideshowState == slideshowStates.SLIDESHOW_RUNNING) {
+                File picture = albumModel.getNextPicture();
+
+                ShowImage(picture);
+                try {
+                    timer.schedule(new NextImage(), timeBetweenImages * 1000);
+                } catch (IllegalStateException e) {
+                    //timer is already cancelled so don't start a new task
+                }
+            }
+        }
     }
 
     /**
@@ -210,8 +255,10 @@ public class Controller implements IController {
      */
     @Override
     public void OnTimeChange(int newTime) {
-        if (this.state == ControllerState.ALBUM_OPENED) {
-            albumModel.SetTimeBetweenImages(newTime);
+        if (newTime > 0) {
+            timeBetweenImages = newTime;
+        } else {
+            timeBetweenImages = 1;
         }
     }
 
@@ -220,6 +267,7 @@ public class Controller implements IController {
      */
     @Override
     public void OnOrderSelection(SlideshowOrder o) {
+
         albumModel.SetSlideshowOrder(o);
 
     }
