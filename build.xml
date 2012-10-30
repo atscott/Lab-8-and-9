@@ -73,7 +73,11 @@
 
     <target name="dist" depends="compile">
         <mkdir dir="${artifacts.dir}"/>
-        <jar jarfile="${artifacts.dir}/photoViewer-SNAPSHOT.jar" basedir="${build.dir}"/>
+        <jar jarfile="${artifacts.dir}/photoViewer-SNAPSHOT.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="PhotoViewer.PhotoViewer" />
+            </manifest>
+        </jar>
     </target>
 
     <target name="clean">
