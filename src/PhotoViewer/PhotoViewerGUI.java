@@ -294,7 +294,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             try {
                 myPicture = ImageIO.read(file);
                 this.setPicture(myPicture);
-                this.SetPictureLabel(file.getName() + " Width: " + myPicture.getWidth() + " Height: " + myPicture.getHeight());
+                this.SetPictureLabel(file.getName() + " Width: " + myPicture.getWidth() + "px Height: " + myPicture.getHeight() + "px");
             } catch (Exception e) {
                 this.setPicture(null);
                 this.SetPictureLabel("Could not read file.");
