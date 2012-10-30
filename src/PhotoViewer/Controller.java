@@ -244,8 +244,6 @@ public class Controller implements IController {
                 timer = new java.util.Timer();
                 timer.schedule(new NextImage(), 0);
             }
-        } else {
-            view.ShowErrorMessage("Cannot stop slideshow because no album is open.");
         }
         return toggled;
     }
