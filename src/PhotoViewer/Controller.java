@@ -152,17 +152,23 @@ public class Controller implements IController {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg");
             fileChooser.setFileFilter(filter);
+            fileChooser.setMultiSelectionEnabled(true);
             int returnVal = fileChooser.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File photo = fileChooser.getSelectedFile();
-                try {
-                    if (albumModel.AddPhoto(photo)) {
-                        this.tellViewToAddPhoto(photo);
-                    } else {
-                        this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
+                File[] files = fileChooser.getSelectedFiles();
+                if(files.length == 1) {
+                    File photo = files[0];
+                    try {
+                        if (albumModel.AddPhoto(photo)) {
+                            this.tellViewToAddPhoto(photo);
+                        } else {
+                            this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
+                        }
+                    } catch (IOException e) {
+                        this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
                     }
-                } catch (IOException e) {
-                    this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
+                } else {
+                    this.OnAddPhoto(Arrays.asList(files));
                 }
             }
         }
@@ -178,6 +184,8 @@ public class Controller implements IController {
             try {
                 if(albumModel.AddPhoto(file)) {
                     this.tellViewToAddPhoto(file);
+                } else {
+                    this.view.ShowErrorMessage("Unable to add photo " + file.getName() + ". Photo is already in the album.");
                 }
             } catch (IOException ignored) {}
         }
