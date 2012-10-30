@@ -73,7 +73,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("\"Album Name\"  -  Photo Viewer");
 
-        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/addPic.png"))); // NOI18N
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/addPic.png"))); // NOI18N
         addButton.setToolTipText("Add file to album");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +81,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/deletePic.png"))); // NOI18N
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/deletePic.png"))); // NOI18N
         deleteButton.setToolTipText("Remove selected file from album");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +91,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
         fileInfoLabel.setText("Picture filename and resolution");
 
-        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/leftArrow.png"))); // NOI18N
+        previousButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/leftArrow.png"))); // NOI18N
         previousButton.setToolTipText("View previous picture");
         previousButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +99,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/rightArrow.png"))); // NOI18N
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/rightArrow.png"))); // NOI18N
         nextButton.setToolTipText("View next picture");
         nextButton.setOpaque(false);
         nextButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +108,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png"))); // NOI18N
+        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/start.png"))); // NOI18N
         startAndStopToggleButton.setToolTipText("Start/Stop Slideshow");
         startAndStopToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -335,7 +335,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         this.controller.StartSlideshow();
-        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/pause.png")));
         startAndStopToggleButton.setSelected(true);
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
@@ -344,7 +344,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void stopSlideMenuItemActionPerformed() {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         this.controller.StopSlideshow();
-        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/start.png")));
         startAndStopToggleButton.setSelected(false);
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
@@ -396,9 +396,9 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void startAndStopToggleButtonActionPerformed() {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
         int state = this.controller.ToggleSlideshow();
         if (state == 1) {
-            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/pause.png")));
         } else if (state == 0) {
-            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/start.png")));
         }  else{
             startAndStopToggleButton.setSelected(!startAndStopToggleButton.isSelected());
         }

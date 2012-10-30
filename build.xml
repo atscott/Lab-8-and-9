@@ -2,9 +2,11 @@
 <project name="photoViewer">
 
     <property name="src.dir" location="src"/>
+    <property name="src.assets.dir" location="assets" />
     <property name="build.dir" location="build"/>
-    <property name="artifacts.dir" location="${build.dir}/artifacts"/>
+    <property name="artifacts.dir" location="artifacts"/>
     <property name="docs.dir" location="docs"/>
+    <property name="build.assets.dir" location="${build.dir}/assets" />
 
     <property name="test.dir" location="src/tests"/>
     <property name="test.report.dir" location="test-reports"/>
@@ -31,6 +33,10 @@
         <exclude name="**/*.rbc/**"/>
         <exclude name="**/vssver.scc/**"/>
         <exclude name="**/vssver2.scc/**"/>
+        <exclude name="**/src/Tests/**"/>
+        <exclude name="**/${docs.dir}/**"/>
+        <exclude name="**/${build.dir}/**"/>
+        <exclude name="**/${test.report.dir}/**"/>
     </patternset>
 
     <path id="classpath">
@@ -56,7 +62,7 @@
             <classpath refid="classpath"/>
             <batchtest todir="${test.report.dir}">
                 <fileset dir="${src.dir}">
-                    <include name="tests/**/*Test.java"/>
+                    <include name="Tests/**/*Test.java"/>
                 </fileset>
             </batchtest>
         </junit>
@@ -71,11 +77,18 @@
         </javadoc>
     </target>
 
-    <target name="dist" depends="compile">
+    <target name="copyNonEmbeddedFiles" depends="init">
+        <mkdir dir="${build.assets.dir}" />
+        <copy todir="${build.assets.dir}" includeemptydirs="false" overwrite="true">
+            <fileset dir="${src.assets.dir}" />
+        </copy>
+    </target>
+
+    <target name="dist" depends="compile,copyNonEmbeddedFiles">
         <mkdir dir="${artifacts.dir}"/>
         <jar jarfile="${artifacts.dir}/photoViewer-SNAPSHOT.jar" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="PhotoViewer.PhotoViewer" />
+                <attribute name="Main-Class" value="PhotoViewer.Launcher" />
             </manifest>
         </jar>
     </target>
