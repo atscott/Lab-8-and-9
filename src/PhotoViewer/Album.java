@@ -164,6 +164,10 @@ public class Album implements IAlbumModel {
         this.createRandomizedList();
     }
 
+    /**
+     * Gets the next picture
+     * @return Next picture
+     */
     @Override
     public File getNextPicture() {
         File picture;
