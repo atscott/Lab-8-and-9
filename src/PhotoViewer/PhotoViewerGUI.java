@@ -334,7 +334,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      * If a slideshow is not running, asks the controller to start it
      */
     private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
-        this.controller.StopSlideshow();
+        this.controller.StartSlideshow();
         startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
