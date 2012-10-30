@@ -165,8 +165,21 @@ public class Controller implements IController {
                     this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
                 }
             }
-        } else {
-            view.ShowErrorMessage("Cannot add photo because no album is open.");
+        }
+    }
+
+    /**
+     * Adds the photos in a list. This method does not output errors
+     * @param transferData Photos to add
+     */
+    @Override
+    public void OnAddPhoto(List<File> transferData) {
+        for(File file : transferData) {
+            try {
+                if(albumModel.AddPhoto(file)) {
+                    this.tellViewToAddPhoto(file);
+                }
+            } catch (IOException ignored) {}
         }
     }
 
@@ -326,7 +339,6 @@ public class Controller implements IController {
      */
     @Override
     public void OnOrderSelection(SlideshowOrder o) {
-
         albumModel.SetSlideshowOrder(o);
 
     }

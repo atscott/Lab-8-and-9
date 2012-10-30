@@ -7,6 +7,9 @@ package PhotoViewer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      * THe controller for this view
      */
     private IController controller;
+    private DropTarget dt;
 
     /**
      * The list of files that are in the album
@@ -136,6 +140,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 fileListValueChanged();
             }
         });
+        dt = new DropTarget(jScrollPane2, new ListDropTargetListener());
         jScrollPane2.setViewportView(fileList);
 
         newMenu.setText("File");
@@ -420,6 +425,111 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void delaySpinnerStateChanged() {//GEN-FIRST:event_delaySpinnerStateChanged
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_delaySpinnerStateChanged
+
+    /**
+     * Listener used for the drop target
+     */
+    private class ListDropTargetListener implements DropTargetListener {
+
+        /**
+         * Called while a drag operation is ongoing, when the mouse pointer enters
+         * the operable part of the drop site for the <code>DropTarget</code>
+         * registered with this listener.
+         *
+         * @param dtde the <code>DropTargetDragEvent</code>
+         */
+        @Override
+        public void dragEnter(DropTargetDragEvent dtde) {}
+
+        /**
+         * Called when a drag operation is ongoing, while the mouse pointer is still
+         * over the operable part of the drop site for the <code>DropTarget</code>
+         * registered with this listener.
+         *
+         * @param dtde the <code>DropTargetDragEvent</code>
+         */
+        @Override
+        public void dragOver(DropTargetDragEvent dtde) {}
+
+        /**
+         * Called if the user has modified
+         * the current drop gesture.
+         * <p/>
+         *
+         * @param dtde the <code>DropTargetDragEvent</code>
+         */
+        @Override
+        public void dropActionChanged(DropTargetDragEvent dtde) {}
+
+        /**
+         * Called while a drag operation is ongoing, when the mouse pointer has
+         * exited the operable part of the drop site for the
+         * <code>DropTarget</code> registered with this listener.
+         *
+         * @param dte the <code>DropTargetEvent</code>
+         */
+        @Override
+        public void dragExit(DropTargetEvent dte) {}
+
+        /**
+         * Called when the drag operation has terminated with a drop on
+         * the operable part of the drop site for the <code>DropTarget</code>
+         * registered with this listener.
+         * <p/>
+         * This method is responsible for undertaking
+         * the transfer of the data associated with the
+         * gesture. The <code>DropTargetDropEvent</code>
+         * provides a means to obtain a <code>Transferable</code>
+         * object that represents the data object(s) to
+         * be transfered.<P>
+         * From this method, the <code>DropTargetListener</code>
+         * shall accept or reject the drop via the
+         * acceptDrop(int dropAction) or rejectDrop() methods of the
+         * <code>DropTargetDropEvent</code> parameter.
+         * <p/>
+         * Subsequent to acceptDrop(), but not before,
+         * <code>DropTargetDropEvent</code>'s getTransferable()
+         * method may be invoked, and data transfer may be
+         * performed via the returned <code>Transferable</code>'s
+         * getTransferData() method.
+         * <p/>
+         * At the completion of a drop, an implementation
+         * of this method is required to signal the success/failure
+         * of the drop by passing an appropriate
+         * <code>boolean</code> to the <code>DropTargetDropEvent</code>'s
+         * dropComplete(boolean success) method.
+         * <p/>
+         * Note: The data transfer should be completed before the call  to the
+         * <code>DropTargetDropEvent</code>'s dropComplete(boolean success) method.
+         * After that, a call to the getTransferData() method of the
+         * <code>Transferable</code> returned by
+         * <code>DropTargetDropEvent.getTransferable()</code> is guaranteed to
+         * succeed only if the data transfer is local; that is, only if
+         * <code>DropTargetDropEvent.isLocalTransfer()</code> returns
+         * <code>true</code>. Otherwise, the behavior of the call is
+         * implementation-dependent.
+         * <p/>
+         *
+         * @param dtde the <code>DropTargetDropEvent</code>
+         */
+        @Override
+        public void drop(DropTargetDropEvent dtde) {
+            onDropFile(dtde);
+        }
+    }
+
+    public void onDropFile(DropTargetDropEvent dtde) {
+        Transferable tr = dtde.getTransferable();
+        DataFlavor[] flavors = tr.getTransferDataFlavors();
+        for (DataFlavor flavor : flavors) {
+            if (flavor.isFlavorJavaFileListType()) {
+                dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                try {
+                    this.controller.OnAddPhoto((java.util.List<File>) tr.getTransferData(flavor));
+                } catch (Exception ignored) {}
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
