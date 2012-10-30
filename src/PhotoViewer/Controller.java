@@ -248,8 +248,8 @@ public class Controller implements IController {
         if (this.state == ControllerState.ALBUM_OPENED) {
             if(this.slideshowState == slideshowStates.SLIDESHOW_RUNNING){
                 this.slideshowState = slideshowStates.SLIDESHOW_STOPPED;
-                timer = new java.util.Timer();
-                timer.schedule(new NextImage(), 0);
+                timer.cancel();
+                toggled = true;
             }
         }
         return toggled;
@@ -266,6 +266,9 @@ public class Controller implements IController {
         if (this.state == ControllerState.ALBUM_OPENED) {
             if(this.slideshowState == slideshowStates.SLIDESHOW_STOPPED){
                 this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
+                timer = new java.util.Timer();
+                timer.schedule(new NextImage(), 0);
+                toggled = true;
             }
         } else {
             view.ShowErrorMessage("Cannot start slideshow because no album is open.");

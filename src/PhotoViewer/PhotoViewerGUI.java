@@ -336,6 +336,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
         this.controller.StartSlideshow();
         startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+        startAndStopToggleButton.setSelected(true);
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
     /**
@@ -344,6 +345,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private void stopSlideMenuItemActionPerformed() {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
         this.controller.StopSlideshow();
         startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+        startAndStopToggleButton.setSelected(false);
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
     /**
@@ -398,7 +400,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         } else if (state == 0) {
             startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
         }  else{
-            //nothing done in the controller, don't change anything in the view
+            startAndStopToggleButton.setSelected(!startAndStopToggleButton.isSelected());
         }
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
