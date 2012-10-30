@@ -132,7 +132,7 @@ public class Controller implements IController {
      */
     @Override
     public void OnSaveAlbum() {
-        if(this.state == ControllerState.ALBUM_OPENED) {
+        if (this.state == ControllerState.ALBUM_OPENED) {
             try {
                 this.albumModel.Save();
             } catch (IOException e) {
@@ -148,7 +148,7 @@ public class Controller implements IController {
      */
     @Override
     public void OnAddPhoto() {
-        if(this.state == ControllerState.ALBUM_OPENED) {
+        if (this.state == ControllerState.ALBUM_OPENED) {
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg");
             fileChooser.setFileFilter(filter);
@@ -193,27 +193,65 @@ public class Controller implements IController {
     }
 
     /**
-     * If controller has an album open (state), tells the AlbumModel to toggle its slideshow. otherwise tells the view
-     * to show an error message.
+     * @return 0 if slideshow stopped, 1 if slideshow started. -1 if nothing done.
      */
     @Override
-    public boolean ToggleSlideshow() {
-        boolean toggled = false;
+    public int ToggleSlideshow() {
+        int startOrStop = -1;
         if (this.state == ControllerState.ALBUM_OPENED) {
             if (this.slideshowState == slideshowStates.SLIDESHOW_STOPPED) {
                 this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
                 timer = new java.util.Timer();
                 timer.schedule(new NextImage(), 0);
-                toggled = true;
+                startOrStop = 1;
             } else {
-                this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
+                this.slideshowState = slideshowStates.SLIDESHOW_STOPPED;
                 timer.cancel();
-                toggled = true;
+                startOrStop = 0;
             }
         } else {
+            startOrStop = -1;
             view.ShowErrorMessage("Cannot toggle slideshow because no album is open.");
         }
 
+        return startOrStop;
+    }
+
+    /**
+     * attempts to stop the slideshow
+     *
+     * @return true if the slideshow was stopped successfully.
+     */
+    @Override
+    public boolean stopSlideshow() {
+        boolean toggled = false;
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            if(this.slideshowState == slideshowStates.SLIDESHOW_RUNNING){
+                this.slideshowState = slideshowStates.SLIDESHOW_STOPPED;
+                timer = new java.util.Timer();
+                timer.schedule(new NextImage(), 0);
+            }
+        } else {
+            view.ShowErrorMessage("Cannot stop slideshow because no album is open.");
+        }
+        return toggled;
+    }
+
+    /**
+     * attemps to start the slideshow.
+     *
+     * @return true if the slideshow was started successfully
+     */
+    @Override
+    public boolean startSlideshow() {
+        boolean toggled = false;
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            if(this.slideshowState == slideshowStates.SLIDESHOW_STOPPED){
+                this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
+            }
+        } else {
+            view.ShowErrorMessage("Cannot start slideshow because no album is open.");
+        }
         return toggled;
     }
 

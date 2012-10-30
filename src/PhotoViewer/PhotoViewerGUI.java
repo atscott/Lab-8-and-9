@@ -21,16 +21,6 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
     private IController controller;
 
     /**
-     * The enum that indicates slideshow state
-     */
-    private static enum slideshowState {SLIDESHOW_RUNNING, SLIDESHOW_STOPPED}
-
-    /**
-     * The slideshow state for the view
-     */
-    private slideshowState state = slideshowState.SLIDESHOW_STOPPED;
-
-    /**
      * The list of files that are in the album
      */
     private ArrayList<File> listFiles = new ArrayList<File>();
@@ -122,7 +112,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             }
         });
 
-        SpinnerModel model = new SpinnerNumberModel(2,1,60,2);
+        SpinnerModel model = new SpinnerNumberModel(2, 1, 60, 2);
         delaySpinner.setModel(model);
         delaySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -339,25 +329,16 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      * If a slideshow is not running, asks the controller to start it
      */
     private void startSlideMenuItemActionPerformed() {//GEN-FIRST:event_startSlideMenuItemActionPerformed
-        if (state == slideshowState.SLIDESHOW_STOPPED) {
-            if (this.controller.ToggleSlideshow()) {
-                state = slideshowState.SLIDESHOW_RUNNING;
-                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
-            }
-
-        }
+        this.controller.stopSlideshow();
+        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
     }//GEN-LAST:event_startSlideMenuItemActionPerformed
 
     /**
      * If a slideshow is running, asks the controller to stop it
      */
     private void stopSlideMenuItemActionPerformed() {//GEN-FIRST:event_stopSlideMenuItemActionPerformed
-        if (state == slideshowState.SLIDESHOW_RUNNING) {
-            if (this.controller.ToggleSlideshow()) {
-                state = slideshowState.SLIDESHOW_STOPPED;
-                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
-            }
-        }
+        this.controller.stopSlideshow();
+        startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
     }//GEN-LAST:event_stopSlideMenuItemActionPerformed
 
     /**
@@ -406,14 +387,13 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      * Toggles slideshow state
      */
     private void startAndStopToggleButtonActionPerformed() {//GEN-FIRST:event_startAndStopToggleButtonActionPerformed
-        if (this.controller.ToggleSlideshow()) {
-            if (state == slideshowState.SLIDESHOW_STOPPED) {
-                state = slideshowState.SLIDESHOW_RUNNING;
-                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
-            } else {
-                state = slideshowState.SLIDESHOW_STOPPED;
-                startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
-            }
+        int state = this.controller.ToggleSlideshow();
+        if (state == 1) {
+            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/pause.png")));
+        } else if (state == 0) {
+            startAndStopToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photoviewer/start.png")));
+        }  else{
+            //nothing done in the controller, don't change anything in the view
         }
     }//GEN-LAST:event_startAndStopToggleButtonActionPerformed
 
@@ -495,7 +475,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         model.addElement(picture.getName());
         this.fileList.setModel(model);
 
-        if(this.fileList.getSelectedIndex() == -1) {
+        if (this.fileList.getSelectedIndex() == -1) {
             this.fileList.setSelectedIndex(0);
         }
     }
@@ -537,6 +517,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     /**
      * Gets the previous picutre
+     *
      * @return The File that is the previous picture in the list
      */
     private File getNextPicture() {
@@ -557,6 +538,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     /**
      * gets the next picture
+     *
      * @return The File that is the next picture in the list
      */
     private File getPreviousPicture() {
@@ -604,7 +586,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
         DefaultListModel model = (DefaultListModel) fileList.getModel();
         model.remove(index);
         fileList.setModel(model);
-        if(listFiles.size() > 0) {
+        if (listFiles.size() > 0) {
             fileList.setSelectedIndex(0);
         } else {
             this.setPicture(null);
@@ -616,14 +598,14 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      * Sets picture that is displayed
      */
     private void setPicture(BufferedImage image) {
-        if(image != null) {
+        if (image != null) {
             int newHeight;
             int newWidth;
-            if(image.getWidth() > image.getHeight()) {
+            if (image.getWidth() > image.getHeight()) {
                 newWidth = jScrollPane1.getWidth();
                 newHeight = image.getHeight() * newWidth / image.getWidth();
 
-                if(newHeight > jScrollPane1.getHeight()) {
+                if (newHeight > jScrollPane1.getHeight()) {
                     int tmpWidth = newWidth;
                     int tmpHeight = newHeight;
                     newHeight = jScrollPane1.getHeight();
@@ -633,7 +615,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
                 newHeight = jScrollPane1.getHeight();
                 newWidth = image.getWidth() * newHeight / image.getHeight();
 
-                if(newWidth > jScrollPane1.getWidth()) {
+                if (newWidth > jScrollPane1.getWidth()) {
                     int tmpWidth = newWidth;
                     int tmpHeight = newHeight;
                     newWidth = jScrollPane1.getWidth();
@@ -649,6 +631,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
 
     /**
      * Changes the JList index
+     *
      * @param index index to change to
      */
     private void changeListIndex(int index) {

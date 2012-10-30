@@ -21,7 +21,11 @@ public interface IController {
 
     void OnDeletePhoto(File photo);
 
-    public boolean ToggleSlideshow();
+    public int ToggleSlideshow();
+
+    public boolean stopSlideshow();
+
+    public boolean startSlideshow();
 
     public void OnTimeChange(int newTime);
 
