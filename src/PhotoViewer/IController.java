@@ -26,9 +26,9 @@ public interface IController {
 
     public int ToggleSlideshow();
 
-    public boolean stopSlideshow();
+    public boolean StopSlideshow();
 
-    public boolean startSlideshow();
+    public boolean StartSlideshow();
 
     public void OnTimeChange(int newTime);
 

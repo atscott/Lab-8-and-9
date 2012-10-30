@@ -221,14 +221,13 @@ public class Controller implements IController {
         int startOrStop = -1;
         if (this.state == ControllerState.ALBUM_OPENED) {
             if (this.slideshowState == slideshowStates.SLIDESHOW_STOPPED) {
-                this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
-                timer = new java.util.Timer();
-                timer.schedule(new NextImage(), 0);
-                startOrStop = 1;
+                if(StartSlideshow()){
+                    startOrStop = 1;
+                }
             } else {
-                this.slideshowState = slideshowStates.SLIDESHOW_STOPPED;
-                timer.cancel();
-                startOrStop = 0;
+                if(StopSlideshow()){
+                    startOrStop = 0;
+                }
             }
         } else {
             startOrStop = -1;
@@ -244,7 +243,7 @@ public class Controller implements IController {
      * @return true if the slideshow was stopped successfully.
      */
     @Override
-    public boolean stopSlideshow() {
+    public boolean StopSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
             if(this.slideshowState == slideshowStates.SLIDESHOW_RUNNING){
@@ -262,7 +261,7 @@ public class Controller implements IController {
      * @return true if the slideshow was started successfully
      */
     @Override
-    public boolean startSlideshow() {
+    public boolean StartSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
             if(this.slideshowState == slideshowStates.SLIDESHOW_STOPPED){
