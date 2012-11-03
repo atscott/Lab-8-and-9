@@ -12,9 +12,9 @@ import java.util.List;
  */
 public interface IController {
 
-    public void OnNewAlbum();
+    public void OnNewAlbum(File file);
 
-    public void OnOpenAlbum();
+    public void OnOpenAlbum(File file);
 
     public void OnSaveAlbum();
 

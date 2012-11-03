@@ -73,11 +73,8 @@ public class Controller implements IController {
      * if the album couldn't be created.
      */
     @Override
-    public void OnNewAlbum() {
-        JFileChooser fc = new JFileChooser("C:\\");
-        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
-        fc.showSaveDialog(null);
-        File file = fc.getSelectedFile();
+    public void OnNewAlbum(File file) {
+
         if (file != null) {
             if (file.exists()) {
                 file.delete();
@@ -105,11 +102,7 @@ public class Controller implements IController {
      * to indicate an album is open. Also calls tellViewToShowAlbumInfo so the view shows the album information.
      */
     @Override
-    public void OnOpenAlbum() {
-        JFileChooser fc = new JFileChooser("C:\\");
-        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
-        fc.showOpenDialog(null);
-        File file = fc.getSelectedFile();
+    public void OnOpenAlbum(File file) {
         if (file != null) {
             this.albumModel = new Album(file);
             try {
