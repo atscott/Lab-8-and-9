@@ -6,6 +6,7 @@ package PhotoViewer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -319,7 +320,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void openMenuItemActionPerformed() {//GEN-FIRST:event_openMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
-        this.controller.OnOpenAlbum();
+        JFileChooser fc = new JFileChooser("C:\\");
+        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
+        fc.showOpenDialog(null);
+        File file = fc.getSelectedFile();
+        this.controller.OnOpenAlbum(file);
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_openMenuItemActionPerformed
 
@@ -417,7 +422,11 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
      */
     private void newMenuItemActionPerformed() {//GEN-FIRST:event_newMenuItemActionPerformed
         stopSlideMenuItemActionPerformed();
-        controller.OnNewAlbum();
+        JFileChooser fc = new JFileChooser("C:\\");
+        fc.setFileFilter(new FileNameExtensionFilter("Album File (*.alb)", "alb"));
+        fc.showSaveDialog(null);
+        File file = fc.getSelectedFile();
+        controller.OnNewAlbum(file);
         controller.OnTimeChange(Integer.parseInt((delaySpinner.getValue().toString().trim())));
     }//GEN-LAST:event_newMenuItemActionPerformed
 
