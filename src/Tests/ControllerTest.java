@@ -40,6 +40,7 @@ public class ControllerTest {
         model = new Album(new File(""));
         view = new CustomView();
         controller = new Controller(model, view);
+        view.setEnabledCalled = false;
     }
 
     @After
@@ -81,26 +82,38 @@ public class ControllerTest {
 
     /**
      * author: atscott
-     *
      * @throws Exception
      */
-    @Test
-    public void testOnOpenAlbum() throws Exception {
-
-//                     controller.OnOpenAlbum();
-    }
-
     @Test
     public void testOpenAlbumWithNullFile() throws Exception {
         controller.OnOpenAlbum(null);
         Assert.assertEquals(this.view.setEnabledCalled, false);
         Assert.assertEquals(this.view.clearEverythingCalled, false);
+        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
     }
 
+    /**
+     * author: atscott
+     * @throws Exception
+     */
     @Test
     public void testOpenAlbumWithInvalidPath() throws Exception {
         controller.OnOpenAlbum(new File("lkajsdflkj@#$%^&*("));
         Assert.assertNotNull(this.view.showErrorMessageCalledWith);
+        Assert.assertEquals(this.view.setEnabledCalled, false);
+        Assert.assertEquals(this.view.clearEverythingCalled, false);
+        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
+    }
+
+    /**
+     * author: atscott
+     */
+    @Test
+    public void testOpenAlbumWithExistingFile(){
+        controller.OnOpenAlbum(this.testAlbumFile);
+        Assert.assertEquals(this.view.setEnabledCalled, true);
+        Assert.assertEquals(this.view.clearEverythingCalled, true);
+        Assert.assertNotNull(this.view.displayAlbumNameCalledWith);
     }
 
     /**
