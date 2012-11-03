@@ -20,7 +20,7 @@ public class ControllerTest {
     private final IAlbumModel model;
 
 
-    ControllerTest() throws IOException {
+    public ControllerTest() throws IOException {
         this.view = new CustomView();
         File f = new File("test.alb");
         if (!f.exists()) {
@@ -43,17 +43,17 @@ public class ControllerTest {
 
     @Test
     public void testOnNewAlbum() throws Exception {
-
+//        controller.OnNewAlbum();
     }
 
     @Test
     public void testOnOpenAlbum() throws Exception {
-
+//                     controller.OnOpenAlbum();
     }
 
     @Test
     public void testOnSaveAlbum() throws Exception {
-
+        controller.OnSaveAlbum();
     }
 
     @Test
