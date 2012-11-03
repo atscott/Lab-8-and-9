@@ -7,8 +7,9 @@
     <property name="artifacts.dir" location="artifacts"/>
     <property name="docs.dir" location="docs"/>
     <property name="build.assets.dir" location="${build.dir}/assets" />
+    <property name="lib.dir" location="lib"/>
 
-    <property name="test.dir" location="src/tests"/>
+    <property name="test.dir" location="src/Tests"/>
     <property name="test.report.dir" location="test-reports"/>
 
     <patternset id="ignored.files">
@@ -40,6 +41,7 @@
     </patternset>
 
     <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
         <pathelement location="${build.dir}"/>
     </path>
 
@@ -57,7 +59,7 @@
     </target>
 
     <target name="test" depends="compile">
-        <junit printsummary="off" fork="off" haltonfailure="yes">
+        <junit printsummary="off" fork="off" haltonfailure="no">
             <formatter type="xml"/>
             <classpath refid="classpath"/>
             <batchtest todir="${test.report.dir}">
