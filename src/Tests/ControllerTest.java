@@ -1,12 +1,12 @@
 package Tests;
 
-import PhotoViewer.IController;
-import PhotoViewer.IPhotoViewerView;
+import PhotoViewer.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * User: scottat
@@ -15,6 +15,21 @@ import java.io.File;
  */
 public class ControllerTest {
 
+    private final IController controller;
+    private final IPhotoViewerView view;
+    private final IAlbumModel model;
+
+
+    ControllerTest() throws IOException {
+        this.view = new CustomView();
+        File f = new File("test.alb");
+        if (!f.exists()) {
+            f.createNewFile();
+        }
+
+        this.model = new Album(f);
+        this.controller = new Controller(this.model, this.view);
+    }
 
     @Before
     public void setUp() throws Exception {
