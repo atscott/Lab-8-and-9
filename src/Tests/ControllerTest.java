@@ -1,9 +1,8 @@
 package Tests;
 
 import PhotoViewer.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -16,18 +15,12 @@ import java.io.IOException;
 public class ControllerTest {
 
     private final IController controller;
-    private final IPhotoViewerView view;
-    private final IAlbumModel model;
+    private final CustomView view;
+    private IAlbumModel model = null;
 
 
     public ControllerTest() throws IOException {
         this.view = new CustomView();
-        File f = new File("test.alb");
-        if (!f.exists()) {
-            f.createNewFile();
-        }
-
-        this.model = new Album(f);
         this.controller = new Controller(this.model, this.view);
     }
 
@@ -41,21 +34,35 @@ public class ControllerTest {
 
     }
 
+    /**
+     * author: atscott
+     * @throws Exception
+     */
     @Test
-    public void testOnNewAlbum() throws Exception {
-//        controller.OnNewAlbum();
+    public void testOnNewAlbumWithNullFile() throws Exception {
+        controller.OnNewAlbum(null);
+        Assert.assertEquals(view.clearEverythingCalled, false);
     }
 
+    /**
+     * author: atscott
+     * @throws Exception
+     */
     @Test
     public void testOnOpenAlbum() throws Exception {
 //                     controller.OnOpenAlbum();
     }
 
+    /**
+     * author: atscott
+     * @throws Exception
+     */
     @Test
     public void testOnSaveAlbum() throws Exception {
         controller.OnSaveAlbum();
     }
 
+    /**
     @Test
     public void testOnAddPhoto() throws Exception {
 
