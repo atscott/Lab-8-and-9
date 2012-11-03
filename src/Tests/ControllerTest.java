@@ -14,19 +14,32 @@ import java.io.IOException;
  */
 public class ControllerTest {
 
-    private final IController controller;
-    private final CustomView view;
-    private IAlbumModel model = null;
+    private static IController controller;
+    private static CustomView view;
+    private static Album model;
+    private File testAlbumFile = null;
 
 
     public ControllerTest() throws IOException {
-        this.view = new CustomView();
-        this.controller = new Controller(this.model, this.view);
+        testAlbumFile = new File("test.alb");
+        if (!testAlbumFile.exists()) {
+            testAlbumFile.createNewFile();
+        }
     }
 
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    /**
+     * make sure the view, model and controller are fresh before every test
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        model = new Album(new File(""));
+        view = new CustomView();
+        controller = new Controller(model, view);
     }
 
     @After
@@ -36,25 +49,63 @@ public class ControllerTest {
 
     /**
      * author: atscott
-     * @throws Exception
      */
     @Test
     public void testOnNewAlbumWithNullFile() throws Exception {
         controller.OnNewAlbum(null);
-        Assert.assertEquals(view.clearEverythingCalled, false);
+        Assert.assertEquals(this.view.clearEverythingCalled, false);
+        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
     }
 
     /**
      * author: atscott
+     */
+    @Test
+    public void testOnNewAlbumWithFileThatCannotBeCreated() throws Exception {
+        controller.OnNewAlbum(new File("#$%^&*("));
+        Assert.assertEquals(this.view.clearEverythingCalled, false);
+        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
+        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
+    }
+
+    /**
+     * author: atscott
+     */
+    @Test
+    public void testOnNewAlbumWithExistingFile() throws Exception {
+        controller.OnNewAlbum(testAlbumFile);
+        Assert.assertEquals(this.view.clearEverythingCalled, true);
+        Assert.assertNotNull(this.view.displayAlbumNameCalledWith);
+        Assert.assertEquals(this.view.showErrorMessageCalledWith, null);
+    }
+
+    /**
+     * author: atscott
+     *
      * @throws Exception
      */
     @Test
     public void testOnOpenAlbum() throws Exception {
+
 //                     controller.OnOpenAlbum();
+    }
+
+    @Test
+    public void testOpenAlbumWithNullFile() throws Exception {
+        controller.OnOpenAlbum(null);
+        Assert.assertEquals(this.view.setEnabledCalled, false);
+        Assert.assertEquals(this.view.clearEverythingCalled, false);
+    }
+
+    @Test
+    public void testOpenAlbumWithInvalidPath() throws Exception {
+        controller.OnOpenAlbum(new File("lkajsdflkj@#$%^&*("));
+        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
     }
 
     /**
      * author: atscott
+     *
      * @throws Exception
      */
     @Test
@@ -62,7 +113,7 @@ public class ControllerTest {
         controller.OnSaveAlbum();
     }
 
-    /**
+
     @Test
     public void testOnAddPhoto() throws Exception {
 
@@ -103,73 +154,5 @@ public class ControllerTest {
 
     }
 
-
-    /**
-     * Allows us to test the controller methods by creating a "fake" view that implements the interface and sets
-     * attributes to indicate what methods were called.
-     */
-    class CustomView implements IPhotoViewerView {
-
-        IController addListenerCalledWith = null;
-
-        String displayAlbumNameCalledWith = null;
-
-        File addPhotoCalledWith = null;
-
-        String showErrorMessageCalledWith = null;
-
-        boolean clearEverythingCalled = false;
-
-        File showImageCalledawith = null;
-
-        boolean setEnabledCalled = false;
-        boolean setEndabledCalledWith = false;
-
-        File removePhotoCalledWith = null;
-
-        CustomView() {
-        }
-
-        @Override
-        public void AddListener(IController controller) {
-            this.addListenerCalledWith = controller;
-        }
-
-        @Override
-        public void DisplayAlbumName(String name) {
-            this.displayAlbumNameCalledWith = name;
-        }
-
-        @Override
-        public void AddPhoto(File picture) {
-            this.addPhotoCalledWith = picture;
-        }
-
-        @Override
-        public void ShowErrorMessage(String message) {
-            this.showErrorMessageCalledWith = message;
-        }
-
-        @Override
-        public void ClearEverything() {
-            this.clearEverythingCalled = true;
-        }
-
-        @Override
-        public void ShowImage(File file) {
-            this.showImageCalledawith = file;
-        }
-
-        @Override
-        public void SetEnabled(boolean enabled) {
-            this.setEnabledCalled = true;
-            this.setEndabledCalledWith = enabled;
-        }
-
-        @Override
-        public void RemovePhoto(File photo) {
-            this.removePhotoCalledWith = photo;
-        }
-    }
 
 }
