@@ -59,7 +59,7 @@
     </target>
 
     <target name="test" depends="compile">
-        <junit printsummary="off" fork="off" haltonfailure="no">
+        <junit printsummary="off" fork="off" haltonfailure="yes">
             <formatter type="xml"/>
             <classpath refid="classpath"/>
             <batchtest todir="${test.report.dir}">
