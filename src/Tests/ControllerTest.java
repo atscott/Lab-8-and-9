@@ -17,14 +17,11 @@ public class ControllerTest {
     private static IController controller;
     private static CustomView view;
     private static Album model;
-    private File testAlbumFile = null;
+    private static File testAlbumFile = null;
 
 
     public ControllerTest() throws IOException {
-        testAlbumFile = new File("test.alb");
-        if (!testAlbumFile.exists()) {
-            testAlbumFile.createNewFile();
-        }
+
     }
 
     @Before
@@ -36,11 +33,19 @@ public class ControllerTest {
      * make sure the view, model and controller are fresh before every test
      */
     @BeforeClass
-    public static void setUpBeforeClass() {
-        model = new Album(new File(""));
+    public static void setUpBeforeClass() throws IOException {
+        testAlbumFile = new File("test.alb");
+        if (!testAlbumFile.exists()) {
+            testAlbumFile.createNewFile();
+        }else{
+            testAlbumFile.delete();
+            testAlbumFile.createNewFile();
+        }
+        model = new Album(testAlbumFile);
         view = new CustomView();
         controller = new Controller(model, view);
         view.setEnabledCalled = false;
+
     }
 
     @After
@@ -123,6 +128,8 @@ public class ControllerTest {
      */
     @Test
     public void testOnSaveAlbum() throws Exception {
+        controller.OnOpenAlbum(this.testAlbumFile);
+        controller.OnAddPhoto();
         controller.OnSaveAlbum();
     }
 
