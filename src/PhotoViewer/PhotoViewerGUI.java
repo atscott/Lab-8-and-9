@@ -536,7 +536,7 @@ public class PhotoViewerGUI extends javax.swing.JFrame implements IPhotoViewerVi
             if (flavor.isFlavorJavaFileListType()) {
                 dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                 try {
-                    this.controller.OnAddPhoto((java.util.List<File>) tr.getTransferData(flavor));
+                    this.controller.AddPhoto((java.util.List<File>) tr.getTransferData(flavor));
                 } catch (Exception ignored) {}
             }
         }

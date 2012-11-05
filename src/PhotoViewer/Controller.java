@@ -149,38 +149,47 @@ public class Controller implements IController {
             int returnVal = fileChooser.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File[] files = fileChooser.getSelectedFiles();
-                if(files.length == 1) {
+                if (files.length == 1) {
                     File photo = files[0];
-                    try {
-                        if (albumModel.AddPhoto(photo)) {
-                            this.tellViewToAddPhoto(photo);
-                        } else {
-                            this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
-                        }
-                    } catch (IOException e) {
-                        this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
-                    }
+                    this.AddPhoto(photo);
                 } else {
-                    this.OnAddPhoto(Arrays.asList(files));
+                    this.AddPhoto(Arrays.asList(files));
                 }
+            }
+        }
+    }
+
+    @Override
+    public void AddPhoto(File file) {
+        if (this.state == ControllerState.ALBUM_OPENED) {
+            try {
+                if (albumModel.AddPhoto(file)) {
+                    this.tellViewToAddPhoto(file);
+                } else {
+                    this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
+                }
+            } catch (IOException e) {
+                this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
             }
         }
     }
 
     /**
      * Adds the photos in a list. This method does not output errors
+     *
      * @param transferData Photos to add
      */
     @Override
-    public void OnAddPhoto(List<File> transferData) {
-        for(File file : transferData) {
+    public void AddPhoto(List<File> transferData) {
+        for (File file : transferData) {
             try {
-                if(albumModel.AddPhoto(file)) {
+                if (albumModel.AddPhoto(file)) {
                     this.tellViewToAddPhoto(file);
                 } else {
                     this.view.ShowErrorMessage("Unable to add photo " + file.getName() + ". Photo is already in the album.");
                 }
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
     }
 
@@ -214,11 +223,11 @@ public class Controller implements IController {
         int startOrStop = -1;
         if (this.state == ControllerState.ALBUM_OPENED) {
             if (this.slideshowState == slideshowStates.SLIDESHOW_STOPPED) {
-                if(StartSlideshow()){
+                if (StartSlideshow()) {
                     startOrStop = 1;
                 }
             } else {
-                if(StopSlideshow()){
+                if (StopSlideshow()) {
                     startOrStop = 0;
                 }
             }
@@ -239,7 +248,7 @@ public class Controller implements IController {
     public boolean StopSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
-            if(this.slideshowState == slideshowStates.SLIDESHOW_RUNNING){
+            if (this.slideshowState == slideshowStates.SLIDESHOW_RUNNING) {
                 this.slideshowState = slideshowStates.SLIDESHOW_STOPPED;
                 timer.cancel();
                 toggled = true;
@@ -257,7 +266,7 @@ public class Controller implements IController {
     public boolean StartSlideshow() {
         boolean toggled = false;
         if (this.state == ControllerState.ALBUM_OPENED) {
-            if(this.slideshowState == slideshowStates.SLIDESHOW_STOPPED){
+            if (this.slideshowState == slideshowStates.SLIDESHOW_STOPPED) {
                 this.slideshowState = slideshowStates.SLIDESHOW_RUNNING;
                 timer = new java.util.Timer();
                 timer.schedule(new NextImage(), 0);

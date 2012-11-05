@@ -20,7 +20,7 @@ public interface IController {
 
     public void OnAddPhoto();
 
-    public void OnAddPhoto(List<File> transferData);
+    public void AddPhoto(List<File> transferData);
 
     void OnDeletePhoto(File photo);
 
@@ -35,5 +35,7 @@ public interface IController {
     public void ShowImage(File file);
 
     public void OnOrderSelection(SlideshowOrder o);
+
+    public void AddPhoto(File file);
 
 }
