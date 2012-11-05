@@ -36,6 +36,4 @@ public interface IController {
 
     public void OnOrderSelection(SlideshowOrder o);
 
-    public void AddPhoto(File file);
-
 }

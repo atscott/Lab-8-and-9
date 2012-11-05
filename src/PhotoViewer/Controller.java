@@ -149,30 +149,11 @@ public class Controller implements IController {
             int returnVal = fileChooser.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File[] files = fileChooser.getSelectedFiles();
-                if (files.length == 1) {
-                    File photo = files[0];
-                    this.AddPhoto(photo);
-                } else {
-                    this.AddPhoto(Arrays.asList(files));
-                }
+                this.AddPhoto(Arrays.asList(files));
             }
         }
     }
 
-    @Override
-    public void AddPhoto(File file) {
-        if (this.state == ControllerState.ALBUM_OPENED) {
-            try {
-                if (albumModel.AddPhoto(file)) {
-                    this.tellViewToAddPhoto(file);
-                } else {
-                    this.view.ShowErrorMessage("Unable to add photo. Photo is already in the album.");
-                }
-            } catch (IOException e) {
-                this.view.ShowErrorMessage("Unable to add image:\n" + e.getMessage());
-            }
-        }
-    }
 
     /**
      * Adds the photos in a list. This method does not output errors
