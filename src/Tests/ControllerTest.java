@@ -205,25 +205,58 @@ public class ControllerTest {
 
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testToggleSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
+        controller.OnOpenAlbum(testAlbumFile);
         controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
         Assert.assertFalse(controller.StartSlideshow());
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
+    @Test
+    public void testToggleSlideshowWithNoAlbum() throws Exception {
+        Assert.assertFalse(controller.StartSlideshow());
+    }
+
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testStopSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
+        controller.OnOpenAlbum(testAlbumFile);
         controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
         Assert.assertTrue(controller.StopSlideshow());
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
+    @Test
+    public void testStopSlideshowWithNoAlbum() throws Exception {
+        Assert.assertFalse(controller.StopSlideshow());
+    }
+
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testStartSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
+        controller.OnOpenAlbum(testAlbumFile);
         controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
     }
