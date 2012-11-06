@@ -180,8 +180,11 @@ public class Controller implements IController {
     @Override
     public void OnDeletePhoto(File photo) {
         if (this.state == ControllerState.ALBUM_OPENED) {
-            this.albumModel.RemovePhoto(photo);
-            this.tellViewToRemovePhoto(photo);
+            if(this.albumModel.RemovePhoto(photo)) {
+                this.tellViewToRemovePhoto(photo);
+            } else {
+                view.ShowErrorMessage("Photo could not be removed because it was not found.");
+            }
         } else {
             view.ShowErrorMessage("Cannot delete photo because no album is open.");
         }

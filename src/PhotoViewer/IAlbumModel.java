@@ -25,7 +25,7 @@ public interface IAlbumModel {
 
     public boolean AddPhoto(File photo) throws IOException;
 
-    public void RemovePhoto(File photo);
+    public boolean RemovePhoto(File photo);
 
     public File getNextPicture();
 }

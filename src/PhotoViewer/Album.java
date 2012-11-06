@@ -157,11 +157,15 @@ public class Album implements IAlbumModel {
 
     /**
      * removes photo from the pictures list
+     * @return True if the image was removed, false if not
      */
     @Override
-    public void RemovePhoto(File photo) {
-        pictures.remove(photo);
-        this.createRandomizedList();
+    public boolean RemovePhoto(File photo) {
+        boolean result = pictures.remove(photo);
+        if(result) {
+            this.createRandomizedList();
+        }
+        return result;
     }
 
     /**
