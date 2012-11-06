@@ -1,14 +1,14 @@
 package Tests;
 
-import PhotoViewer.*;
+import PhotoViewer.Album;
+import PhotoViewer.Controller;
+import PhotoViewer.IController;
 import org.junit.*;
-
+import sun.nio.cs.StandardCharsets;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -199,17 +199,25 @@ public class ControllerTest {
 
     @Test
     public void testToggleSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
+        Assert.assertFalse(controller.StartSlideshow());
     }
 
     @Test
     public void testStopSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
+        Assert.assertTrue(controller.StopSlideshow());
     }
 
     @Test
     public void testStartSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
     }
 
     @Test
