@@ -206,14 +206,23 @@ public class ControllerTest {
 
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testToggleSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.OnOpenAlbum(testAlbumFile);
         this.controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
         Assert.assertFalse(controller.StartSlideshow());
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testStopSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
@@ -222,6 +231,10 @@ public class ControllerTest {
         Assert.assertTrue(controller.StopSlideshow());
     }
 
+    /**
+     * author: tohtzk
+     * @throws Exception
+     */
     @Test
     public void testStartSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
