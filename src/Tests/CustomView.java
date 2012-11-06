@@ -4,6 +4,7 @@ import PhotoViewer.IController;
 import PhotoViewer.IPhotoViewerView;
 
 import java.io.File;
+import java.util.EventObject;
 
 /**
  * User: scottat
@@ -27,6 +28,7 @@ class CustomView implements IPhotoViewerView {
     boolean clearEverythingCalled = false;
 
     File showImageCalledawith = null;
+    int numberOfTimesShowImageCalled = 0;
 
     boolean setEnabledCalled = false;
     boolean setEndabledCalledWith = false;
@@ -64,6 +66,8 @@ class CustomView implements IPhotoViewerView {
     @Override
     public void ShowImage(File file) {
         this.showImageCalledawith = file;
+        numberOfTimesShowImageCalled++;
+        fireEvent();
     }
 
     @Override
@@ -76,6 +80,27 @@ class CustomView implements IPhotoViewerView {
     public void RemovePhoto(File photo) {
         this.removePhotoCalledWith = photo;
     }
+
+    public class ShowImageCalled extends java.util.EventObject {
+        //here's the constructor
+        public ShowImageCalled(Object source) {
+            super(source);
+        }
+    }
+
+    public interface ShowImageCalledListener {
+        public void handleShowImageCalled(EventObject e);
+    }
+
+    public ShowImageCalledListener listener;
+
+    private synchronized void fireEvent() {
+        ShowImageCalled event = new ShowImageCalled(this);
+        if (listener != null) {
+            this.listener.handleShowImageCalled(event);
+        }
+    }
+
 }
 
 
