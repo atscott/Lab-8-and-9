@@ -94,9 +94,11 @@ class CustomView implements IPhotoViewerView {
 
     public ShowImageCalledListener listener;
 
-    private synchronized void fireEvent()	{
+    private synchronized void fireEvent() {
         ShowImageCalled event = new ShowImageCalled(this);
-        this.listener.handleShowImageCalled(event);
+        if (listener != null) {
+            this.listener.handleShowImageCalled(event);
+        }
     }
 
 }
