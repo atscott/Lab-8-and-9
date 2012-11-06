@@ -70,7 +70,7 @@ public class ControllerTest {
      */
     @Test
     public void testOnNewAlbumWithFileThatCannotBeCreated() throws Exception {
-        controller.OnNewAlbum(new File("\\\\\\\\\\\\\\"));
+        controller.OnNewAlbum(new File("D:/%#$#(&*($%&#$%&#)$*$_@#$@#"));
         Assert.assertEquals(view.clearEverythingCalled, false);
         Assert.assertEquals(view.displayAlbumNameCalledWith, null);
         Assert.assertNotNull(view.showErrorMessageCalledWith);
