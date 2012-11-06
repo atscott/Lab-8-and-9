@@ -26,16 +26,12 @@ public class ControllerTest {
     private static File testAlbumFile = null;
     private long lastTimeShowImageWasCalled;
 
-    public ControllerTest() throws IOException {
-
-    }
-
     /**
      * make sure the view, model and controller are fresh before every test
      */
     @Before
     public void setUpBeforeTest() throws IOException {
-        testAlbumFile = new File("test.alb");
+        testAlbumFile = new File("test" + Math.random() + ".alb");
         if (!testAlbumFile.exists()) {
             testAlbumFile.createNewFile();
         } else {
@@ -51,7 +47,6 @@ public class ControllerTest {
 
     @After
     public void tearDown() throws Exception {
-        testAlbumFile = new File("test.alb");
         if (testAlbumFile.exists()) {
             testAlbumFile.delete();
         }
@@ -189,7 +184,7 @@ public class ControllerTest {
             lines.add(line);
         }
         //file should be empty
-        Assert.assertEquals(lines.size(), 0);
+        Assert.assertEquals(0, lines.size());
         //no error message should have been displayed
         Assert.assertNull(view.showErrorMessageCalledWith);
     }
