@@ -3,6 +3,8 @@ package Tests;
 import PhotoViewer.Album;
 import PhotoViewer.Controller;
 import PhotoViewer.IController;
+import PhotoViewer.Album.SlideshowOrder;
+
 import org.junit.*;
 
 import java.io.BufferedReader;
@@ -352,19 +354,35 @@ public class ControllerTest {
         }
     }
 
+    /**
+     * @author moorea
+     * @throws Exception
+     */
     @Test
     public void testShowImage() throws Exception {
-
+    	controller.OnOpenAlbum(testAlbumFile);
+    	File f = new File("testAssets/Chrysanthemum.jpg");
+        controller.ShowImage(f);
+    	Assert.assertTrue(f.getCanonicalPath().equals(view.showImageCalledawith.getCanonicalPath()));
     }
-
+    
+    /**
+     * @author moorea
+     * @throws Exception
+     */
     @Test
     public void testOnTimeChange() throws Exception {
-
+    	controller.OnTimeChange(10);
+    	Assert.assertTrue(((Controller) controller).getTimeBetweenImages() == 10);
     }
 
+    /**
+     * @author moorea
+     * @throws Exception
+     */
     @Test
     public void testOnOrderSelection() throws Exception {
-
+    	//controller.OnOrderSelection(SlideshowOrder.RANDOM);
     }
 
     private ArrayList<File> getSomePhotos() {

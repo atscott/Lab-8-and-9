@@ -334,7 +334,9 @@ public class Controller implements IController {
     @Override
     public void OnOrderSelection(SlideshowOrder o) {
         albumModel.SetSlideshowOrder(o);
-
     }
-
+    
+    public int getTimeBetweenImages(){
+    	return timeBetweenImages;
+    }
 }

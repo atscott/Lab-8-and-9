@@ -82,7 +82,6 @@ class CustomView implements IPhotoViewerView {
     }
 
     public class ShowImageCalled extends java.util.EventObject {
-        //here's the constructor
         public ShowImageCalled(Object source) {
             super(source);
         }
