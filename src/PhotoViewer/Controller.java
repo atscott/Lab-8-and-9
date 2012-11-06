@@ -336,6 +336,10 @@ public class Controller implements IController {
         albumModel.SetSlideshowOrder(o);
     }
     
+    /**
+     * returns the currently set timeBetweenImages value. 
+     * @return timeBetweenImages
+     */
     public int getTimeBetweenImages(){
     	return timeBetweenImages;
     }
