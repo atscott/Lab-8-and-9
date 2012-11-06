@@ -27,17 +27,11 @@ public class ControllerTest {
     public ControllerTest() throws IOException {
 
     }
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     /**
      * make sure the view, model and controller are fresh before every test
      */
-    @BeforeClass
-    public static void setUpBeforeClass() throws IOException {
+    @Before
+    public void setUpBeforeTest() throws IOException {
         testAlbumFile = new File("test.alb");
         if (!testAlbumFile.exists()) {
             testAlbumFile.createNewFile();
@@ -49,7 +43,6 @@ public class ControllerTest {
         view = new CustomView();
         controller = new Controller(model, view);
         view.setEnabledCalled = false;
-
     }
 
     @After
@@ -66,8 +59,8 @@ public class ControllerTest {
     @Test
     public void testOnNewAlbumWithNullFile() throws Exception {
         controller.OnNewAlbum(null);
-        Assert.assertEquals(this.view.clearEverythingCalled, false);
-        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
+        Assert.assertEquals(view.clearEverythingCalled, false);
+        Assert.assertEquals(view.displayAlbumNameCalledWith, null);
     }
 
     /**
@@ -76,9 +69,9 @@ public class ControllerTest {
     @Test
     public void testOnNewAlbumWithFileThatCannotBeCreated() throws Exception {
         controller.OnNewAlbum(new File("#$%^&*("));
-        Assert.assertEquals(this.view.clearEverythingCalled, false);
-        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
-        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
+        Assert.assertEquals(view.clearEverythingCalled, false);
+        Assert.assertEquals(view.displayAlbumNameCalledWith, null);
+        Assert.assertNotNull(view.showErrorMessageCalledWith);
     }
 
     /**
@@ -87,9 +80,9 @@ public class ControllerTest {
     @Test
     public void testOnNewAlbumWithExistingFile() throws Exception {
         controller.OnNewAlbum(testAlbumFile);
-        Assert.assertEquals(this.view.clearEverythingCalled, true);
-        Assert.assertNotNull(this.view.displayAlbumNameCalledWith);
-        Assert.assertEquals(this.view.showErrorMessageCalledWith, null);
+        Assert.assertEquals(view.clearEverythingCalled, true);
+        Assert.assertNotNull(view.displayAlbumNameCalledWith);
+        Assert.assertEquals(view.showErrorMessageCalledWith, null);
     }
 
     /**
@@ -100,9 +93,9 @@ public class ControllerTest {
     @Test
     public void testOpenAlbumWithNullFile() throws Exception {
         controller.OnOpenAlbum(null);
-        Assert.assertEquals(this.view.setEnabledCalled, false);
-        Assert.assertEquals(this.view.clearEverythingCalled, false);
-        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
+        Assert.assertEquals(view.setEnabledCalled, false);
+        Assert.assertEquals(view.clearEverythingCalled, false);
+        Assert.assertEquals(view.displayAlbumNameCalledWith, null);
     }
 
     /**
@@ -113,10 +106,10 @@ public class ControllerTest {
     @Test
     public void testOpenAlbumWithInvalidPath() throws Exception {
         controller.OnOpenAlbum(new File("lkajsdflkj@#$%^&*("));
-        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
-        Assert.assertEquals(this.view.setEnabledCalled, false);
-        Assert.assertEquals(this.view.clearEverythingCalled, false);
-        Assert.assertEquals(this.view.displayAlbumNameCalledWith, null);
+        Assert.assertNotNull(view.showErrorMessageCalledWith);
+        Assert.assertEquals(view.setEnabledCalled, false);
+        Assert.assertEquals(view.clearEverythingCalled, false);
+        Assert.assertEquals(view.displayAlbumNameCalledWith, null);
     }
 
     /**
@@ -124,10 +117,10 @@ public class ControllerTest {
      */
     @Test
     public void testOpenAlbumWithExistingFile() {
-        controller.OnOpenAlbum(this.testAlbumFile);
-        Assert.assertEquals(this.view.setEnabledCalled, true);
-        Assert.assertEquals(this.view.clearEverythingCalled, true);
-        Assert.assertNotNull(this.view.displayAlbumNameCalledWith);
+        controller.OnOpenAlbum(testAlbumFile);
+        Assert.assertEquals(view.setEnabledCalled, true);
+        Assert.assertEquals(view.clearEverythingCalled, true);
+        Assert.assertNotNull(view.displayAlbumNameCalledWith);
     }
 
     /**
@@ -137,10 +130,10 @@ public class ControllerTest {
      */
     @Test
     public void testOnSaveAlbumWithAFewFiles() throws Exception {
-        controller.OnOpenAlbum(this.testAlbumFile);
+        controller.OnOpenAlbum(testAlbumFile);
         //get some photos and add them to the album
         ArrayList<File> somePhotos = this.getSomePhotos();
-        this.controller.AddPhoto(somePhotos);
+        controller.AddPhoto(somePhotos);
         //save the album
         controller.OnSaveAlbum();
 
@@ -171,7 +164,7 @@ public class ControllerTest {
     public void testOnSaveAlbumWithNoOpenAlbum() throws Exception{
         controller.OnSaveAlbum();
         //error message should have been displayed
-        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
+        Assert.assertNotNull(view.showErrorMessageCalledWith);
     }
 
     /**
@@ -192,7 +185,7 @@ public class ControllerTest {
         //file should be empty
         Assert.assertEquals(lines.size(), 0);
         //no error message should have been displayed
-        Assert.assertNull(this.view.showErrorMessageCalledWith);
+        Assert.assertNull(view.showErrorMessageCalledWith);
     }
 
 
@@ -209,7 +202,7 @@ public class ControllerTest {
     @Test
     public void testToggleSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
-        this.controller.AddPhoto(somePhotos);
+        controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
         Assert.assertFalse(controller.StartSlideshow());
     }
@@ -217,7 +210,7 @@ public class ControllerTest {
     @Test
     public void testStopSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
-        this.controller.AddPhoto(somePhotos);
+        controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
         Assert.assertTrue(controller.StopSlideshow());
     }
@@ -225,7 +218,7 @@ public class ControllerTest {
     @Test
     public void testStartSlideshow() throws Exception {
         ArrayList<File> somePhotos = this.getSomePhotos();
-        this.controller.AddPhoto(somePhotos);
+        controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
     }
 
