@@ -57,7 +57,10 @@ public class ControllerTest {
 
     @After
     public void tearDown() throws Exception {
-
+        testAlbumFile = new File("test.alb");
+        if (testAlbumFile.exists()) {
+            testAlbumFile.delete();
+        }
     }
 
     /**
@@ -146,7 +149,6 @@ public class ControllerTest {
 
 
         //now check the file to make sure that it has all the photo paths
-        FileInputStream fs = new FileInputStream(testAlbumFile.getPath());
         List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
         if (lines.size() != somePhotos.size()) {
             Assert.fail("Number of lines in file (" + lines.size() + ") is not equal to number of photos added (" + somePhotos.size() + ")");
@@ -156,7 +158,32 @@ public class ControllerTest {
                 Assert.fail("Saved album does not contain expected file: " + file.getPath());
             }
         }
+    }
 
+    /**
+     * author: scottat
+     * @throws Exception
+     */
+    @Test
+    public void testOnSaveAlbumWithNoOpenAlbum() throws Exception{
+        controller.OnSaveAlbum();
+        //error message should have been displayed
+        Assert.assertNotNull(this.view.showErrorMessageCalledWith);
+    }
+
+    /**
+     * author: scottat
+     * @throws Exception
+     */
+    @Test
+    public void testOnSaveAlbumWithEmptyAlbum() throws Exception{
+        controller.OnOpenAlbum(testAlbumFile);
+        controller.OnSaveAlbum();
+        List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        //file should be empty
+        Assert.assertEquals(lines.size(), 0);
+        //no error message should have been displayed
+        Assert.assertNull(this.view.showErrorMessageCalledWith);
     }
 
 
