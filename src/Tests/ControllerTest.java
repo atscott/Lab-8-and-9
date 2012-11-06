@@ -195,6 +195,11 @@ public class ControllerTest {
     }
 
 
+    /**
+     * Tests on add photo
+     * author: Chris Hougard
+     * @throws Exception
+     */
     @Test
     public void testOnAddPhoto() throws Exception {
         controller.OnOpenAlbum(testAlbumFile);
@@ -216,6 +221,12 @@ public class ControllerTest {
         Assert.assertNull(view.addPhotoCalledWith);
         Assert.assertNotNull(view.showErrorMessageCalledWith);
 
+        // give it an empty list
+        view.addPhotoCalledWith = null;
+        view.showErrorMessageCalledWith = null;
+        controller.AddPhoto(new LinkedList<File>());
+        Assert.assertNull(view.addPhotoCalledWith);
+
         // try to add a bad photo
         view.addPhotoCalledWith = null;
         view.showErrorMessageCalledWith = null;
@@ -228,9 +239,29 @@ public class ControllerTest {
         Assert.assertNull(view.addPhotoCalledWith);
     }
 
+    /**
+     * Tests on delete photo
+     * author: Chris Hougard
+     * @throws Exception
+     */
     @Test
     public void testOnDeletePhoto() throws Exception {
+        controller.OnOpenAlbum(testAlbumFile);
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        controller.AddPhoto(somePhotos);
 
+        // try to delete a photo
+        view.removePhotoCalledWith = null;
+        view.showErrorMessageCalledWith = null;
+        controller.OnDeletePhoto(somePhotos.get(0));
+        Assert.assertEquals(somePhotos.get(0).getAbsolutePath(), view.removePhotoCalledWith.getAbsolutePath());
+
+        // try to delete a photo not in the list
+        view.removePhotoCalledWith = null;
+        view.showErrorMessageCalledWith = null;
+        controller.OnDeletePhoto(somePhotos.get(0));
+        Assert.assertNull(view.removePhotoCalledWith);
+        Assert.assertNotNull(view.showErrorMessageCalledWith);
     }
 
     /**
