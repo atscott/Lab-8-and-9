@@ -3,10 +3,12 @@
 
     <property name="src.dir" location="src"/>
     <property name="src.assets.dir" location="assets" />
+    <property name="src.testAssets.dir" location="testAssets" />
     <property name="build.dir" location="build"/>
     <property name="artifacts.dir" location="artifacts"/>
     <property name="docs.dir" location="docs"/>
     <property name="build.assets.dir" location="${build.dir}/assets" />
+    <property name="build.testAssets.dir" location="${build.dir}/testAssets" />
     <property name="lib.dir" location="lib"/>
 
     <property name="test.dir" location="src/Tests"/>
@@ -45,7 +47,7 @@
         <pathelement location="${build.dir}"/>
     </path>
 
-    <target name="init">
+    <target name="init" depends="clean">
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${docs.dir}"/>
         <mkdir dir="${test.report.dir}"/>
@@ -58,7 +60,7 @@
         </javac>
     </target>
 
-    <target name="test" depends="compile">
+    <target name="test" depends="compile, copyNonEmbeddedFiles">
         <junit printsummary="off" fork="off" haltonfailure="yes">
             <formatter type="xml"/>
             <classpath refid="classpath"/>
@@ -83,6 +85,11 @@
         <mkdir dir="${build.assets.dir}" />
         <copy todir="${build.assets.dir}" includeemptydirs="false" overwrite="true">
             <fileset dir="${src.assets.dir}" />
+        </copy>
+
+        <mkdir dir="${build.testAssets.dir}" />
+        <copy todir="${build.testAssets.dir}" includeemptydirs="false" overwrite="true">
+            <fileset dir="${src.testAssets.dir}" />
         </copy>
     </target>
 
