@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class ControllerTest {
     private static IController controller;
     private static CustomView view;
     private static File testAlbumFile = null;
+    private long lastTimeShowImageWasCalled;
 
     public ControllerTest() throws IOException {
 
     }
+
     /**
      * make sure the view, model and controller are fresh before every test
      */
@@ -43,6 +46,7 @@ public class ControllerTest {
         view = new CustomView();
         controller = new Controller(model, view);
         view.setEnabledCalled = false;
+
     }
 
     @After
@@ -143,7 +147,7 @@ public class ControllerTest {
         BufferedReader in = new BufferedReader(new FileReader(testAlbumFile));
         String line;
         List<String> lines = new LinkedList<String>();
-        while((line = in.readLine()) != null) {
+        while ((line = in.readLine()) != null) {
             lines.add(line);
         }
         if (lines.size() != somePhotos.size()) {
@@ -158,10 +162,11 @@ public class ControllerTest {
 
     /**
      * author: scottat
+     *
      * @throws Exception
      */
     @Test
-    public void testOnSaveAlbumWithNoOpenAlbum() throws Exception{
+    public void testOnSaveAlbumWithNoOpenAlbum() throws Exception {
         controller.OnSaveAlbum();
         //error message should have been displayed
         Assert.assertNotNull(view.showErrorMessageCalledWith);
@@ -169,17 +174,18 @@ public class ControllerTest {
 
     /**
      * author: scottat
+     *
      * @throws Exception
      */
     @Test
-    public void testOnSaveAlbumWithEmptyAlbum() throws Exception{
+    public void testOnSaveAlbumWithEmptyAlbum() throws Exception {
         controller.OnOpenAlbum(testAlbumFile);
         controller.OnSaveAlbum();
         //List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
         BufferedReader in = new BufferedReader(new FileReader(testAlbumFile));
         String line;
         List<String> lines = new LinkedList<String>();
-        while((line = in.readLine()) != null) {
+        while ((line = in.readLine()) != null) {
             lines.add(line);
         }
         //file should be empty
@@ -220,6 +226,43 @@ public class ControllerTest {
         ArrayList<File> somePhotos = this.getSomePhotos();
         controller.AddPhoto(somePhotos);
         Assert.assertTrue(controller.StartSlideshow());
+    }
+
+    /**
+     * author: scottat
+     * @throws Exception
+     */
+    @Test
+    public void testSlideshowFunction() throws Exception {
+        final int interval = 1000;
+
+        view.listener = new CustomView.ShowImageCalledListener() {
+            @Override
+            public void handleShowImageCalled(EventObject e) {
+                long currentTime = System.currentTimeMillis();
+                if (lastTimeShowImageWasCalled != 0) {
+                    if(Math.abs(currentTime - lastTimeShowImageWasCalled) > interval + 1000){
+                        Assert.fail("slideshow next image not called in a reasonable amount of time");
+                    }
+                }
+                lastTimeShowImageWasCalled = currentTime;
+            }
+        };
+
+        controller.OnOpenAlbum(testAlbumFile);
+        //get some photos and add them to the album
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        controller.AddPhoto(somePhotos);
+        controller.OnTimeChange(interval/1000);
+
+        if(!controller.StartSlideshow()){
+            Assert.fail("Could not start slideshow");
+        }
+
+        Thread.sleep(5000);
+        if(view.numberOfTimesShowImageCalled < 5){
+            Assert.fail("show image not called 5 times in 5 seconds with slideshow running at 5 second interval");
+        }
     }
 
     @Test
