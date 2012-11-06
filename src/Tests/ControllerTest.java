@@ -191,7 +191,35 @@ public class ControllerTest {
 
     @Test
     public void testOnAddPhoto() throws Exception {
+        controller.OnOpenAlbum(testAlbumFile);
 
+        // verify a photo can be added
+        view.addPhotoCalledWith = null;
+        ArrayList<File> somePhotos = new ArrayList<File>();
+        String path = getClass().getResource("/testAssets/Chrysanthemum.jpg").getPath();
+        path = path.replace("%20", " ");
+        File f = new File(path);
+        somePhotos.add(f);
+        controller.AddPhoto(somePhotos);
+        Assert.assertEquals(f.getAbsolutePath(), view.addPhotoCalledWith.getAbsolutePath());
+
+        // try to add the photo again
+        view.addPhotoCalledWith = null;
+        view.showErrorMessageCalledWith = null;
+        controller.AddPhoto(somePhotos);
+        Assert.assertNull(view.addPhotoCalledWith);
+        Assert.assertNotNull(view.showErrorMessageCalledWith);
+
+        // try to add a bad photo
+        view.addPhotoCalledWith = null;
+        view.showErrorMessageCalledWith = null;
+        somePhotos = new ArrayList<File>();
+        path = getClass().getResource("/testAssets/bad.jpg").getPath();
+        path = path.replace("%20", " ");
+        f = new File(path);
+        somePhotos.add(f);
+        controller.AddPhoto(somePhotos);
+        Assert.assertNull(view.addPhotoCalledWith);
     }
 
     @Test
