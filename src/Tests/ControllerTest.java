@@ -6,6 +6,7 @@ import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * User: scottat
@@ -16,7 +17,6 @@ public class ControllerTest {
 
     private static IController controller;
     private static CustomView view;
-    private static Album model;
     private static File testAlbumFile = null;
 
 
@@ -41,7 +41,7 @@ public class ControllerTest {
             testAlbumFile.delete();
             testAlbumFile.createNewFile();
         }
-        model = new Album(testAlbumFile);
+        Album model = new Album(testAlbumFile);
         view = new CustomView();
         controller = new Controller(model, view);
         view.setEnabledCalled = false;
@@ -129,7 +129,7 @@ public class ControllerTest {
     @Test
     public void testOnSaveAlbum() throws Exception {
         controller.OnOpenAlbum(this.testAlbumFile);
-        controller.OnAddPhoto();
+
         controller.OnSaveAlbum();
     }
 
@@ -172,6 +172,20 @@ public class ControllerTest {
     @Test
     public void testOnOrderSelection() throws Exception {
 
+    }
+
+    private void addSomePics(){
+        ArrayList<File> temp = new ArrayList<File>();
+        File f = new File(getClass().getResource("/testAssets/Chrysanthemum.jpg").getPath());
+        temp.add(f);
+        f = new File(getClass().getResource("/testAssets/Desert.jpg").getPath());
+        temp.add(f);
+        f = new File(getClass().getResource("/testAssets/Hydrangeas.jpg").getPath());
+        temp.add(f);
+        f = new File(getClass().getResource("/testAssets/Jellyfish.jpg").getPath());
+        temp.add(f);
+        f = new File(getClass().getResource("/testAssets/Koala.jpg").getPath());
+        temp.add(f);
     }
 
 
