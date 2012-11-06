@@ -3,9 +3,10 @@ package Tests;
 import PhotoViewer.Album;
 import PhotoViewer.Controller;
 import PhotoViewer.IController;
-import PhotoViewer.Album.SlideshowOrder;
-
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,7 +70,7 @@ public class ControllerTest {
      */
     @Test
     public void testOnNewAlbumWithFileThatCannotBeCreated() throws Exception {
-        controller.OnNewAlbum(new File("#$%^&*("));
+        controller.OnNewAlbum(new File("\\\\\\\\\\\\\\"));
         Assert.assertEquals(view.clearEverythingCalled, false);
         Assert.assertEquals(view.displayAlbumNameCalledWith, null);
         Assert.assertNotNull(view.showErrorMessageCalledWith);
@@ -106,7 +107,7 @@ public class ControllerTest {
      */
     @Test
     public void testOpenAlbumWithInvalidPath() throws Exception {
-        controller.OnOpenAlbum(new File("lkajsdflkj@#$%^&*("));
+        controller.OnOpenAlbum(new File("\\\\\\\\\\\\\\\\\\\\"));
         Assert.assertNotNull(view.showErrorMessageCalledWith);
         Assert.assertEquals(view.setEnabledCalled, false);
         Assert.assertEquals(view.clearEverythingCalled, false);
@@ -374,15 +375,6 @@ public class ControllerTest {
     public void testOnTimeChange() throws Exception {
     	controller.OnTimeChange(10);
     	Assert.assertTrue(((Controller) controller).getTimeBetweenImages() == 10);
-    }
-
-    /**
-     * @author moorea
-     * @throws Exception
-     */
-    @Test
-    public void testOnOrderSelection() throws Exception {
-    	//controller.OnOrderSelection(SlideshowOrder.RANDOM);
     }
 
     private ArrayList<File> getSomePhotos() {
