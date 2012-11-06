@@ -5,8 +5,14 @@ import org.junit.*;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: scottat
@@ -18,6 +24,7 @@ public class ControllerTest {
     private static IController controller;
     private static CustomView view;
     private static File testAlbumFile = null;
+    final static Charset ENCODING = StandardCharsets.UTF_8;
 
 
     public ControllerTest() throws IOException {
@@ -37,7 +44,7 @@ public class ControllerTest {
         testAlbumFile = new File("test.alb");
         if (!testAlbumFile.exists()) {
             testAlbumFile.createNewFile();
-        }else{
+        } else {
             testAlbumFile.delete();
             testAlbumFile.createNewFile();
         }
@@ -87,6 +94,7 @@ public class ControllerTest {
 
     /**
      * author: atscott
+     *
      * @throws Exception
      */
     @Test
@@ -99,6 +107,7 @@ public class ControllerTest {
 
     /**
      * author: atscott
+     *
      * @throws Exception
      */
     @Test
@@ -114,7 +123,7 @@ public class ControllerTest {
      * author: atscott
      */
     @Test
-    public void testOpenAlbumWithExistingFile(){
+    public void testOpenAlbumWithExistingFile() {
         controller.OnOpenAlbum(this.testAlbumFile);
         Assert.assertEquals(this.view.setEnabledCalled, true);
         Assert.assertEquals(this.view.clearEverythingCalled, true);
@@ -127,10 +136,27 @@ public class ControllerTest {
      * @throws Exception
      */
     @Test
-    public void testOnSaveAlbum() throws Exception {
+    public void testOnSaveAlbumWithAFewFiles() throws Exception {
         controller.OnOpenAlbum(this.testAlbumFile);
-
+        //get some photos and add them to the album
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        //save the album
         controller.OnSaveAlbum();
+
+
+        //now check the file to make sure that it has all the photo paths
+        FileInputStream fs = new FileInputStream(testAlbumFile.getPath());
+        List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        if (lines.size() != somePhotos.size()) {
+            Assert.fail("Number of lines in file (" + lines.size() + ") is not equal to number of photos added (" + somePhotos.size() + ")");
+        }
+        for (File file : somePhotos) {
+            if (!lines.contains(file.getPath())) {
+                Assert.fail("Saved album does not contain expected file: " + file.getPath());
+            }
+        }
+
     }
 
 
@@ -174,18 +200,29 @@ public class ControllerTest {
 
     }
 
-    private void addSomePics(){
+    private ArrayList<File> getSomePhotos() {
         ArrayList<File> temp = new ArrayList<File>();
-        File f = new File(getClass().getResource("/testAssets/Chrysanthemum.jpg").getPath());
+        String path = getClass().getResource("/testAssets/Chrysanthemum.jpg").getPath();
+        path = path.replace("%20", " ");
+        File f = new File(path);
         temp.add(f);
-        f = new File(getClass().getResource("/testAssets/Desert.jpg").getPath());
+        path = getClass().getResource("/testAssets/Desert.jpg").getPath();
+        path = path.replace("%20", " ");
+        f = new File(path);
         temp.add(f);
-        f = new File(getClass().getResource("/testAssets/Hydrangeas.jpg").getPath());
+        path = getClass().getResource("/testAssets/Hydrangeas.jpg").getPath();
+        path = path.replace("%20", " ");
+        f = new File(path);
         temp.add(f);
-        f = new File(getClass().getResource("/testAssets/Jellyfish.jpg").getPath());
+        path = getClass().getResource("/testAssets/Jellyfish.jpg").getPath();
+        path = path.replace("%20", " ");
+        f = new File(path);
         temp.add(f);
-        f = new File(getClass().getResource("/testAssets/Koala.jpg").getPath());
+        path = getClass().getResource("/testAssets/Koala.jpg").getPath();
+        path = path.replace("%20", " ");
+        f = new File(path);
         temp.add(f);
+        return temp;
     }
 
 
