@@ -208,17 +208,25 @@ public class ControllerTest {
 
     @Test
     public void testToggleSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
+        Assert.assertFalse(controller.StartSlideshow());
     }
 
     @Test
     public void testStopSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
+        Assert.assertTrue(controller.StopSlideshow());
     }
 
     @Test
     public void testStartSlideshow() throws Exception {
-
+        ArrayList<File> somePhotos = this.getSomePhotos();
+        this.controller.AddPhoto(somePhotos);
+        Assert.assertTrue(controller.StartSlideshow());
     }
 
     @Test
