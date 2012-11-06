@@ -1,17 +1,16 @@
 package Tests;
 
-import PhotoViewer.*;
+import PhotoViewer.Album;
+import PhotoViewer.Controller;
+import PhotoViewer.IController;
 import org.junit.*;
 
-
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,8 +23,6 @@ public class ControllerTest {
     private static IController controller;
     private static CustomView view;
     private static File testAlbumFile = null;
-    final static Charset ENCODING = StandardCharsets.UTF_8;
-
 
     public ControllerTest() throws IOException {
 
@@ -149,7 +146,13 @@ public class ControllerTest {
 
 
         //now check the file to make sure that it has all the photo paths
-        List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        //List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        BufferedReader in = new BufferedReader(new FileReader(testAlbumFile));
+        String line;
+        List<String> lines = new LinkedList<String>();
+        while((line = in.readLine()) != null) {
+            lines.add(line);
+        }
         if (lines.size() != somePhotos.size()) {
             Assert.fail("Number of lines in file (" + lines.size() + ") is not equal to number of photos added (" + somePhotos.size() + ")");
         }
@@ -179,7 +182,13 @@ public class ControllerTest {
     public void testOnSaveAlbumWithEmptyAlbum() throws Exception{
         controller.OnOpenAlbum(testAlbumFile);
         controller.OnSaveAlbum();
-        List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        //List<String> lines = Files.readAllLines(Paths.get(testAlbumFile.getPath()), ENCODING);
+        BufferedReader in = new BufferedReader(new FileReader(testAlbumFile));
+        String line;
+        List<String> lines = new LinkedList<String>();
+        while((line = in.readLine()) != null) {
+            lines.add(line);
+        }
         //file should be empty
         Assert.assertEquals(lines.size(), 0);
         //no error message should have been displayed
